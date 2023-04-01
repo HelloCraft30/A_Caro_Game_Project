@@ -1,6 +1,20 @@
 #include "View_Functions.h"
+#include "_draw_SHAPE.h"
 
 using namespace std;
+
+// _draw functions are made with tool
+// and this tool was created by myself xD
+
+void _draw_Screen_Border() {
+	draw_BORDER_2line(0, 0, 93, 30);
+}
+
+SHORT getRandomColor() {
+	SHORT hold = (rand() % 8);
+	if (hold == COLOR_BG) hold = getRandomColor();
+	return hold;
+}
 
 void SetColor(int backgound_color, int text_color)
 {
@@ -82,11 +96,9 @@ void fixConsoleWindow()
 	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
 	SetWindowLong(consoleWindow, GWL_STYLE, style);
 }
-
 void returnColor() {
 	SetColor(COLOR_BG, COLOR_TXT);
 }
-
 void draw_BORDER_1line(SHORT posX, SHORT posY, int width, int height, int COLOR) {
 	GoTo(posX, posY);
 	SetColor(COLOR_BG, COLOR);
@@ -124,7 +136,6 @@ void draw_BORDER_2line(SHORT posX, SHORT posY, int width, int height, int COLOR)
 	cout << LINE2_RIGHT_BOT;
 	returnColor();
 }
-
 void draw_RETANGLE_SPACE(SHORT posX, SHORT posY, int width, int height, int COLOR, bool SHADOW) {
 	SetColor(COLOR, COLOR);
 	for (int i = 0; i < height; i++) {
@@ -133,19 +144,18 @@ void draw_RETANGLE_SPACE(SHORT posX, SHORT posY, int width, int height, int COLO
 			cout << ' ';
 		}
 	}
-	SetColor(COLOR_BG, COLOR);
+	SetColor(COLOR_BG, COLOR_GRAY);
 	if (SHADOW) {
 		for (int i = 0; i < height; i++) {
-			GoTo(posX - 3, posY + i);
-			cout << BLUR1 << BLUR2 << BLUR3;
+			GoTo(posX - 2, posY + i);
+			cout  << BLUR2 << BLUR3;
 			GoTo(posX + width, posY + i);
-			cout << BLUR3 << BLUR2 << BLUR1;
+			cout << BLUR3 << BLUR2;
 		}
 
 	}
 	returnColor();
 }
-
 void draw_BOX(SHORT posX, SHORT posY, int width, int height, char type, int COLOR_bg, int COLOR_txt) {
 	if (type == '-') {
 		draw_BORDER_1line(posX, posY, width, height, COLOR_txt);
@@ -156,7 +166,6 @@ void draw_BOX(SHORT posX, SHORT posY, int width, int height, char type, int COLO
 		draw_RETANGLE_SPACE(posX + 1, posY + 1, width - 2, height - 2, COLOR_bg);
 	}
 }
-
 void draw_BOARD(SHORT posX, SHORT posY, int sizeBoard, string nameBoard) {
 	GoTo(posX, posY);
 	cout << LINE2_LEFT_TOP;
@@ -189,19 +198,18 @@ void draw_BOARD(SHORT posX, SHORT posY, int sizeBoard, string nameBoard) {
 	}
 	cout << LINE2_H << LINE2_H << LINE2_H << LINE2_RIGHT_BOT;
 	GoTo(posX, posY - 1);
-	SetColor(COLOR_TXT, COLOR_BG);
-	cout << BLUR3 << BLUR2 << BLUR1<< " NAME BOARD: ";
+	SetColor(COLOR_BLACK, COLOR_BG);
+	cout << BLUR3 << BLUR2 << BLUR1<< " BOARD NAME: ";
 	returnColor(); cout << ' ';
 	if (nameBoard.size() > 25) {
 		nameBoard.resize(25); nameBoard += "...  ";
 	}
 	cout << nameBoard;
-	GoTo(posX + 27, posY + 25);
-	SetColor(COLOR_TXT, COLOR_BG);
+	GoTo(posX + 63, posY + 25);
+	SetColor(COLOR_GRAY, COLOR_BG);
 	cout << BLUR3 << BLUR2 << BLUR1 << " Caro game ver 0.1 ";
 	returnColor();
 }
-
 void draw_POINT(const _POINT& point) {
 	switch (point.c) {
 	case 'X':
@@ -216,7 +224,6 @@ void draw_POINT(const _POINT& point) {
 		break;
 	}
 }
-
 void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
@@ -225,73 +232,98 @@ void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix) {
 		}
 	}
 }
-
-void _draw_X_shape(int _x, int _y) {
-	GoTo(_x + 1, _y + 1); cout << (char)223;
-	GoTo(_x + 1, _y + 4); cout << (char)223;
-	GoTo(_x + 2, _y + 1); cout << (char)220;
-	GoTo(_x + 2, _y + 3); cout << (char)220;
-	GoTo(_x + 3, _y + 2); cout << (char)223;
-	GoTo(_x + 3, _y + 3); cout << (char)223;
-	GoTo(_x + 4, _y + 2); cout << (char)220;
-	GoTo(_x + 5, _y + 2); cout << (char)223;
-	GoTo(_x + 5, _y + 3); cout << (char)223;
-	GoTo(_x + 6, _y + 1); cout << (char)220;
-	GoTo(_x + 6, _y + 3); cout << (char)220;
-	GoTo(_x + 7, _y + 1); cout << (char)223;
-	GoTo(_x + 7, _y + 4); cout << (char)223;
-}
-void _draw_O_shape(int _x, int _y) {
-	GoTo(_x + 1, _y + 2); cout << (char)219;
-	GoTo(_x + 1, _y + 3); cout << (char)219;
-	GoTo(_x + 2, _y + 1); cout << (char)220;
-	GoTo(_x + 2, _y + 4); cout << (char)223;
-	GoTo(_x + 3, _y + 1); cout << (char)220;
-	GoTo(_x + 3, _y + 4); cout << (char)223;
-	GoTo(_x + 4, _y + 1); cout << (char)220;
-	GoTo(_x + 4, _y + 4); cout << (char)223;
-	GoTo(_x + 5, _y + 2); cout << (char)219;
-	GoTo(_x + 5, _y + 3); cout << (char)219;
-
-}
-
-void display_TURN(SHORT posX, SHORT posY, char turn) {
-	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, 0, true);
-	SetColor(COLOR_TXT, COLOR_BG);
+void show_TURN(SHORT posX, SHORT posY, char turn) {
+	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, COLOR_GREEN, true);
+	SetColor(COLOR_GREEN, COLOR_BG);
 	GoTo(posX, posY); cout << "CURRENT";
 	GoTo(posX + 1, posY + 1); cout << "TURN:";
 
 	int _posX = posX + 17, _posY = posY - 4;
 	
 	if (turn == 'X') {
-		draw_RETANGLE_SPACE(_posX - 2, _posY + 2, 13, 6);
+		draw_RETANGLE_SPACE(_posX - 1, _posY + 2, 13, 6);
 		SetColor(COLOR_BG, 12);
-		_draw_X_shape(_posX - 1, _posY + 2);
+		_draw_X_shape(_posX , _posY + 2);
 	}
 	else {
-		draw_RETANGLE_SPACE(_posX - 2, _posY + 2, 13, 6);
+		draw_RETANGLE_SPACE(_posX - 1, _posY + 2, 13, 6);
 		SetColor(COLOR_BG, 9);
-		_draw_O_shape(_posX, _posY + 2);
+		_draw_O_shape(_posX+1, _posY + 2);
 	}
-	draw_BORDER_2line(_posX - 3, _posY + 2, 13, 6);
+	draw_BORDER_2line(_posX - 2, _posY + 2, 13, 6);
 	returnColor();
 }
-
-void display_SCORE_X(SHORT posX, SHORT posY, int score) {
-	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, 0, true);
-	SetColor(COLOR_TXT, COLOR_BG);
+void show_SCORE_X(SHORT posX, SHORT posY, int score) {
+	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, COLOR_RED, true);
+	SetColor(COLOR_RED, COLOR_BG);
 	GoTo(posX-2, posY); cout << "X player's";
 	GoTo(posX + 1, posY + 1); cout << "SCORE: ";
-
+	returnColor();
+	GoTo(posX +2, posY + 3); cout << score;
 	draw_BORDER_1line(posX-4, posY + 2, 14, 3);
 }
-
-void display_SCORE_O(SHORT posX, SHORT posY, int score) {
-	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, 0, true);
-	SetColor(COLOR_TXT, COLOR_BG);
+void show_SCORE_O(SHORT posX, SHORT posY, int score) {
+	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, COLOR_BLUE, true);
+	SetColor(COLOR_BLUE, COLOR_BG);
 	GoTo(posX - 2, posY); cout << "O player's";
 	GoTo(posX + 1, posY + 1); cout << "SCORE: ";
-
+	returnColor();
+	GoTo(posX +2, posY + 3); cout << score;
 	draw_BORDER_1line(posX - 4, posY + 2, 14, 3);
 }
-
+void show_LASTMOVE(SHORT posX, SHORT posY, _POINT point) {
+	draw_RETANGLE_SPACE(posX - 3, posY, 12, 1, COLOR_GRAY,TRUE);
+	SetColor(COLOR_GRAY, COLOR_BG);
+	GoTo(posX - 2, posY); cout << "Last move: ";
+	returnColor();
+	GoTo(posX + 14, posY); cout << "                  ";
+	GoTo(posX + 14, posY); cout << point.c << ": [" << point.x << "] - [" << point.y<<"]";
+}
+void show_GAME_HELP(SHORT posX, SHORT posY) {
+	draw_BORDER_2line(posX, posY, 33, 10);
+	GoTo(posX + 3, posY + 2);
+	cout << "1. WASD or " << (char)273<<' ' << (char)286 << ' ' << (char)287 << ' ' << (char)272 << " to move.";
+	GoTo(posX + 3, posY + 3);
+	cout << "2. [ENTER] to tick your TURN.";
+	GoTo(posX + 3, posY + 4);
+	cout << "3. [ESCAPE] to open menu.";
+	GoTo(posX + 3, posY + 5);
+	cout << "    (Quit, Save, Load Game)";
+	GoTo(posX + 11, posY + 7);
+	cout << "--Enjoy!--";
+}
+void show_SCREEN_MAINMENU(SHORT color,SHORT cmd) {
+	SetColor(COLOR_BG, color);
+	_draw_NAME_CARO(10, 2);
+	SetColor(COLOR_BG, COLOR_TXT);
+	//draw options
+	SHORT op_x = 60, op_y = 3;
+	int a[6]{};
+	int b[6]{ 15,15,15,15,15,15 };
+	a[cmd] = COLOR_GREEN;
+	b[cmd] = 15;
+	//option 1: NEW GAME
+	draw_RETANGLE_SPACE(op_x, op_y, 17, 1, a[1], true);
+	SetColor(a[1], b[1]);
+	GoTo(op_x + 5, op_y); cout << "NEW GAME";
+	//option 2: CONTINUE GAME
+	draw_RETANGLE_SPACE(op_x, op_y+2, 17, 1, a[2], true);
+	SetColor(a[2], b[2]);
+	GoTo(op_x + 2, op_y+2); cout << "CONTINUE GAME";
+	//option 3: HOW TO PLAY
+	draw_RETANGLE_SPACE(op_x, op_y + 4, 17, 1, a[3], true);
+	SetColor(a[3], b[3]);
+	GoTo(op_x + 3, op_y + 4); cout << "HOW TO PLAY";
+	//option 4: ABOUT
+	draw_RETANGLE_SPACE(op_x, op_y + 6, 17, 1, a[4], true);
+	SetColor(a[4], b[4]);
+	GoTo(op_x + 6, op_y + 6); cout << "ABOUT";
+	//option 5: QUIT
+	draw_RETANGLE_SPACE(op_x, op_y + 8, 17, 1, a[5], true);
+	SetColor(a[5], b[5]);
+	GoTo(op_x + 6, op_y + 8); cout << "QUIT";
+	returnColor();
+	_draw_MY_BOY(10, 14);
+	_draw_TALK_BOX(36, 13);
+	_draw_XO_SHAPE(57, 21);
+}

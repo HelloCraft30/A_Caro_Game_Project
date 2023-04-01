@@ -23,6 +23,7 @@
     <ClInclude Include="Data_Game.h" />
     <ClInclude Include="Model_Functions.h" />
     <ClInclude Include="View_Functions.h" />
+    <ClInclude Include="_draw_SHAPE.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Control_Functions.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model_Functions.cpp" />
     <ClCompile Include="View_Functions.cpp" />
+    <ClCompile Include="_draw_SHAPE.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
