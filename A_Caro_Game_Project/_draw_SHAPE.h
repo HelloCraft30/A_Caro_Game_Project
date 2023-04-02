@@ -12,3 +12,5 @@ void _draw_MY_BOY(SHORT _x, SHORT _y);
 void _draw_TALK_BOX(SHORT _x, SHORT _y);
 
 void _draw_XO_SHAPE(SHORT _x, SHORT _y);
+
+void _TRANSITION();

@@ -1,0 +1,17 @@
+score: X/O
+1 2
+turn:
+X
+data:
+X X X X X X X X X X X X
+N N N N N N N N N N N N
+N N N N N N O N N N N N
+N N N N N X N N N N N N
+N N N N N N N N N N N N
+N N N N N X N N N N N N
+N N N N N N N N N N N N
+N N N N N N N N N N N N
+N N N N N N N N N N N N
+N N N N N N N N N N N N
+N N N N N N N N N N N N
+N N N N N N N N N N N N

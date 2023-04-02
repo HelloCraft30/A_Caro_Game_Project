@@ -27,18 +27,18 @@ void moveCur(int& x, int& y) {
 
 int main() {
 	int x = 0; int y = 0;
+	DATA gameDat;
 	getFormedWindow();
+	get_STUFFS(gameDat);
 	BOARD a;
 	init_BOARD(a);
-	a.points[0][0].c = 'X';
-	a.points[11][11].c = 'O';
+	a.points[0][0].c = 'x';
+	a.points[11][11].c = 'o';
 	
 	while (true) {
 		moveCur(x, y);
 		system("cls");
-		system("color F0");
-		display_SCREEN_GAME();
-		while(1){}
+		display_SCREEN_GAME(gameDat,0,"NGUYENLAN");
 	}
 	while(1){}
 	return 0;

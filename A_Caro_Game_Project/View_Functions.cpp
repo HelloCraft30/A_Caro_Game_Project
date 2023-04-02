@@ -228,7 +228,7 @@ void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			GoTo(posX + X_OFFSET + j * POINT_DIST_X, posY + Y_OFFSET + i * POINT_DIST_Y);
-			draw_POINT(matrix.points[i][j]);
+			draw_POINT(matrix.points[j][i]);
 		}
 	}
 }
@@ -294,10 +294,10 @@ void show_GAME_HELP(SHORT posX, SHORT posY) {
 }
 void show_SCREEN_MAINMENU(SHORT color,SHORT cmd) {
 	SetColor(COLOR_BG, color);
-	_draw_NAME_CARO(10, 2);
+	_draw_NAME_CARO(12, 3);
 	SetColor(COLOR_BG, COLOR_TXT);
 	//draw options
-	SHORT op_x = 60, op_y = 3;
+	SHORT op_x = 26, op_y = 15;
 	int a[6]{};
 	int b[6]{ 15,15,15,15,15,15 };
 	a[cmd] = COLOR_GREEN;
@@ -323,7 +323,11 @@ void show_SCREEN_MAINMENU(SHORT color,SHORT cmd) {
 	SetColor(a[5], b[5]);
 	GoTo(op_x + 6, op_y + 8); cout << "QUIT";
 	returnColor();
-	_draw_MY_BOY(10, 14);
-	_draw_TALK_BOX(36, 13);
-	_draw_XO_SHAPE(57, 21);
+	_draw_MY_BOY(60, 3);
+	_draw_XO_SHAPE(62, 17);
+}
+
+void show_GET_NAME() {
+	draw_BOX(25, 11, 40, 3, '=');
+	GoTo(25 + 2, 11 + 1); cout << "NAME THE BOARD: ";
 }

@@ -21,4 +21,4 @@ struct _POINT {
 	char c;
 };
 
-typedef struct { _POINT** points; } BOARD;
+typedef struct { _POINT** points; std::string name; int X_wins; int O_wins; char Turn; } BOARD;

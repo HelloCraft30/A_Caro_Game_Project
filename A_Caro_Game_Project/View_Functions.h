@@ -86,4 +86,7 @@ void show_LASTMOVE(SHORT posX, SHORT posY, _POINT point);
 void show_GAME_HELP(SHORT posX, SHORT posY);
 //MAINMENU SHOWING
 void show_SCREEN_MAINMENU(SHORT color, SHORT cmd);
+//GAME SHOWING
+//some orther function
+void show_GET_NAME();
 

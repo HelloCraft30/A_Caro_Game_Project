@@ -31,7 +31,7 @@ void _draw_O_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 5, _y + 3); cout << (char)219;
 }
 void _draw_NAME_CARO(SHORT _x, SHORT _y) {
-	GoTo(_x + 43, _y + 26); cout << "- A project made by 11th Group. -";
+	GoTo(_x +10, _y + 9); cout << "- A project made by 11th Group. -";
 	GoTo(_x + 1, _y + 2); cout << (char)219; GoTo(_x + 1, _y + 3); cout << (char)219; GoTo(_x + 1, _y + 4); cout << (char)219;
 	GoTo(_x + 1, _y + 5); cout << (char)219; GoTo(_x + 1, _y + 6); cout << (char)219; GoTo(_x + 1, _y + 7); cout << (char)219;
 	GoTo(_x + 2, _y + 2); cout << (char)219; GoTo(_x + 2, _y + 3); cout << (char)219; GoTo(_x + 2, _y + 4); cout << (char)219;
@@ -385,6 +385,7 @@ void _draw_TALK_BOX(SHORT _x, SHORT _y) {
 
 }
 void _draw_XO_SHAPE(SHORT _x, SHORT _y) {
+	SetColor(COLOR_BG, COLOR_RED);
 	GoTo(_x + 2, _y + 1); cout << (char)219;
 	GoTo(_x + 2, _y + 5); cout << (char)219;
 	GoTo(_x + 3, _y + 1); cout << (char)219;
@@ -417,6 +418,7 @@ void _draw_XO_SHAPE(SHORT _x, SHORT _y) {
 	GoTo(_x + 10, _y + 5); cout << (char)219;
 	GoTo(_x + 11, _y + 1); cout << (char)219;
 	GoTo(_x + 11, _y + 5); cout << (char)219;
+	SetColor(COLOR_BG, COLOR_BLUE);
 	GoTo(_x + 14, _y + 2); cout << (char)219;
 	GoTo(_x + 14, _y + 3); cout << (char)219;
 	GoTo(_x + 14, _y + 4); cout << (char)219;
@@ -449,5 +451,87 @@ void _draw_XO_SHAPE(SHORT _x, SHORT _y) {
 	GoTo(_x + 23, _y + 2); cout << (char)219;
 	GoTo(_x + 23, _y + 3); cout << (char)219;
 	GoTo(_x + 23, _y + 4); cout << (char)219;
+	returnColor();
 
+}
+
+void _draw_BALL(SHORT _x, SHORT _y) {
+	GoTo(_x + 7, _y + 4); cout << (char)219;
+	GoTo(_x + 7, _y + 5); cout << (char)219;
+	GoTo(_x + 8, _y + 3); cout << (char)220;
+	GoTo(_x + 8, _y + 4); cout << (char)219;
+	GoTo(_x + 8, _y + 5); cout << (char)219;
+	GoTo(_x + 8, _y + 6); cout << (char)223;
+	GoTo(_x + 9, _y + 3); cout << (char)219;
+	GoTo(_x + 9, _y + 4); cout << (char)219;
+	GoTo(_x + 9, _y + 5); cout << (char)219;
+	GoTo(_x + 9, _y + 6); cout << (char)219;
+	GoTo(_x + 10, _y + 3); cout << (char)219;
+	GoTo(_x + 10, _y + 4); cout << (char)219;
+	GoTo(_x + 10, _y + 5); cout << (char)219;
+	GoTo(_x + 10, _y + 6); cout << (char)219;
+	GoTo(_x + 11, _y + 3); cout << (char)219;
+	GoTo(_x + 11, _y + 4); cout << (char)219;
+	GoTo(_x + 11, _y + 5); cout << (char)219;
+	GoTo(_x + 11, _y + 6); cout << (char)219;
+	GoTo(_x + 12, _y + 3); cout << (char)219;
+	GoTo(_x + 12, _y + 4); cout << (char)219;
+	GoTo(_x + 12, _y + 5); cout << (char)219;
+	GoTo(_x + 12, _y + 6); cout << (char)219;
+	GoTo(_x + 13, _y + 3); cout << (char)220;
+	GoTo(_x + 13, _y + 4); cout << (char)219;
+	GoTo(_x + 13, _y + 5); cout << (char)219;
+	GoTo(_x + 13, _y + 6); cout << (char)223;
+	GoTo(_x + 14, _y + 4); cout << (char)219;
+	GoTo(_x + 14, _y + 5); cout << (char)219;
+}
+void _draw_LINE(SHORT _x, SHORT _y) {
+	GoTo(_x + 5, _y + 8); cout << (char)223;
+	GoTo(_x + 6, _y + 8); cout << (char)223;
+	GoTo(_x + 7, _y + 8); cout << (char)223;
+	GoTo(_x + 8, _y + 8); cout << (char)223;
+	GoTo(_x + 9, _y + 8); cout << (char)223;
+	GoTo(_x + 10, _y + 8); cout << (char)223;
+	GoTo(_x + 11, _y + 8); cout << (char)223;
+	GoTo(_x + 12, _y + 8); cout << (char)223;
+	GoTo(_x + 13, _y + 8); cout << (char)223;
+	GoTo(_x + 14, _y + 8); cout << (char)223;
+	GoTo(_x + 15, _y + 8); cout << (char)223;
+	GoTo(_x + 16, _y + 8); cout << (char)223;
+}
+
+void _TRANSITION() {
+	system("cls");
+	SHORT _x = 34, _y = 2;
+	_draw_BALL(_x, _y);
+	_draw_LINE(_x, _y + 4);
+	Sleep(300);
+	for (int i = 0; i < 8; i++) {
+		Sleep(20);
+		system("cls");
+		_draw_LINE(_x, _y + 4);
+		_draw_BALL(_x, _y + i);
+	}
+	system("color 0F");
+	for (int i = 8; i < 16; i++) {
+		Sleep(20);
+		system("cls");
+		_draw_LINE(_x, _y + 4);
+		_draw_BALL(_x, _y + i);
+	}
+	for (int i = 15; i >= 7; i--) {
+		Sleep(20);
+		system("cls");
+		_draw_LINE(_x, _y + 4);
+		_draw_BALL(_x, _y + i);
+	}
+	system("color F0");
+	for (int i = 7; i >= 0; i--) {
+		Sleep(20);
+		system("cls");
+		_draw_LINE(_x, _y + 4);
+		_draw_BALL(_x, _y + i);
+	}
+	Sleep(300);
+	system("cls");
 }
