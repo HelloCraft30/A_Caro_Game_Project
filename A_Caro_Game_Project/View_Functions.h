@@ -89,4 +89,5 @@ void show_SCREEN_MAINMENU(SHORT color, SHORT cmd);
 //GAME SHOWING
 //some orther function
 void show_GET_NAME();
-
+void show_SCREEN_GAME(BOARD& board);
+void show_BOARD_CURSOR(SHORT _x, SHORT _y, char type);

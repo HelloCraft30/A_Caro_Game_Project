@@ -13,7 +13,9 @@
 
 void getFormedWindow();
 
-void Display();
+void resetMatch(BOARD& a);
+
+void Display(DATA& data);
 
 SHORT display_SCREEN_MAINMENU();
 
@@ -22,3 +24,5 @@ SHORT display_SCREEN_GAME(DATA &gameData,bool newGame = 1, std::string nameGame 
 void new_GAME_BOARD(DATA& gameDat, BOARD& a);
 
 std::string get_STRING(SHORT x, SHORT y, int len);
+
+SHORT is_WIN(BOARD a, SHORT x, SHORT y);

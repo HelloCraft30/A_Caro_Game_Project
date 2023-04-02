@@ -1,9 +1,18 @@
 #include "Control_Functions.h"
 #include "View_Functions.h"
+#include "_draw_SHAPE.h"
 
 using namespace std;
 
 SHORT _do_CMD_MAINMENU(SHORT cmd);
+
+void resetMatch(BOARD& a) {
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			a.points[i][j].c = 'N';
+		}
+	}
+}
 
 void get_BOARD_NAME(DATA& gameDat,BOARD& result, string Name) {
 	for (int i = 0; i < gameDat.SAVEdatas.size(); i++) {
@@ -27,8 +36,18 @@ void getFormedWindow() {
 	changeFont(FONT_SIZE);
 }
 
-void Display() {
+void Display(DATA& data) {
 	int display_id = 0;
+	while (true) {
+		switch (display_id) {
+		case 0:
+			display_id = display_SCREEN_MAINMENU();
+			break;
+		case 1:
+			display_id = display_SCREEN_GAME(data);
+			break;
+		}
+	}
 }
 
 SHORT display_SCREEN_MAINMENU() {
@@ -63,22 +82,85 @@ SHORT display_SCREEN_MAINMENU() {
 
 SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 	//maaybe transition
-	system("cls");
 	BOARD a;
+	SHORT cur_X = 0, cur_Y = 0;
+
 	if (newGame) {
+		system("cls");
 		new_GAME_BOARD(gameDat, a);
 	}
 	else {
 		get_BOARD_NAME(gameDat, a, gameName);
 	}
 	system("cls");
-	draw_BOARD(4, 2, 12, a.name);
-	draw_POINTS(4, 2, a);
-	show_TURN(61, 4, a.Turn);
-	show_SCORE_X(61, 9, 1);
-	show_SCORE_O(80, 9, 2);
+
+	//CONTROL THE GAME
+	show_SCREEN_GAME(a);
+	show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
 	show_LASTMOVE(61, 15, { 1,2 ,'X' });
-	show_GAME_HELP(57, 17);
+	while (true) {
+		while (_kbhit()) {
+			char key = _getch();
+			if (isalpha(key)) key = toupper(key);
+			switch (key) {
+			case 'W':
+				if (cur_Y == 0) cur_Y = BOARD_SIZE - 1;
+				else cur_Y--;
+				break;
+			case 'S':
+				if (cur_Y == BOARD_SIZE - 1) cur_Y = 0;
+				else cur_Y++;
+				break;
+			case 'A':
+				if (cur_X == 0) cur_X = BOARD_SIZE - 1;
+				else cur_X--;
+				break;
+			case 'D':
+				if (cur_X == BOARD_SIZE - 1) cur_X = 0;
+				else cur_X++;
+				break;
+			case ENTER:
+				if (a.points[cur_Y][cur_X].c == 'X' || a.points[cur_Y][cur_X].c == 'O') break;
+				a.points[cur_Y][cur_X].c = a.Turn;
+				if (a.Turn == 'X') a.Turn = 'O';
+				else a.Turn = 'X';
+				break;
+			default:
+				break;
+			}
+			draw_POINTS(4, 2, a);
+			show_TURN(61, 4, a.Turn);
+			show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+			switch (is_WIN(a, cur_X, cur_Y)) {
+				//temp notice
+			case 1:
+				Sleep(1000);
+				system("cls");
+				_draw_animation_win(9, 7, _draw_XWIN_shape);
+				resetMatch(a);
+				a.X_wins++;
+				system("cls");
+				show_SCREEN_GAME(a);
+				cur_X = 0;
+				cur_Y = 0;
+				break;
+			case 2:
+				Sleep(1000);
+				system("cls");
+				_draw_animation_win(9, 7, _draw_OWIN_shape);
+				resetMatch(a);
+				a.O_wins++;
+				system("cls");
+				show_SCREEN_GAME(a);
+				cur_X = 0;
+				cur_Y = 0;
+				break;
+			}
+
+		}
+		
+	}
+
 	return 0;
 }
 
@@ -102,13 +184,13 @@ void new_GAME_BOARD(DATA &gameDat,BOARD& a) {
 			next = false; continue;
 		}
 		success = true;
-	} while (!success);
+	} while (!success || a.name.size()==0);
 }
 
 SHORT _do_CMD_MAINMENU(SHORT cmd) {
 	switch (cmd) {
 	case 1:
-		break;
+		return 1;
 	}
 	return 0;
 }
@@ -159,4 +241,107 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 		}
 	}
 	return str;
+}
+
+SHORT is_WIN(BOARD a, SHORT x, SHORT y) {
+	vector<pair<int, int>> list;
+	SHORT winTYPE = (a.points[y][x].c == 'X' ? 1 : 2);
+	if (a.points[y][x].c != 'X' && a.points[y][x].c != 'O') return 0;
+	int count = 0; //5: win, i dunt check if it was blocked
+	//Horizon
+	for (int i = x; i >= 0; i--) {
+		if (a.points[y][i].c == a.points[y][x].c) {
+			count++;
+			list.push_back({ i, y });
+		}
+		else break;
+	}
+	for (int i = x + 1; i < BOARD_SIZE; i++) {
+		if (a.points[y][i].c == a.points[y][x].c) {
+			count++;
+			list.push_back({ i, y });
+		}
+		else break;
+	}
+	if (count >= 5) {
+		for (auto _x : list) {
+			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+		}
+		return winTYPE;
+	}
+	else {
+		count = 0;
+		list.resize(0);
+	}
+	//Vertical
+	for (int i = x; i >= 0; i--) {
+		if (a.points[i][x].c == a.points[y][x].c) {
+			count++;
+			list.push_back({ x,i });
+		}
+		else break;
+	}
+	for (int i = x + 1; i < BOARD_SIZE; i++) {
+		if (a.points[i][x].c == a.points[y][x].c) {
+			count++;
+			list.push_back({ x,i });
+		}
+		else break;
+	}
+	if (count >= 5) {
+		for (auto _x : list) {
+			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+		}
+		return winTYPE;
+	}
+	else {
+		count = 0; list.resize(0);
+	}
+	//diagonal
+	for (int _x = x, _y = y; _x >= 0 && _y >= 0; _x--, _y--) {
+		if (a.points[_y][_x].c == a.points[y][x].c) {
+			count++;
+			list.push_back({ _x,_y });
+		}
+		else break;
+	}
+	for (int _x = x+1, _y = y+1; _x <BOARD_SIZE && _y < BOARD_SIZE; _x++, _y++) {
+		if (a.points[_y][_x].c == a.points[y][x].c) {
+			count++;
+			list.push_back({ _x,_y });
+		}
+		else break;
+	}
+	if (count >= 5) {
+		for (auto _x : list) {
+			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+		}
+		return winTYPE;
+	}
+	else {
+		count = 0;
+		list.resize(0);
+	}
+	//oposite diagonal
+	for (int _x = x, _y = y; _x < BOARD_SIZE && _y >= 0; _x++, _y--) {
+		if (a.points[_y][_x].c == a.points[y][x].c) {
+			list.push_back({ _x,_y });
+			count++;
+		}
+		else break;
+	}
+	for (int _x = x - 1, _y = y + 1; _x >=0 && _y < BOARD_SIZE; _x--, _y++) {
+		if (a.points[_y][_x].c == a.points[y][x].c) {
+			list.push_back({ _x,_y });
+			count++;
+		}
+		else break;
+	}
+	if (count >= 5) {
+		for (auto _x : list) {
+			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+		}
+		return winTYPE;
+	}
+	return 0;
 }

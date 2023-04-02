@@ -222,19 +222,23 @@ void draw_POINT(const _POINT& point) {
 		cout << " O ";
 		returnColor();
 		break;
+	default:
+		cout << "   ";
+		break;
 	}
 }
 void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			GoTo(posX + X_OFFSET + j * POINT_DIST_X, posY + Y_OFFSET + i * POINT_DIST_Y);
-			draw_POINT(matrix.points[j][i]);
+			draw_POINT(matrix.points[i][j]);
 		}
 	}
 }
 void show_TURN(SHORT posX, SHORT posY, char turn) {
-	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, COLOR_GREEN, true);
-	SetColor(COLOR_GREEN, COLOR_BG);
+	
+	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, (turn=='X'?COLOR_RED:COLOR_BLUE), true);
+	SetColor((turn == 'X' ? COLOR_RED : COLOR_BLUE), COLOR_BG);
 	GoTo(posX, posY); cout << "CURRENT";
 	GoTo(posX + 1, posY + 1); cout << "TURN:";
 
@@ -318,10 +322,10 @@ void show_SCREEN_MAINMENU(SHORT color,SHORT cmd) {
 	draw_RETANGLE_SPACE(op_x, op_y + 6, 17, 1, a[4], true);
 	SetColor(a[4], b[4]);
 	GoTo(op_x + 6, op_y + 6); cout << "ABOUT";
-	//option 5: QUIT
+	//option 6: QUIT
 	draw_RETANGLE_SPACE(op_x, op_y + 8, 17, 1, a[5], true);
 	SetColor(a[5], b[5]);
-	GoTo(op_x + 6, op_y + 8); cout << "QUIT";
+	GoTo(op_x + 5, op_y + 8); cout << "SETTINGS";
 	returnColor();
 	_draw_MY_BOY(60, 3);
 	_draw_XO_SHAPE(62, 17);
@@ -330,4 +334,32 @@ void show_SCREEN_MAINMENU(SHORT color,SHORT cmd) {
 void show_GET_NAME() {
 	draw_BOX(25, 11, 40, 3, '=');
 	GoTo(25 + 2, 11 + 1); cout << "NAME THE BOARD: ";
+}
+
+void show_SCREEN_GAME(BOARD& board) {
+	system("cls");
+	draw_BOARD(4, 2, 12, board.name);
+	draw_POINTS(4, 2, board);
+	show_TURN(61, 4, board.Turn);
+	show_SCORE_X(61, 9, board.X_wins);
+	show_SCORE_O(80, 9, board.O_wins);
+	show_GAME_HELP(57, 17);
+}
+
+void show_BOARD_CURSOR(SHORT _x, SHORT _y, char type) {
+	GoTo(4 + X_OFFSET + _x * POINT_DIST_X, 2 + Y_OFFSET + _y * POINT_DIST_Y);
+	switch (type) {
+	case 'X':
+		SetColor(COLOR_RED, COLOR_BG);
+		cout << " X ";
+		break;
+	case 'O':
+		SetColor(COLOR_BLUE, COLOR_BG);
+		cout << " O ";
+		break;
+	default:
+		cout << ' ' << (char)260;
+		break;
+	}
+	returnColor();
 }
