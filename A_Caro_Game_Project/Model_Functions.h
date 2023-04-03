@@ -21,4 +21,8 @@ void get_STUFFS(DATA& data);
 
 void get_BOARD_DATA(BOARD& des, std::string fileName);
 
-void save_BOARD_DATA(const BOARD& src);
+void save_BOARD_DATA(DATA& data,const BOARD& src);
+
+void save_BOARD_FILE(BOARD& board);
+
+void save_DATA_FILE(DATA& data);

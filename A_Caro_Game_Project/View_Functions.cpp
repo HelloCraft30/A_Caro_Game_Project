@@ -363,3 +363,30 @@ void show_BOARD_CURSOR(SHORT _x, SHORT _y, char type) {
 	}
 	returnColor();
 }
+
+void show_SCREEN_SUBMENU(SHORT _x, SHORT _y, SHORT cmd) {
+	int x = 28, y = 9;
+	draw_BOX(x+30, y+9, 31, 8, '=');
+	GoTo(x+40, y+10); cout << "---MENU---";
+	GoTo(x+30, y+11); cout << LINE2_V_LEFT; 
+	for (int i = 0; i < 29; i++) cout << LINE2_H;
+	GoTo(x+60, y+11); cout << LINE2_V_RIGHT;
+
+	//draw options
+	SHORT x_op = 67, y_op = 21;
+	bool a[3]{ 0 };
+	a[cmd] = true;
+	if (a[0]) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(x_op, y_op);
+	cout << "SAVE";
+	returnColor();
+	if (a[1]) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(x_op, y_op + 1);
+	cout << "SETTINGS";
+	returnColor();
+	if (a[2]) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(x_op, y_op + 2);
+	cout << "QUIT";
+	returnColor();
+	
+}

@@ -72,6 +72,55 @@ void get_BOARD_DATA(BOARD& des, string fileName) {
 	fileOPEN.close();
 }
 
-void save_BOARD_DATA(const BOARD& src) {
-	
+void save_BOARD_DATA(DATA& data, const BOARD& src) {
+	//linear search
+	bool existed = 0;
+	for(auto x: data.SAVEnames) 
+		if (x == src.name) {
+			existed = 1;
+			break;
+		}
+	if (!existed) {
+		data.SAVEnames.push_back(src.name);
+		data.SAVEdatas.push_back(src);
+	}
+	else {
+		for (auto x : data.SAVEdatas) {
+			if (x.name == src.name) {
+				x = src;
+				break;
+			}
+		}
+	}
+}
+
+void save_BOARD_FILE(BOARD& board) {
+	string link = SAVESFOLDER;
+	link += '\\';
+	link += board.name;
+	link += ".txt";
+	fstream fileOpen(link, ios::out | ios::trunc);
+	fileOpen << "score: X/O" << endl;
+	fileOpen << board.X_wins << " " << board.O_wins << endl;
+	fileOpen << "turn:" << endl;
+	fileOpen << board.Turn << endl;
+	fileOpen << "data:" << endl;
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			fileOpen << board.points[i][j].c << " ";
+		}
+		fileOpen << endl;
+	}
+	fileOpen.close();
+}
+
+void save_DATA_FILE(DATA& data) {
+	fstream fileLIST(LISTSAVES, ios::out | ios::trunc);
+	for (auto x : data.SAVEnames) {
+		fileLIST << x << endl;
+	}
+	fileLIST.close();
+	for (auto x : data.SAVEdatas) {
+		save_BOARD_FILE(x);
+	}
 }

@@ -3,15 +3,15 @@ score: X/O
 turn:
 X
 data:
-N N N N N N N N N N N N
-N N N N N N N N N N N N
-N N N N N N O N N N N N
-N N N N N X N N N N N N
-N N N N N N N N N N N N
-N N N N N X N N N N N N
-N N N N N N N N N N N N
-N N N N N N N N N N N N
-N N N N N N N N N N N N
-N N N N N N N N N N N N
-N N N N N N N N N N N N
-N N N N N N N N N N N N
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N O N N N N N 
+N N N N N X N N N N N N 
+N N N N N N N N N N N N 
+N N N N N X N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 

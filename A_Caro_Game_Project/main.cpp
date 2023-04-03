@@ -34,6 +34,13 @@ int main() {
 	get_STUFFS(gameDat);
 	
 	Display(gameDat);
-	while(1){}
+
+
+	/*while(1){
+		
+		moveCur(x, y);
+		system("cls");
+		display_SCREEN_SUBMENU(gameDat.SAVEdatas[0],gameDat);
+	}*/
 	return 0;
 }

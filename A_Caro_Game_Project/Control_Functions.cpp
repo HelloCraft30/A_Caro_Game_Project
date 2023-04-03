@@ -6,6 +6,8 @@ using namespace std;
 
 SHORT _do_CMD_MAINMENU(SHORT cmd);
 
+SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd);
+
 void resetMatch(BOARD& a) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
@@ -46,6 +48,8 @@ void Display(DATA& data) {
 		case 1:
 			display_id = display_SCREEN_GAME(data);
 			break;
+		case 3:
+			break;
 		}
 	}
 }
@@ -72,6 +76,10 @@ SHORT display_SCREEN_MAINMENU() {
 				else cmd++; break;
 			case ENTER:
 				return _do_CMD_MAINMENU(cmd);
+				break;
+			case ESC:
+				system("cls");
+				exit(0);
 				break;
 			}
 			show_SCREEN_MAINMENU(0, cmd);
@@ -125,6 +133,17 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				if (a.Turn == 'X') a.Turn = 'O';
 				else a.Turn = 'X';
 				break;
+			case ESC:
+				if (display_SCREEN_SUBMENU(a, gameDat)) {
+					system("cls");
+					return 0;
+				}
+				else {
+					show_SCREEN_GAME(a);
+					show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+					show_LASTMOVE(61, 15, { 1,2 ,'X' });
+				}
+				break;
 			default:
 				break;
 			}
@@ -162,6 +181,33 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 	}
 
 	return 0;
+}
+
+SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data) {
+	int cmd = 0;
+	show_SCREEN_SUBMENU(0, 0, cmd);
+	char key = ' ';
+	while (true) {
+		while (_kbhit()) {
+			key = _getch();
+			if (isalpha(key)) key = toupper(key);
+			switch (key) {
+			case 'W':
+				if (cmd == 0) cmd = 2;
+				else cmd--; break;
+			case 'S':
+				if (cmd == 2) cmd = 0;
+				else cmd++; break;
+			case ESC:
+				return 0;
+			case ENTER:
+				return _do_CMD_SUBMENU(board, data, cmd);
+				break;
+			}
+			show_SCREEN_SUBMENU(0, 0, cmd);
+		}
+		
+	}
 }
 
 void new_GAME_BOARD(DATA &gameDat,BOARD& a) {
@@ -344,4 +390,22 @@ SHORT is_WIN(BOARD a, SHORT x, SHORT y) {
 		return winTYPE;
 	}
 	return 0;
+}
+
+SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd) {
+	switch (cmd) {
+	case 0:
+		//save game
+		save_BOARD_DATA(data, board);
+		save_BOARD_FILE(board);
+		save_DATA_FILE(data);
+		GoTo(67, 21); cout << "SAVED!";
+		Sleep(1000);
+		return 0;
+	case 1:
+		//settings
+	case 2:
+		//quit
+		return 1;
+	}
 }
