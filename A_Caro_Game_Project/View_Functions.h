@@ -76,6 +76,8 @@ void draw_BOARD(SHORT posX, SHORT posY, int sizeBoard, std::string nameBoard);
 void draw_POINT(const _POINT& point);
 //Draw points
 void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix);
+//Draw text 1 line
+void draw_TXT(SHORT posX, SHORT posY, const std::string& str);
 //Draw turn display
 void show_TURN(SHORT posX, SHORT posY, char turn);
 //Draw scores
@@ -93,3 +95,4 @@ void show_SCREEN_GAME(BOARD& board);
 void show_BOARD_CURSOR(SHORT _x, SHORT _y, char type);
 
 void show_SCREEN_SUBMENU(SHORT _x, SHORT _y, SHORT cmd);
+void show_SCREEN_CGAME(const BOARD& a);

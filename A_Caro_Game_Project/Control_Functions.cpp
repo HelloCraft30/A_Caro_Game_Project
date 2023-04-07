@@ -40,7 +40,9 @@ void getFormedWindow() {
 
 void Display(DATA& data) {
 	int display_id = 0;
+	string insSTR;
 	while (true) {
+		system("cls");
 		switch (display_id) {
 		case 0:
 			display_id = display_SCREEN_MAINMENU();
@@ -48,8 +50,11 @@ void Display(DATA& data) {
 		case 1:
 			display_id = display_SCREEN_GAME(data);
 			break;
-		case 3:
+		case 2:
+			display_id = display_SCREEN_CGAME(data, insSTR);
 			break;
+		case 9:
+			display_id = display_SCREEN_GAME(data, false, insSTR);
 		}
 	}
 }
@@ -95,7 +100,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 
 	if (newGame) {
 		system("cls");
-		new_GAME_BOARD(gameDat, a);
+		if(new_GAME_BOARD(gameDat, a)==0) return 0;
 	}
 	else {
 		get_BOARD_NAME(gameDat, a, gameName);
@@ -162,6 +167,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				show_SCREEN_GAME(a);
 				cur_X = 0;
 				cur_Y = 0;
+				show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
 				break;
 			case 2:
 				Sleep(1000);
@@ -210,16 +216,18 @@ SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data) {
 	}
 }
 
-void new_GAME_BOARD(DATA &gameDat,BOARD& a) {
+SHORT new_GAME_BOARD(DATA &gameDat,BOARD& a) {
 	init_BOARD(a);
 	show_GET_NAME();
+	draw_TXT(3, 28, "Press ESC to go back!");
 	bool success = false;
 	bool next = false;
 	do {
-		a.name = get_STRING(43, 12, 17);
+		a.name = get_STRING(43, 14, 17);
+		if (a.name == "#######################") return 0;
 		//linear search :|
 		for (int i = 0; i < gameDat.SAVEnames.size(); i++) {
-			if (gameDat.SAVEnames[i] == a.name) {
+			if (gameDat.SAVEnames[i] == a.name || a.name == "#######################") {
 				SetColor(COLOR_BG, COLOR_RED);
 				GoTo(43, 12); cout << "EXISTED NAME!"; Sleep(500);
 				returnColor();
@@ -237,6 +245,8 @@ SHORT _do_CMD_MAINMENU(SHORT cmd) {
 	switch (cmd) {
 	case 1:
 		return 1;
+	case 2:
+		return 2;
 	}
 	return 0;
 }
@@ -266,6 +276,8 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 				}
 				return str;
 				break;
+			case ESC:
+				return "#######################";
 			default:
 				str.push_back(key);
 				break;
@@ -274,7 +286,7 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 		}
 		if (str.size() <= len) {
 			GoTo(x, y);
-			cout << str;
+			cout << str << (char)219;
 			for (int i = len - str.size(); i >= 0; i--) cout << " ";
 		}
 		else {
@@ -408,4 +420,37 @@ SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd) {
 		//quit
 		return 1;
 	}
+}
+
+SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
+	system("cls");
+	if (gameData.SAVEnames.size() == 0) {
+		GoTo(1, 1); cout << "ERROR: NO DATA"; _getch(); return 0;
+	}
+	int n = gameData.SAVEdatas.size();
+	int curBoard = 0;
+	show_SCREEN_CGAME(gameData.SAVEdatas[curBoard]);
+	while (true) {
+		while (_kbhit()) {
+			char key = _getch();
+			if (isalpha(key)) key = toupper(key);
+			switch (key) {
+			case 'A':
+				if (curBoard == 0) curBoard = n - 1;
+				else curBoard--; break;
+			case 'D':
+				if (curBoard == n - 1) curBoard = 0;
+				else curBoard++; break;
+			case ESC:
+				return 0;
+			case ENTER:
+				output = gameData.SAVEdatas[curBoard].name;
+				return 9;
+			default:
+				break;
+			}
+			show_SCREEN_CGAME(gameData.SAVEdatas[curBoard]);
+		}
+	}
+	return 0;
 }

@@ -964,6 +964,152 @@ void _draw_OWIN_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 71, _y + 9); cout << (char)219;
 	returnColor();
 }
+
+void _draw_NEWBOARDGAME(SHORT _x, SHORT _y) {
+	GoTo(_x + 1, _y + 1); cout << (char)219;
+	GoTo(_x + 1, _y + 2); cout << (char)219;
+	GoTo(_x + 1, _y + 3); cout << (char)223;
+	GoTo(_x + 2, _y + 1); cout << (char)220;
+	GoTo(_x + 3, _y + 2); cout << (char)223;
+	GoTo(_x + 4, _y + 2); cout << (char)220;
+	GoTo(_x + 5, _y + 1); cout << (char)219;
+	GoTo(_x + 5, _y + 2); cout << (char)219;
+	GoTo(_x + 5, _y + 3); cout << (char)223;
+	GoTo(_x + 7, _y + 1); cout << (char)219;
+	GoTo(_x + 7, _y + 2); cout << (char)219;
+	GoTo(_x + 7, _y + 3); cout << (char)223;
+	GoTo(_x + 8, _y + 1); cout << (char)223;
+	GoTo(_x + 8, _y + 2); cout << (char)223;
+	GoTo(_x + 8, _y + 3); cout << (char)223;
+	GoTo(_x + 9, _y + 1); cout << (char)223;
+	GoTo(_x + 9, _y + 2); cout << (char)223;
+	GoTo(_x + 9, _y + 3); cout << (char)223;
+	GoTo(_x + 10, _y + 1); cout << (char)223;
+	GoTo(_x + 10, _y + 2); cout << (char)223;
+	GoTo(_x + 10, _y + 3); cout << (char)223;
+	GoTo(_x + 12, _y + 1); cout << (char)219;
+	GoTo(_x + 12, _y + 2); cout << (char)223;
+
+	GoTo(_x + 13, _y + 2); cout << (char)219;
+	GoTo(_x + 14, _y + 2); cout << (char)220;
+	GoTo(_x + 14, _y + 3); cout << (char)223;
+
+	GoTo(_x + 14, _y + 5); cout << (char)219;
+	GoTo(_x + 14, _y + 6); cout << (char)223;
+	GoTo(_x + 15, _y + 1); cout << (char)219;
+	GoTo(_x + 15, _y + 2); cout << (char)219;
+	GoTo(_x + 15, _y + 4); cout << (char)220;
+	GoTo(_x + 15, _y + 6); cout << (char)220;
+	GoTo(_x + 16, _y + 2); cout << (char)220;
+	GoTo(_x + 16, _y + 3); cout << (char)223;
+	GoTo(_x + 16, _y + 4); cout << (char)220;
+	GoTo(_x + 16, _y + 6); cout << (char)220;
+	GoTo(_x + 17, _y + 2); cout << (char)219;
+	GoTo(_x + 17, _y + 4); cout << (char)220;
+	GoTo(_x + 17, _y + 5); cout << (char)220;
+	GoTo(_x + 17, _y + 6); cout << (char)220;
+	GoTo(_x + 18, _y + 1); cout << (char)219;
+	GoTo(_x + 18, _y + 2); cout << (char)223;
+	GoTo(_x + 18, _y + 4); cout << (char)220;
+	GoTo(_x + 18, _y + 5); cout << (char)220;
+	GoTo(_x + 18, _y + 6); cout << (char)223;
+	GoTo(_x + 20, _y + 5); cout << (char)219;
+	GoTo(_x + 20, _y + 6); cout << (char)219;
+	GoTo(_x + 21, _y + 4); cout << (char)220;
+	GoTo(_x + 21, _y + 5); cout << (char)220;
+	GoTo(_x + 22, _y + 1); cout << (char)219;
+	GoTo(_x + 22, _y + 2); cout << (char)219;
+	GoTo(_x + 22, _y + 3); cout << (char)223;
+	GoTo(_x + 22, _y + 4); cout << (char)220;
+	GoTo(_x + 22, _y + 5); cout << (char)220;
+	GoTo(_x + 23, _y + 1); cout << (char)223;
+	GoTo(_x + 23, _y + 2); cout << (char)223;
+	GoTo(_x + 23, _y + 3); cout << (char)223;
+	GoTo(_x + 23, _y + 4); cout << (char)220;
+	GoTo(_x + 23, _y + 5); cout << (char)220;
+	GoTo(_x + 24, _y + 1); cout << (char)223;
+	GoTo(_x + 24, _y + 2); cout << (char)223;
+	GoTo(_x + 24, _y + 3); cout << (char)223;
+	GoTo(_x + 24, _y + 5); cout << (char)219;
+	GoTo(_x + 24, _y + 6); cout << (char)219;
+	GoTo(_x + 25, _y + 1); cout << (char)223;
+	GoTo(_x + 25, _y + 2); cout << (char)223;
+	GoTo(_x + 25, _y + 3); cout << (char)223;
+	GoTo(_x + 26, _y + 1); cout << (char)220;
+	GoTo(_x + 26, _y + 2); cout << (char)220;
+	GoTo(_x + 26, _y + 5); cout << (char)219;
+	GoTo(_x + 26, _y + 6); cout << (char)219;
+	GoTo(_x + 27, _y + 4); cout << (char)220;
+	GoTo(_x + 28, _y + 1); cout << (char)220;
+	GoTo(_x + 28, _y + 2); cout << (char)219;
+
+	GoTo(_x + 28, _y + 5); cout << (char)219;
+	GoTo(_x + 28, _y + 6); cout << (char)219;
+	GoTo(_x + 29, _y + 1); cout << (char)223;
+	GoTo(_x + 29, _y + 3); cout << (char)223;
+	GoTo(_x + 29, _y + 4); cout << (char)220;
+	GoTo(_x + 30, _y + 1); cout << (char)223;
+	GoTo(_x + 30, _y + 3); cout << (char)223;
+	GoTo(_x + 30, _y + 5); cout << (char)219;
+	GoTo(_x + 30, _y + 6); cout << (char)219;
+	GoTo(_x + 31, _y + 1); cout << (char)223;
+
+	GoTo(_x + 31, _y + 3); cout << (char)223;
+	GoTo(_x + 32, _y + 1); cout << (char)220;
+	GoTo(_x + 32, _y + 2); cout << (char)219;
+	GoTo(_x + 32, _y + 4); cout << (char)220;
+	GoTo(_x + 32, _y + 5); cout << (char)219;
+	GoTo(_x + 32, _y + 6); cout << (char)219;
+	GoTo(_x + 33, _y + 4); cout << (char)220;
+	GoTo(_x + 33, _y + 5); cout << (char)220;
+	GoTo(_x + 33, _y + 6); cout << (char)220;
+	GoTo(_x + 34, _y + 1); cout << (char)220;
+	GoTo(_x + 34, _y + 2); cout << (char)219;
+	GoTo(_x + 34, _y + 3); cout << (char)223;
+	GoTo(_x + 34, _y + 4); cout << (char)220;
+	GoTo(_x + 34, _y + 5); cout << (char)220;
+	GoTo(_x + 34, _y + 6); cout << (char)220;
+	GoTo(_x + 35, _y + 1); cout << (char)223;
+	GoTo(_x + 35, _y + 2); cout << (char)223;
+	GoTo(_x + 35, _y + 4); cout << (char)220;
+	GoTo(_x + 35, _y + 5); cout << (char)220;
+	GoTo(_x + 35, _y + 6); cout << (char)220;
+	GoTo(_x + 36, _y + 1); cout << (char)223;
+	GoTo(_x + 36, _y + 2); cout << (char)223;
+	GoTo(_x + 37, _y + 1); cout << (char)223;
+	GoTo(_x + 37, _y + 2); cout << (char)223;
+	GoTo(_x + 38, _y + 1); cout << (char)220;
+	GoTo(_x + 38, _y + 2); cout << (char)219;
+	GoTo(_x + 38, _y + 3); cout << (char)223;
+	GoTo(_x + 39, _y + 4); cout << (char)220;
+	GoTo(_x + 39, _y + 5); cout << (char)219;
+	GoTo(_x + 39, _y + 6); cout << (char)220;
+	GoTo(_x + 40, _y + 1); cout << (char)219;
+	GoTo(_x + 40, _y + 2); cout << (char)219;
+	GoTo(_x + 40, _y + 3); cout << (char)223;
+	GoTo(_x + 41, _y + 1); cout << (char)223;
+	GoTo(_x + 41, _y + 2); cout << (char)223;
+	GoTo(_x + 42, _y + 1); cout << (char)223;
+	GoTo(_x + 42, _y + 2); cout << (char)223;
+	GoTo(_x + 43, _y + 1); cout << (char)223;
+	GoTo(_x + 43, _y + 2); cout << (char)223;
+	GoTo(_x + 44, _y + 1); cout << (char)220;
+	GoTo(_x + 44, _y + 2); cout << (char)220;
+	GoTo(_x + 44, _y + 3); cout << (char)223;
+	GoTo(_x + 46, _y + 1); cout << (char)219;
+	GoTo(_x + 46, _y + 2); cout << (char)219;
+	GoTo(_x + 46, _y + 3); cout << (char)223;
+	GoTo(_x + 47, _y + 1); cout << (char)223;
+	GoTo(_x + 47, _y + 3); cout << (char)223;
+	GoTo(_x + 48, _y + 1); cout << (char)223;
+	GoTo(_x + 48, _y + 3); cout << (char)223;
+	GoTo(_x + 49, _y + 1); cout << (char)223;
+	GoTo(_x + 49, _y + 3); cout << (char)223;
+	GoTo(_x + 50, _y + 1); cout << (char)220;
+	GoTo(_x + 50, _y + 2); cout << (char)219;
+
+}
+
 void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT)) {
 	while (!_kbhit()) {
 		draw_RETANGLE_SPACE(_x-1, _y, 73, 11);
@@ -986,6 +1132,57 @@ void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT)) {
 	_getch();
 	
 }
+
+void _draw_LEFTARROW_SHAPE(SHORT _x, SHORT _y) {
+	GoTo(_x + 3, _y + 4); cout << (char)220;
+	GoTo(_x + 4, _y + 4); cout << (char)219;
+	GoTo(_x + 4, _y + 5); cout << (char)223;
+	GoTo(_x + 5, _y + 3); cout << (char)220;
+	GoTo(_x + 5, _y + 4); cout << (char)219;
+	GoTo(_x + 5, _y + 5); cout << (char)219;
+	GoTo(_x + 6, _y + 3); cout << (char)219;
+	GoTo(_x + 6, _y + 4); cout << (char)219;
+	GoTo(_x + 6, _y + 5); cout << (char)219;
+	GoTo(_x + 6, _y + 6); cout << (char)223;
+	GoTo(_x + 7, _y + 2); cout << (char)220;
+	GoTo(_x + 7, _y + 3); cout << (char)219;
+	GoTo(_x + 7, _y + 4); cout << (char)219;
+	GoTo(_x + 7, _y + 5); cout << (char)219;
+	GoTo(_x + 7, _y + 6); cout << (char)219;
+	GoTo(_x + 8, _y + 2); cout << (char)219;
+	GoTo(_x + 8, _y + 3); cout << (char)219;
+	GoTo(_x + 8, _y + 4); cout << (char)219;
+	GoTo(_x + 8, _y + 5); cout << (char)219;
+	GoTo(_x + 8, _y + 6); cout << (char)219;
+	GoTo(_x + 8, _y + 7); cout << (char)223;
+
+}
+
+void _draw_RIGHTARROW_SHAPE(SHORT _x, SHORT _y) {
+	GoTo(_x + 1, _y + 1); cout << (char)219;
+	GoTo(_x + 1, _y + 2); cout << (char)219;
+	GoTo(_x + 1, _y + 3); cout << (char)219;
+	GoTo(_x + 1, _y + 4); cout << (char)219;
+	GoTo(_x + 1, _y + 5); cout << (char)219;
+	GoTo(_x + 1, _y + 6); cout << (char)223;
+	GoTo(_x + 2, _y + 1); cout << (char)220;
+	GoTo(_x + 2, _y + 2); cout << (char)219;
+	GoTo(_x + 2, _y + 3); cout << (char)219;
+	GoTo(_x + 2, _y + 4); cout << (char)219;
+	GoTo(_x + 2, _y + 5); cout << (char)219;
+	GoTo(_x + 3, _y + 2); cout << (char)219;
+	GoTo(_x + 3, _y + 3); cout << (char)219;
+	GoTo(_x + 3, _y + 4); cout << (char)219;
+	GoTo(_x + 3, _y + 5); cout << (char)223;
+	GoTo(_x + 4, _y + 2); cout << (char)220;
+	GoTo(_x + 4, _y + 3); cout << (char)219;
+	GoTo(_x + 4, _y + 4); cout << (char)219;
+	GoTo(_x + 5, _y + 3); cout << (char)219;
+	GoTo(_x + 5, _y + 4); cout << (char)223;
+	GoTo(_x + 6, _y + 3); cout << (char)220;
+
+}
+
 void _TRANSITION() {
 	system("cls");
 	SHORT _x = 34, _y = 2;

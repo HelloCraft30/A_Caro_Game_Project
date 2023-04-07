@@ -107,7 +107,7 @@ void save_BOARD_FILE(BOARD& board) {
 	fileOpen << "data:" << endl;
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
-			fileOpen << board.points[i][j].c << " ";
+			fileOpen << board.points[j][i].c << " ";
 		}
 		fileOpen << endl;
 	}

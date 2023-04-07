@@ -23,7 +23,9 @@ SHORT display_SCREEN_GAME(DATA &gameData,bool newGame = 1, std::string nameGame 
 
 SHORT display_SCREEN_SUBMENU(BOARD& board, DATA & data);
 
-void new_GAME_BOARD(DATA& gameDat, BOARD& a);
+SHORT display_SCREEN_CGAME(DATA& gameData, std::string& output);
+
+SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a);
 
 std::string get_STRING(SHORT x, SHORT y, int len);
 

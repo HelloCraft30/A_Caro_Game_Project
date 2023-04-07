@@ -35,12 +35,12 @@ int main() {
 	
 	Display(gameDat);
 
+	//show_SCREEN_MAINMENU(0, 0);
 
-	/*while(1){
+	while(1){
 		
 		moveCur(x, y);
 		system("cls");
-		display_SCREEN_SUBMENU(gameDat.SAVEdatas[0],gameDat);
-	}*/
+	}
 	return 0;
 }

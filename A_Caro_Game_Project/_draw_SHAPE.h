@@ -19,4 +19,10 @@ void _draw_OWIN_shape(SHORT _x, SHORT _y);
 
 void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT));
 
+void _draw_LEFTARROW_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_RIGHTARROW_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_NEWBOARDGAME(SHORT _x, SHORT _y);
+
 void _TRANSITION();

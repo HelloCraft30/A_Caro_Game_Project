@@ -235,6 +235,12 @@ void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix) {
 		}
 	}
 }
+
+void draw_TXT(SHORT posX, SHORT posY, const string& str) {
+	GoTo(posX, posY);
+	cout << "-- " << str;
+}
+
 void show_TURN(SHORT posX, SHORT posY, char turn) {
 	
 	draw_RETANGLE_SPACE(posX - 3, posY, 12, 2, (turn=='X'?COLOR_RED:COLOR_BLUE), true);
@@ -300,6 +306,7 @@ void show_SCREEN_MAINMENU(SHORT color,SHORT cmd) {
 	SetColor(COLOR_BG, color);
 	_draw_NAME_CARO(12, 3);
 	SetColor(COLOR_BG, COLOR_TXT);
+	draw_TXT(3, 28, "Press ESC to QUIT the game");
 	//draw options
 	SHORT op_x = 26, op_y = 15;
 	int a[6]{};
@@ -332,8 +339,9 @@ void show_SCREEN_MAINMENU(SHORT color,SHORT cmd) {
 }
 
 void show_GET_NAME() {
-	draw_BOX(25, 11, 40, 3, '=');
-	GoTo(25 + 2, 11 + 1); cout << "NAME THE BOARD: ";
+	draw_BOX(25, 13, 40, 3, '=');
+	GoTo(25 + 2, 13 + 1); cout << "NAME THE BOARD: ";
+	_draw_NEWBOARDGAME(19, 5);
 }
 
 void show_SCREEN_GAME(BOARD& board) {
@@ -366,7 +374,7 @@ void show_BOARD_CURSOR(SHORT _x, SHORT _y, char type) {
 
 void show_SCREEN_SUBMENU(SHORT _x, SHORT _y, SHORT cmd) {
 	int x = 28, y = 9;
-	draw_BOX(x+30, y+9, 31, 8, '=');
+	draw_BOX(x+30, y+9, 31, 10, '=');
 	GoTo(x+40, y+10); cout << "---MENU---";
 	GoTo(x+30, y+11); cout << LINE2_V_LEFT; 
 	for (int i = 0; i < 29; i++) cout << LINE2_H;
@@ -377,16 +385,57 @@ void show_SCREEN_SUBMENU(SHORT _x, SHORT _y, SHORT cmd) {
 	bool a[3]{ 0 };
 	a[cmd] = true;
 	if (a[0]) SetColor(COLOR_BLACK, COLOR_BG);
+	else SetColor(COLOR_WHITE, COLOR_BLACK);
 	GoTo(x_op, y_op);
-	cout << "SAVE";
+	cout << "    SAVE    ";
 	returnColor();
 	if (a[1]) SetColor(COLOR_BLACK, COLOR_BG);
-	GoTo(x_op, y_op + 1);
-	cout << "SETTINGS";
+	else SetColor(COLOR_WHITE, COLOR_BLACK);
+	GoTo(x_op, y_op + 2);
+	cout << "  SETTINGS  ";
 	returnColor();
 	if (a[2]) SetColor(COLOR_BLACK, COLOR_BG);
-	GoTo(x_op, y_op + 2);
-	cout << "QUIT";
+	else SetColor(COLOR_WHITE, COLOR_BLACK);
+	GoTo(x_op, y_op + 4);
+	cout << "    QUIT    ";
 	returnColor();
-	
+}
+
+void show_SCREEN_CGAME(const BOARD& a) {
+	draw_BOX(23, 6, 42, 17, '=');
+	GoTo(2, 1);
+	SetColor(COLOR_BLACK, COLOR_BG);
+	cout << " CONTINUE GAME: " << BLUR1 << BLUR2 << BLUR3;
+	returnColor();
+	GoTo(32, 3);
+	SetColor(COLOR_GRAY, COLOR_BG);
+	cout <<BLUR3<<BLUR2<<BLUR1<< " DEMO SCREEN: " << BLUR1 << BLUR2 << BLUR3;
+	returnColor();
+	string _name = a.name;
+	if (_name.size() > 25) {
+		_name.resize(25);  _name += "...";
+	}
+	GoTo(26, 7); cout << "Name: " << _name;
+	int x_mat = 26, y_mat = 9;
+	draw_BORDER_1line(25, 8, 27, 14);
+	GoTo(x_mat+1, y_mat);
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		GoTo(x_mat + 1, y_mat + i);
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			cout << (a.points[i][j].c != 'N' ? a.points[i][j].c : ' ') << " ";
+		}
+	}
+	draw_TXT(3, 28, "Press ESC to go back!");
+	draw_RETANGLE_SPACE(53, 16, 6, 5);
+	if (a.Turn == 'X') {
+		_draw_X_shape(54,16);
+	}
+	else _draw_O_shape(55, 16);
+	GoTo(54, 11);
+	cout << "[X]: " << a.X_wins;
+	GoTo(54, 11 + 2);
+	cout << "[O]: " << a.O_wins;
+
+	_draw_LEFTARROW_SHAPE(5, 10);
+	_draw_RIGHTARROW_SHAPE(76, 11);
 }
