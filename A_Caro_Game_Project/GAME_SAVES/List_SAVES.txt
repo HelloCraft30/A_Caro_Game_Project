@@ -1,1 +1,5 @@
 LINE1
+d
+a
+ddd
+ccc

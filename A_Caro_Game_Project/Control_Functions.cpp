@@ -224,16 +224,24 @@ SHORT new_GAME_BOARD(DATA &gameDat,BOARD& a) {
 	bool next = false;
 	do {
 		a.name = get_STRING(43, 14, 17);
-		if (a.name == "#######################") return 0;
+		if (a.name == "########################################") return 0;
 		//linear search :|
 		for (int i = 0; i < gameDat.SAVEnames.size(); i++) {
-			if (gameDat.SAVEnames[i] == a.name || a.name == "#######################") {
+			if (gameDat.SAVEnames[i] == a.name ) {
 				SetColor(COLOR_BG, COLOR_RED);
-				GoTo(43, 12); cout << "EXISTED NAME!"; Sleep(500);
+				GoTo(43, 14); cout << "EXISTED NAME!"; Sleep(500);
 				returnColor();
 				next = true; break;
 			}
 		}
+
+		if (a.name.size() > 25) {
+			SetColor(COLOR_BG, COLOR_RED);
+			GoTo(43, 14); cout << "TOO LONG (< 25)! "; Sleep(500);
+			returnColor();
+			continue;
+		}
+
 		if (next) {
 			next = false; continue;
 		}
@@ -277,7 +285,7 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 				return str;
 				break;
 			case ESC:
-				return "#######################";
+				return "########################################";
 			default:
 				str.push_back(key);
 				break;
@@ -411,7 +419,9 @@ SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd) {
 		save_BOARD_DATA(data, board);
 		save_BOARD_FILE(board);
 		save_DATA_FILE(data);
-		GoTo(67, 21); cout << "SAVED!";
+		SetColor(COLOR_GREEN, COLOR_BG);
+		GoTo(67, 21); cout << "   SAVED!   ";
+		returnColor();
 		Sleep(1000);
 		return 0;
 	case 1:
