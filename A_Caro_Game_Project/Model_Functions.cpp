@@ -49,6 +49,7 @@ void init_BOARD(BOARD& matrix) {
 	matrix.O_wins = 0;
 	matrix.X_wins = 0;
 	matrix.Turn = 'X';
+	matrix.listOfMoves.resize(0);
 }
 
 void get_BOARD_DATA(BOARD& des, string fileName) {
@@ -69,6 +70,16 @@ void get_BOARD_DATA(BOARD& des, string fileName) {
 			fileOPEN >> des.points[j][i].c;
 		}
 	}
+	fileOPEN.ignore();
+	fileOPEN.ignore();
+	getline(fileOPEN, temp);
+	while (!fileOPEN.eof()) {
+		int _x = 0, _y = 0;
+		char _ch = 'N';
+		fileOPEN >> _x >> _y >> _ch;
+		if (_ch == 'N') break;
+		des.listOfMoves.push_back({ _x,_y,_ch });
+	}
 	fileOPEN.close();
 }
 
@@ -85,7 +96,7 @@ void save_BOARD_DATA(DATA& data, const BOARD& src) {
 		data.SAVEdatas.push_back(src);
 	}
 	else {
-		for (auto x : data.SAVEdatas) {
+		for (auto &x : data.SAVEdatas) {
 			if (x.name == src.name) {
 				x = src;
 				break;
@@ -110,6 +121,10 @@ void save_BOARD_FILE(BOARD& board) {
 			fileOpen << board.points[j][i].c << " ";
 		}
 		fileOpen << endl;
+	}
+	fileOpen << "history:" << endl;
+	for (const _POINT& x : board.listOfMoves) {
+		fileOpen << x.x << " " << x.y << " " << x.c << endl;
 	}
 	fileOpen.close();
 }

@@ -84,7 +84,7 @@ void show_TURN(SHORT posX, SHORT posY, char turn);
 void show_SCORE_X(SHORT posX, SHORT posY, int score);
 void show_SCORE_O(SHORT posX, SHORT posY, int score);
 //Draw last move
-void show_LASTMOVE(SHORT posX, SHORT posY, _POINT point);
+void show_LASTMOVE(SHORT posX, SHORT posY, const BOARD& board);
 void show_GAME_HELP(SHORT posX, SHORT posY);
 //MAINMENU SHOWING
 void show_SCREEN_MAINMENU(SHORT color, SHORT cmd);

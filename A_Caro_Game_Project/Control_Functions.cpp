@@ -14,6 +14,7 @@ void resetMatch(BOARD& a) {
 			a.points[i][j].c = 'N';
 		}
 	}
+	a.listOfMoves.resize(0);
 }
 
 void get_BOARD_NAME(DATA& gameDat,BOARD& result, string Name) {
@@ -110,7 +111,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 	//CONTROL THE GAME
 	show_SCREEN_GAME(a);
 	show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-	show_LASTMOVE(61, 15, { 1,2 ,'X' });
+	show_LASTMOVE(61, 15, a);
 	while (true) {
 		while (_kbhit()) {
 			char key = _getch();
@@ -134,9 +135,19 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				break;
 			case ENTER:
 				if (a.points[cur_Y][cur_X].c == 'X' || a.points[cur_Y][cur_X].c == 'O') break;
-				a.points[cur_Y][cur_X].c = a.Turn;
+				{
+					a.points[cur_Y][cur_X].c = a.Turn;
+					a.listOfMoves.push_back({ cur_X,cur_Y,a.Turn });
+				}
 				if (a.Turn == 'X') a.Turn = 'O';
 				else a.Turn = 'X';
+				show_LASTMOVE(61, 15, a);
+				break;
+			case 'U':
+				game_UNDO(a, cur_X, cur_Y);
+				draw_POINTS(4, 2, a);
+				show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+				show_LASTMOVE(61, 15, a);
 				break;
 			case ESC:
 				if (display_SCREEN_SUBMENU(a, gameDat)) {
@@ -146,7 +157,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				else {
 					show_SCREEN_GAME(a);
 					show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-					show_LASTMOVE(61, 15, { 1,2 ,'X' });
+					show_LASTMOVE(61, 15, a);
 				}
 				break;
 			default:
@@ -434,6 +445,7 @@ SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd) {
 
 SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 	system("cls");
+	get_STUFFS(gameData);
 	if (gameData.SAVEnames.size() == 0) {
 		GoTo(1, 1); cout << "ERROR: NO DATA"; _getch(); return 0;
 	}
@@ -463,4 +475,15 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 		}
 	}
 	return 0;
+}
+
+void game_UNDO(BOARD& a, SHORT &curX, SHORT &curY) {
+	if (a.listOfMoves.size() == 0 ) return;
+	curX = a.listOfMoves[a.listOfMoves.size() - 1].x;
+	curY = a.listOfMoves[a.listOfMoves.size() - 1].y;
+	a.points[a.listOfMoves[a.listOfMoves.size() - 1].y][a.listOfMoves[a.listOfMoves.size() - 1].x].c = 'N';
+	a.listOfMoves.pop_back();
+	if (a.Turn == 'X') a.Turn = 'O';
+	else a.Turn = 'X';
+
 }

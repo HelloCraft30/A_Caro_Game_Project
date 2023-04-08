@@ -32,7 +32,7 @@ int main() {
 
 	getFormedWindow();
 	get_STUFFS(gameDat);
-	
+
 	Display(gameDat);
 
 	//show_SCREEN_MAINMENU(0, 0);

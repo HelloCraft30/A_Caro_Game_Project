@@ -1,5 +1,1 @@
-LINE1
-d
-a
-ddd
-ccc
+new one

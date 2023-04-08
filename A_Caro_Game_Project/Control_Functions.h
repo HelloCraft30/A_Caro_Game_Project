@@ -30,3 +30,5 @@ SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a);
 std::string get_STRING(SHORT x, SHORT y, int len);
 
 SHORT is_WIN(BOARD a, SHORT x, SHORT y);
+
+void game_UNDO(BOARD& a, SHORT &curX, SHORT &curY);
