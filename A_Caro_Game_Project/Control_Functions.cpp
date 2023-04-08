@@ -33,7 +33,7 @@ void getFormedWindow() {
 	str[7] = '0' + COLOR_TXT;
 	system(str.c_str());
 	resizeConsole(SCREEN_WIDTH, SCREEN_HEIGHT);
-	DisableSelection();
+	//DisableSelection();
 	removeScrollBar();
 	Nocursortype();
 	changeFont(FONT_SIZE);
@@ -65,17 +65,13 @@ SHORT display_SCREEN_MAINMENU() {
 	show_SCREEN_MAINMENU(0, cmd);
 	while (true) {
 		while (_kbhit()) {
-			switch (_getch()) {
-			case 'W':
-			case 'w':
-			case key_Up:
+			switch (toupper(_getch())) {
+			case 72: case 'W':
 				if (cmd == 1) {
 					cmd = 5;
 				}
 				else cmd--; break;
-			case 'S':
-			case 's':
-			case key_Down:
+			case 80: case 'S':
 				if (cmd == 5) {
 					cmd = 1;
 				}
@@ -114,22 +110,21 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 	show_LASTMOVE(61, 15, a);
 	while (true) {
 		while (_kbhit()) {
-			char key = _getch();
-			if (isalpha(key)) key = toupper(key);
+			char key = toupper(_getch());
 			switch (key) {
-			case 'W':
+			case 72: case 'W':
 				if (cur_Y == 0) cur_Y = BOARD_SIZE - 1;
 				else cur_Y--;
 				break;
-			case 'S':
+			case 80: case 'S':
 				if (cur_Y == BOARD_SIZE - 1) cur_Y = 0;
 				else cur_Y++;
 				break;
-			case 'A':
+			case 75: case 'A':
 				if (cur_X == 0) cur_X = BOARD_SIZE - 1;
 				else cur_X--;
 				break;
-			case 'D':
+			case 77: case 'D':
 				if (cur_X == BOARD_SIZE - 1) cur_X = 0;
 				else cur_X++;
 				break;
@@ -143,7 +138,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				else a.Turn = 'X';
 				show_LASTMOVE(61, 15, a);
 				break;
-			case 'U':
+			case BACKSPACE:
 				game_UNDO(a, cur_X, cur_Y);
 				draw_POINTS(4, 2, a);
 				show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
@@ -206,13 +201,11 @@ SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data) {
 	char key = ' ';
 	while (true) {
 		while (_kbhit()) {
-			key = _getch();
-			if (isalpha(key)) key = toupper(key);
-			switch (key) {
-			case 'W':
+			switch (toupper(_getch())) {
+			case 72: case 'W':
 				if (cmd == 0) cmd = 2;
 				else cmd--; break;
-			case 'S':
+			case 80: case 'S':
 				if (cmd == 2) cmd = 0;
 				else cmd++; break;
 			case ESC:
@@ -276,7 +269,7 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 		while (_kbhit()) {
 			char key = _getch();
 			switch (key) {
-			case 127:
+			case BACKSPACE:
 				if (str.size() != 0) str.pop_back();
 				break;
 			case 13:

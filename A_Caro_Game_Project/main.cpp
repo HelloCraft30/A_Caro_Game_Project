@@ -26,13 +26,13 @@ void moveCur(int& x, int& y) {
 }
 
 int main() {
+
 	int x = 0; int y = 0;
 	DATA gameDat;
 	
-
 	getFormedWindow();
 	get_STUFFS(gameDat);
-
+	
 	Display(gameDat);
 
 	//show_SCREEN_MAINMENU(0, 0);
