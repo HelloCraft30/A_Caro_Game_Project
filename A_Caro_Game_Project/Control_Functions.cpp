@@ -6,7 +6,9 @@ using namespace std;
 
 SHORT _do_CMD_MAINMENU(SHORT cmd);
 
-SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd);
+SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd);
+
+SHORT _do_CMD_SETTINGS(DATA& data);
 
 void resetMatch(BOARD& a) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
@@ -17,7 +19,7 @@ void resetMatch(BOARD& a) {
 	a.listOfMoves.resize(0);
 }
 
-void get_BOARD_NAME(DATA& gameDat,BOARD& result, string Name) {
+void get_BOARD_NAME(DATA& gameDat, BOARD& result, string Name) {
 	for (int i = 0; i < gameDat.SAVEdatas.size(); i++) {
 		if (Name == gameDat.SAVEdatas[i].name) {
 			result = gameDat.SAVEdatas[i];
@@ -37,16 +39,18 @@ void getFormedWindow() {
 	removeScrollBar();
 	Nocursortype();
 	changeFont(FONT_SIZE);
+	waveOutSetVolume(NULL, 1615 * 11);
 }
 
 void Display(DATA& data) {
 	int display_id = 0;
 	string insSTR;
+	PlaySound(L"music_BG.wav", NULL, SND_ASYNC | SND_LOOP);
 	while (true) {
 		system("cls");
 		switch (display_id) {
 		case 0:
-			display_id = display_SCREEN_MAINMENU();
+			display_id = display_SCREEN_MAINMENU(data);
 			break;
 		case 1:
 			display_id = display_SCREEN_GAME(data);
@@ -54,50 +58,85 @@ void Display(DATA& data) {
 		case 2:
 			display_id = display_SCREEN_CGAME(data, insSTR);
 			break;
+		case 3:
+			display_id = display_SCREEN_HTP(data);
+			break;
+		case 4:
+			display_id = display_SCREEN_ABOUT();
+			break;
+		case 5:
+			display_id = display_SCREEN_SETTINGS(data);
+			break;
 		case 9:
 			display_id = display_SCREEN_GAME(data, false, insSTR);
 		}
 	}
 }
 
-SHORT display_SCREEN_MAINMENU() {
+SHORT display_SCREEN_MAINMENU(DATA& gameData) {
 	SHORT cmd = 1;
-	show_SCREEN_MAINMENU(0, cmd);
+	bool ct_check = gameData.SAVEnames.size();
+	show_SCREEN_MAINMENU(0, cmd, ct_check,0,0);
 	while (true) {
 		while (_kbhit()) {
 			switch (toupper(_getch())) {
 			case 72: case 'W':
-				if (cmd == 1) {
+				selectSound1();
+				if (cmd == 3 && !ct_check) {
+					cmd = 1;
+				}
+				else if (cmd == 1) {
 					cmd = 5;
 				}
 				else cmd--; break;
 			case 80: case 'S':
-				if (cmd == 5) {
+				selectSound1();
+				if (cmd == 1 && !ct_check) {
+					cmd = 3;
+				}
+				else if (cmd == 5) {
 					cmd = 1;
 				}
 				else cmd++; break;
 			case ENTER:
+				selectSound2();
 				return _do_CMD_MAINMENU(cmd);
 				break;
 			case ESC:
+				selectSound3();
 				system("cls");
 				exit(0);
 				break;
 			}
-			show_SCREEN_MAINMENU(0, cmd);
+			show_SCREEN_MAINMENU(0, cmd, ct_check,0,0);
 		}
 	}
 	return 0;
 }
 
-SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
+bool is_DRAW(const BOARD&a) {
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			if (a.points[i][j].c == 'N') return false;
+		}
+	}
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			show_BOARD_CURSOR(i, j, a.points[i][j].c);
+		}
+	}
+
+	return true;
+}
+
+SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string &gameName) {
 	//maaybe transition
 	BOARD a;
 	SHORT cur_X = 0, cur_Y = 0;
 
 	if (newGame) {
 		system("cls");
-		if(new_GAME_BOARD(gameDat, a)==0) return 0;
+		if (new_GAME_BOARD(gameDat, a) == 0) return 0;
 	}
 	else {
 		get_BOARD_NAME(gameDat, a, gameName);
@@ -129,6 +168,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				else cur_X++;
 				break;
 			case ENTER:
+				selectSound3();
 				if (a.points[cur_Y][cur_X].c == 'X' || a.points[cur_Y][cur_X].c == 'O') break;
 				{
 					a.points[cur_Y][cur_X].c = a.Turn;
@@ -139,12 +179,14 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				show_LASTMOVE(61, 15, a);
 				break;
 			case BACKSPACE:
+				selectSound3();
 				game_UNDO(a, cur_X, cur_Y);
 				draw_POINTS(4, 2, a);
 				show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
 				show_LASTMOVE(61, 15, a);
 				break;
 			case ESC:
+				selectSound3();
 				if (display_SCREEN_SUBMENU(a, gameDat)) {
 					system("cls");
 					return 0;
@@ -166,7 +208,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 			case 1:
 				Sleep(1000);
 				system("cls");
-				_draw_animation_win(9, 7, _draw_XWIN_shape);
+				_draw_animation_win(-3, 10, _draw_XWIN_shape);
 				resetMatch(a);
 				a.X_wins++;
 				system("cls");
@@ -178,7 +220,7 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 			case 2:
 				Sleep(1000);
 				system("cls");
-				_draw_animation_win(9, 7, _draw_OWIN_shape);
+				_draw_animation_win(-3, 10, _draw_OWIN_shape);
 				resetMatch(a);
 				a.O_wins++;
 				system("cls");
@@ -187,9 +229,21 @@ SHORT display_SCREEN_GAME(DATA &gameDat,bool newGame,string gameName) {
 				cur_Y = 0;
 				break;
 			}
-
+			if (is_DRAW(a)) {
+				Sleep(1000);
+				system("cls");
+				SetColor(COLOR_BG, COLOR_GREEN);
+				_draw_animation_win(28, 8, _draw_DRAW_shape);
+				returnColor();
+				resetMatch(a);
+				system("cls");
+				show_SCREEN_GAME(a);
+				cur_X = 0;
+				cur_Y = 0;
+				break;
+			}
 		}
-		
+
 	}
 
 	return 0;
@@ -203,27 +257,103 @@ SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data) {
 		while (_kbhit()) {
 			switch (toupper(_getch())) {
 			case 72: case 'W':
+				selectSound1();
 				if (cmd == 0) cmd = 2;
 				else cmd--; break;
 			case 80: case 'S':
+				selectSound1();
 				if (cmd == 2) cmd = 0;
 				else cmd++; break;
 			case ESC:
+				selectSound1();
 				return 0;
 			case ENTER:
+				selectSound2();
 				return _do_CMD_SUBMENU(board, data, cmd);
 				break;
 			}
 			show_SCREEN_SUBMENU(0, 0, cmd);
 		}
-		
+
 	}
 }
 
-SHORT new_GAME_BOARD(DATA &gameDat,BOARD& a) {
+SHORT display_SCREEN_SETTINGS(DATA& gameData) {
+	bool cmd = 0;
+	bool a[2]{ 0 };
+	a[cmd] = true;
+	show_SPEAKER(gameData.mute);
+	draw_BORDER_2line(5, 1, 83, 28);
+	draw_TXT(31, 26, "Press ESC to go back --");
+	show_SCREEN_SETTINGS(cmd, gameData);
+	a[0] = a[1] = 0;
+	while (true) {
+		while (_kbhit()) {
+			switch (toupper(_getch())) {
+			case 72: case 'W':
+			case 80: case 'S':
+				cmd = !cmd;
+				break;
+			case 75: case 'A':
+				if (cmd) {
+					if (!gameData.mute&& gameData.Vol == 1) gameData.mute = !gameData.mute;
+					if (gameData.Vol == 0) {
+						show_SPEAKER(gameData.mute); break;
+					}
+					else gameData.Vol--; break;
+				}break;
+			case 77: case 'D':
+				if (cmd) {
+					if (gameData.mute) {
+						gameData.mute = !gameData.mute;
+						show_SPEAKER(gameData.mute);
+					}
+					if (gameData.Vol == 22) break;
+					else gameData.Vol++; break;
+				}break;
+			case ESC: selectSound2(); return 0;
+			case ENTER:
+				selectSound2();
+				if (!cmd) {
+					gameData.mute = !gameData.mute;
+					show_SPEAKER(gameData.mute);
+					if (gameData.mute) gameData.Vol = 0;
+					else gameData.Vol = 1;
+				}
+				break;
+			}
+			a[cmd] = true;
+			show_SETTINGS_MUTE(gameData.mute, a[0]);
+			show_SETTINGS_VOLUME(gameData.Vol, a[1]);
+			a[0] = a[1] = 0;
+			_do_CMD_SETTINGS(gameData);
+		}
+	}
+	system("pause");
+	return 0;
+}
+
+SHORT display_SCREEN_ABOUT() {
+	show_SCREEN_ABOUT(0, 0);
+	while (true) {
+		switch (_getch()) {
+		case ESC:
+			return 0;
+		}
+	}
+}
+
+
+SHORT _do_CMD_SETTINGS(DATA& data) {
+	waveOutSetVolume(NULL, 1615*data.Vol);
+	return 0;
+}
+
+SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a) {
 	init_BOARD(a);
 	show_GET_NAME();
-	draw_TXT(3, 28, "Press ESC to go back!");
+	draw_BOX(28, 24,32, 3, '-');
+	draw_TXT(31, 25, "Press ESC to go back --");
 	bool success = false;
 	bool next = false;
 	do {
@@ -231,7 +361,7 @@ SHORT new_GAME_BOARD(DATA &gameDat,BOARD& a) {
 		if (a.name == "########################################") return 0;
 		//linear search :|
 		for (int i = 0; i < gameDat.SAVEnames.size(); i++) {
-			if (gameDat.SAVEnames[i] == a.name ) {
+			if (gameDat.SAVEnames[i] == a.name) {
 				SetColor(COLOR_BG, COLOR_RED);
 				GoTo(43, 14); cout << "EXISTED NAME!"; Sleep(500);
 				returnColor();
@@ -250,7 +380,17 @@ SHORT new_GAME_BOARD(DATA &gameDat,BOARD& a) {
 			next = false; continue;
 		}
 		success = true;
-	} while (!success || a.name.size()==0);
+	} while (!success || a.name.size() == 0);
+}
+
+SHORT display_SCREEN_HTP(DATA& gameData) {
+	show_SCREEN_HTP(0, 0);
+	while (true) {
+		switch (_getch()) {
+		case ESC:
+			return 0;
+		}
+	}
 }
 
 SHORT _do_CMD_MAINMENU(SHORT cmd) {
@@ -259,6 +399,12 @@ SHORT _do_CMD_MAINMENU(SHORT cmd) {
 		return 1;
 	case 2:
 		return 2;
+	case 3:
+		return 3;
+	case 4:
+		return 4;
+	case 5:
+		return 5;
 	}
 	return 0;
 }
@@ -273,6 +419,7 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 				if (str.size() != 0) str.pop_back();
 				break;
 			case 13:
+				selectSound2();
 				if (str.size() <= len) {
 					GoTo(x, y);
 					cout << str;
@@ -289,6 +436,7 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 				return str;
 				break;
 			case ESC:
+				selectSound2();
 				return "########################################";
 			default:
 				str.push_back(key);
@@ -313,7 +461,7 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 	return str;
 }
 
-SHORT is_WIN(BOARD a, SHORT x, SHORT y) {
+SHORT is_WIN(const BOARD&a, SHORT x, SHORT y) {
 	vector<pair<int, int>> list;
 	SHORT winTYPE = (a.points[y][x].c == 'X' ? 1 : 2);
 	if (a.points[y][x].c != 'X' && a.points[y][x].c != 'O') return 0;
@@ -375,7 +523,7 @@ SHORT is_WIN(BOARD a, SHORT x, SHORT y) {
 		}
 		else break;
 	}
-	for (int _x = x+1, _y = y+1; _x <BOARD_SIZE && _y < BOARD_SIZE; _x++, _y++) {
+	for (int _x = x + 1, _y = y + 1; _x < BOARD_SIZE && _y < BOARD_SIZE; _x++, _y++) {
 		if (a.points[_y][_x].c == a.points[y][x].c) {
 			count++;
 			list.push_back({ _x,_y });
@@ -400,7 +548,7 @@ SHORT is_WIN(BOARD a, SHORT x, SHORT y) {
 		}
 		else break;
 	}
-	for (int _x = x - 1, _y = y + 1; _x >=0 && _y < BOARD_SIZE; _x--, _y++) {
+	for (int _x = x - 1, _y = y + 1; _x >= 0 && _y < BOARD_SIZE; _x--, _y++) {
 		if (a.points[_y][_x].c == a.points[y][x].c) {
 			list.push_back({ _x,_y });
 			count++;
@@ -416,7 +564,7 @@ SHORT is_WIN(BOARD a, SHORT x, SHORT y) {
 	return 0;
 }
 
-SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd) {
+SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd) {
 	switch (cmd) {
 	case 0:
 		//save game
@@ -426,10 +574,13 @@ SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd) {
 		SetColor(COLOR_GREEN, COLOR_BG);
 		GoTo(67, 21); cout << "   SAVED!   ";
 		returnColor();
-		Sleep(1000);
+		Sleep(300);
 		return 0;
 	case 1:
 		//settings
+		system("cls");
+		display_SCREEN_SETTINGS(data);
+		return 0;
 	case 2:
 		//quit
 		return 1;
@@ -439,39 +590,65 @@ SHORT _do_CMD_SUBMENU(BOARD& board,DATA& data,SHORT cmd) {
 SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 	system("cls");
 	get_STUFFS(gameData);
-	if (gameData.SAVEnames.size() == 0) {
-		GoTo(1, 1); cout << "ERROR: NO DATA"; _getch(); return 0;
-	}
 	int n = gameData.SAVEdatas.size();
 	int curBoard = 0;
-	show_SCREEN_CGAME(gameData.SAVEdatas[curBoard]);
+	show_SCREEN_CGAME(gameData.SAVEdatas[curBoard],gameData,curBoard,0,0);
 	while (true) {
 		while (_kbhit()) {
-			char key = _getch();
-			if (isalpha(key)) key = toupper(key);
-			switch (key) {
-			case 'A':
+			switch (toupper(_getch())) {
+			case 'A': case 75:
+			case 'W': case 72:
+				selectSound1();
 				if (curBoard == 0) curBoard = n - 1;
 				else curBoard--; break;
-			case 'D':
+			case 'D': case 77:
+			case 'S': case 80:
+				selectSound1();
 				if (curBoard == n - 1) curBoard = 0;
 				else curBoard++; break;
 			case ESC:
+				selectSound2();
 				return 0;
 			case ENTER:
+				selectSound2();
 				output = gameData.SAVEdatas[curBoard].name;
 				return 9;
+			case BACKSPACE:
+				if (display_ASK_DEL()) {
+					delete_BOARD(gameData, gameData.SAVEdatas[curBoard].name);
+					if (!(gameData.SAVEdatas.size())) return 0;
+					curBoard--;
+				}
+				system("cls");
 			default:
 				break;
 			}
-			show_SCREEN_CGAME(gameData.SAVEdatas[curBoard]);
+			show_SCREEN_CGAME(gameData.SAVEdatas[curBoard],gameData,curBoard,0,0);
 		}
 	}
 	return 0;
 }
 
-void game_UNDO(BOARD& a, SHORT &curX, SHORT &curY) {
-	if (a.listOfMoves.size() == 0 ) return;
+BOOL display_ASK_DEL() {
+	bool cmd = 0;
+	show_ASK_DEL(0, 0, 0);
+	while (true) {
+		switch (toupper(_getch())) {
+		case 75: case 'A':
+			if (!cmd) cmd = 1;
+			break;
+		case 77: case 'D':
+			if (cmd) cmd = 0;
+			break;
+		case ENTER:
+			return cmd;
+		}
+		show_ASK_DEL(0, 0, cmd);
+	}
+}
+
+void game_UNDO(BOARD& a, SHORT& curX, SHORT& curY) {
+	if (a.listOfMoves.size() == 0) return;
 	curX = a.listOfMoves[a.listOfMoves.size() - 1].x;
 	curY = a.listOfMoves[a.listOfMoves.size() - 1].y;
 	a.points[a.listOfMoves[a.listOfMoves.size() - 1].y][a.listOfMoves[a.listOfMoves.size() - 1].x].c = 'N';

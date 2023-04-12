@@ -17,6 +17,8 @@ void _draw_XWIN_shape(SHORT _x, SHORT _y);
 
 void _draw_OWIN_shape(SHORT _x, SHORT _y);
 
+void _draw_DRAW_shape(SHORT _x, SHORT _y);
+
 void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT));
 
 void _draw_LEFTARROW_SHAPE(SHORT _x, SHORT _y);
@@ -24,5 +26,21 @@ void _draw_LEFTARROW_SHAPE(SHORT _x, SHORT _y);
 void _draw_RIGHTARROW_SHAPE(SHORT _x, SHORT _y);
 
 void _draw_NEWBOARDGAME(SHORT _x, SHORT _y);
+
+void _draw_SETTINGS_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_VOLUME_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_SILINE_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_CONTINUE_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_HTP_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_CONSOLE_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_ABOUT_SHAPE(SHORT _x, SHORT _y);
+
+void _draw_FACE_SHAPE(SHORT _x, SHORT _y);
 
 void _TRANSITION();

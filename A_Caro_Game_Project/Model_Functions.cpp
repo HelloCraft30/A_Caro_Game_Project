@@ -3,9 +3,11 @@
 
 using namespace std;
 
-void get_STUFFS(DATA &data) {
+bool get_STUFFS(DATA &data) {
 	data.SAVEdatas.resize(0);
 	data.SAVEnames.resize(0);
+	data.mute = false;
+	data.Vol = 11;
 	int status = _mkdir("GAME_SAVES");
 	if (status != -1) {
 		fstream createFILE(LISTSAVES, ios::out);
@@ -13,6 +15,7 @@ void get_STUFFS(DATA &data) {
 	}
 	else {
 		fstream readFILE(LISTSAVES, ios::in);
+		if (!readFILE) return 0;
 		string temp;
 		while (getline(readFILE, temp)) {
 			data.SAVEnames.push_back(temp);
@@ -26,6 +29,7 @@ void get_STUFFS(DATA &data) {
 			data.SAVEdatas.push_back(_board);
 		}
 	}
+	return true;
 }
 
 void setVal_POINT(_POINT& point, int _x, int _y, char _c) {
@@ -52,7 +56,7 @@ void init_BOARD(BOARD& matrix) {
 	matrix.listOfMoves.resize(0);
 }
 
-void get_BOARD_DATA(BOARD& des, string fileName) {
+void get_BOARD_DATA(BOARD& des,const string& fileName) {
 	des.name = fileName;
 	string dir = SAVESFOLDER;
 	dir+= '\\' + fileName + ".txt";
@@ -138,4 +142,34 @@ void save_DATA_FILE(DATA& data) {
 	for (auto x : data.SAVEdatas) {
 		save_BOARD_FILE(x);
 	}
+}
+
+void delete_BOARD_DATA(DATA& data,const std::string& name) {
+	for (int i = 0; i < data.SAVEnames.size(); i++) {
+		if (data.SAVEnames[i] == name) {
+			data.SAVEnames.erase(data.SAVEnames.begin()+i);
+			break;
+		}
+	}
+
+	for (int i = 0; i < data.SAVEdatas.size(); i++) {
+		if (data.SAVEdatas[i].name == name) {
+			data.SAVEdatas.erase(data.SAVEdatas.begin() + i);
+			break;
+		}
+	}
+}
+
+void delete_BOARD_FILE(const std::string& name) {
+	string dir = SAVESFOLDER;
+	dir += '\\';
+	dir += name;
+	dir += ".txt";
+	remove(dir.c_str());
+}
+
+void delete_BOARD(DATA& data, const std::string& name) {
+	delete_BOARD_FILE(name);
+	delete_BOARD_DATA(data, name);
+	save_DATA_FILE(data);
 }

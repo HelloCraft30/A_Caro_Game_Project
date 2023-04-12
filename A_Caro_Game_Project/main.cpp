@@ -3,6 +3,7 @@
 #include "Model_Functions.h"
 #include "View_Functions.h"
 #include "_draw_SHAPE.h"
+#pragma comment( lib, "Winmm.lib" )
 
 using namespace std;
 
@@ -29,18 +30,25 @@ int main() {
 
 	int x = 0; int y = 0;
 	DATA gameDat;
-	
+	resizeConsole(700, 70);
+	system("color F0");
+	GoTo(0, 0); cout << "THIS WORKS BEST ON WINDOW CONSOLE HOST - press any key";
+	system("pause");
+
+	SetConsoleTitleA("CARO GAME");
 	getFormedWindow();
-	get_STUFFS(gameDat);
-	
-	Display(gameDat);
+	if (get_STUFFS(gameDat)) {
+		Display(gameDat);
+	}
 
-	//show_SCREEN_MAINMENU(0, 0);
-
-	while(1){
+	while (1) {
 		
 		moveCur(x, y);
 		system("cls");
+		show_SCREEN_CGAME(gameDat.SAVEdatas[0], gameDat, 0, 0, 0);
+		//show_ASK_DEL(x,y,1);
+
 	}
+
 	return 0;
 }

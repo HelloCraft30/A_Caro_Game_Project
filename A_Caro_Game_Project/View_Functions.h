@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <string>
 #include "Data_Game.h"
+#include "Model_Functions.h"
 
 //COLORS
 #define COLOR_BLACK 0
@@ -67,7 +68,7 @@ void returnColor();
 void draw_BORDER_1line(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_TXT);
 void draw_BORDER_2line(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_TXT);
 //Draw retangle of spaces - default bg color : white
-void draw_RETANGLE_SPACE(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_BG,bool SHADOW = 0);
+void draw_RETANGLE_SPACE(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_BG, bool SHADOW = 0);
 //Draw Box - default color, bg : white, txt : black
 void draw_BOX(SHORT posX, SHORT posY, int width, int height, char type, int COLOR_bg = COLOR_BG, int COLOR_txt = COLOR_TXT);
 //Draw grid of board game
@@ -78,8 +79,13 @@ void draw_POINT(const _POINT& point);
 void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix);
 //Draw text 1 line
 void draw_TXT(SHORT posX, SHORT posY, const std::string& str);
+
+void draw_Grid_XO();
+
 //Draw turn display
 void show_TURN(SHORT posX, SHORT posY, char turn);
+
+void draw_STR_limit(SHORT x, SHORT y, std::string str, int len);
 //Draw scores
 void show_SCORE_X(SHORT posX, SHORT posY, int score);
 void show_SCORE_O(SHORT posX, SHORT posY, int score);
@@ -87,7 +93,7 @@ void show_SCORE_O(SHORT posX, SHORT posY, int score);
 void show_LASTMOVE(SHORT posX, SHORT posY, const BOARD& board);
 void show_GAME_HELP(SHORT posX, SHORT posY);
 //MAINMENU SHOWING
-void show_SCREEN_MAINMENU(SHORT color, SHORT cmd);
+void show_SCREEN_MAINMENU(SHORT color, SHORT cmd, bool continue_check, SHORT _x, SHORT _y);
 //GAME SHOWING
 //some orther function
 void show_GET_NAME();
@@ -95,4 +101,19 @@ void show_SCREEN_GAME(BOARD& board);
 void show_BOARD_CURSOR(SHORT _x, SHORT _y, char type);
 
 void show_SCREEN_SUBMENU(SHORT _x, SHORT _y, SHORT cmd);
-void show_SCREEN_CGAME(const BOARD& a);
+void show_SCREEN_CGAME(const BOARD& a, const DATA& data, SHORT index, SHORT _x, SHORT _y);
+
+void show_SCREEN_SETTINGS(SHORT cmd, DATA& dat);
+void show_SETTINGS_VOLUME(SHORT lenVolume, BOOL HL);
+void show_SETTINGS_MUTE(BOOL check, BOOL HL);
+void show_SPEAKER(bool check);
+
+void show_ASK_DEL(SHORT x, SHORT y, BOOL check);
+
+void show_SCREEN_HTP(SHORT _x, SHORT _y);
+
+void show_SCREEN_ABOUT(SHORT _x, SHORT _y);
+
+void selectSound1();
+void selectSound2();
+void selectSound3();
