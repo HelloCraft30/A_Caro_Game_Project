@@ -1,6 +1,6 @@
 #pragma once
 #include "View_Functions.h"
-
+#include <math.h>
 void _draw_X_shape(SHORT _x, SHORT _y);
 
 void _draw_O_shape(SHORT _x, SHORT _y);

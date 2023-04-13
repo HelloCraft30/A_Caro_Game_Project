@@ -50,6 +50,7 @@ void Display(DATA& data) {
 		system("cls");
 		switch (display_id) {
 		case 0:
+			_TRANSITION();
 			display_id = display_SCREEN_MAINMENU(data);
 			break;
 		case 1:
@@ -100,6 +101,7 @@ SHORT display_SCREEN_MAINMENU(DATA& gameData) {
 				else cmd++; break;
 			case ENTER:
 				selectSound2();
+				_TRANSITION();
 				return _do_CMD_MAINMENU(cmd);
 				break;
 			case ESC:
@@ -135,8 +137,8 @@ SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string &gameName) {
 	SHORT cur_X = 0, cur_Y = 0;
 
 	if (newGame) {
-		system("cls");
 		if (new_GAME_BOARD(gameDat, a) == 0) return 0;
+		else _TRANSITION();
 	}
 	else {
 		get_BOARD_NAME(gameDat, a, gameName);

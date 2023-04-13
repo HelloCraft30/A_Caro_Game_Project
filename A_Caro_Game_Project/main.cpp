@@ -40,15 +40,17 @@ int main() {
 	if (get_STUFFS(gameDat)) {
 		Display(gameDat);
 	}
+	
+	_TRANSITION();
 
-	while (1) {
-		
-		moveCur(x, y);
-		system("cls");
-		show_SCREEN_CGAME(gameDat.SAVEdatas[0], gameDat, 0, 0, 0);
-		//show_ASK_DEL(x,y,1);
+	//while (1) {
+	//	
+	//	moveCur(x, y);
+	//	system("cls");
+	//	show_SCREEN_CGAME(gameDat.SAVEdatas[0], gameDat, 0, 0, 0);
+	//	//show_ASK_DEL(x,y,1);
 
-	}
+	//}
 
 	return 0;
 }

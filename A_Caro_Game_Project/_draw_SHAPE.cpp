@@ -1213,7 +1213,7 @@ void _draw_NEWBOARDGAME(SHORT _x, SHORT _y) {
 }
 
 void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT)) {
-	PlaySound(0,0,0);
+	PlaySound(0, 0, 0);
 	mciSendString(L"play music_winner.wav", NULL, 0, NULL);
 	_y = 1;
 	function(_x, _y);
@@ -1221,10 +1221,10 @@ void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT)) {
 	_y += 7;
 	function(_x, _y);
 	Sleep(300);
-	_y += 7; 
+	_y += 7;
 	function(_x, _y);
 	Sleep(300);
-	_y += 7; 
+	_y += 7;
 	function(_x, _y);
 	Sleep(300);
 	_y += 7;
@@ -1790,7 +1790,7 @@ void _draw_ABOUT_SHAPE(SHORT _x, SHORT _y) {
 	GoTo(_x + 24, _y + 2); cout << (char)219;
 	GoTo(_x + 24, _y + 3); cout << (char)219;
 	GoTo(_x + 25, _y + 1); cout << (char)220;
-	
+
 }
 
 void _draw_FACE_SHAPE(SHORT _x, SHORT _y) {
@@ -1832,36 +1832,10 @@ void _draw_FACE_SHAPE(SHORT _x, SHORT _y) {
 
 void _TRANSITION() {
 	system("cls");
-	SHORT _x = 34, _y = 2;
-	_draw_BALL(_x, _y);
-	_draw_LINE(_x, _y + 4);
-	Sleep(300);
-	for (int i = 0; i < 8; i++) {
-		Sleep(20);
-		system("cls");
-		_draw_LINE(_x, _y + 4);
-		_draw_BALL(_x, _y + i);
+	GoTo(42, 14); cout << "LOADING ";
+	for (int i = 0; i < 3; i++) {
+		 cout << ". "; Sleep(300);
 	}
-	system("color 0F");
-	for (int i = 8; i < 16; i++) {
-		Sleep(20);
-		system("cls");
-		_draw_LINE(_x, _y + 4);
-		_draw_BALL(_x, _y + i);
-	}
-	for (int i = 15; i >= 7; i--) {
-		Sleep(20);
-		system("cls");
-		_draw_LINE(_x, _y + 4);
-		_draw_BALL(_x, _y + i);
-	}
-	system("color F0");
-	for (int i = 7; i >= 0; i--) {
-		Sleep(20);
-		system("cls");
-		_draw_LINE(_x, _y + 4);
-		_draw_BALL(_x, _y + i);
-	}
-	Sleep(300);
 	system("cls");
+	returnColor();
 }
