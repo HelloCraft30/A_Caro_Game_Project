@@ -1,9 +1,9 @@
 score: X/O
 0 0
 turn:
-O
+X
 data:
-X N N N N N N N N N N N 
+N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
@@ -16,4 +16,3 @@ N N N N N N N N N N N N
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 history:
-0 0 X

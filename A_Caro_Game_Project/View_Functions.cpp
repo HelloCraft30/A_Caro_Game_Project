@@ -618,16 +618,16 @@ void show_SPEAKER(bool check) {
 }
 
 void selectSound1() {
-	mciSendString(L"play music_select1.wav", NULL, 0, NULL);
+	mciSendString(L"play GAME_MUSICS\\music_select1.wav", NULL, 0, NULL);
 	Sleep(1);
 }
 
 void selectSound2() {
-	mciSendString(L"play music_select2.wav", NULL, 0, NULL);
+	mciSendString(L"play GAME_MUSICS\\music_select2.wav", NULL, 0, NULL);
 	Sleep(1);
 }
 
 void selectSound3() {
-	mciSendString(L"play music_select3.wav", NULL, 0, NULL);
+	mciSendString(L"play GAME_MUSICS\\music_select3.wav", NULL, 0, NULL);
 
 }

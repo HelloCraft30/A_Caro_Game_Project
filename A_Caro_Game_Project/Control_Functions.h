@@ -1,6 +1,7 @@
 #pragma once
 #include "Data_Game.h"
 #include "Model_Functions.h"
+#include "_computer_play.h"
 #include <string>
 
 #define ENTER 13
@@ -16,6 +17,8 @@ void Display(DATA& data);
 SHORT display_SCREEN_MAINMENU(DATA& gameData);
 
 SHORT display_SCREEN_GAME(DATA &gameData,bool newGame = 1,const std::string& nameGame = "");
+
+SHORT display_SCREEN_GAME_BOT(DATA& gameData, bool newGame = 1, const std::string& nameGame = "");
 
 SHORT display_SCREEN_SUBMENU(BOARD& board, DATA & data);
 
@@ -38,3 +41,5 @@ SHORT is_WIN(const BOARD& a, SHORT x, SHORT y);
 bool is_DRAW(const BOARD& a);
 
 void game_UNDO(BOARD& a, SHORT &curX, SHORT &curY);
+
+bool checkResult(BOARD& a, SHORT &curX, SHORT &curY);

@@ -1000,6 +1000,21 @@ void _draw_OWIN_shape(SHORT _x, SHORT _y) {
 	returnColor();
 }
 
+void _draw_BOT_face(SHORT _x, SHORT _y) {
+	GoTo(_x + 3, _y + 3); cout << (char)219;
+	GoTo(_x + 4, _y + 4); cout << (char)223;
+	GoTo(_x + 5, _y + 1); cout << (char)219;
+	GoTo(_x + 5, _y + 4); cout << (char)223;
+	GoTo(_x + 6, _y + 4); cout << (char)223;
+	GoTo(_x + 7, _y + 3); cout << (char)219;
+	GoTo(_x + 8, _y + 4); cout << (char)223;
+	GoTo(_x + 9, _y + 1); cout << (char)219;
+	GoTo(_x + 9, _y + 4); cout << (char)223;
+	GoTo(_x + 10, _y + 4); cout << (char)223;
+	GoTo(_x + 11, _y + 3); cout << (char)219;
+
+}
+
 void _draw_DRAW_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 3, _y + 2); cout << (char)219;
 	GoTo(_x + 3, _y + 3); cout << (char)219;
@@ -1214,7 +1229,7 @@ void _draw_NEWBOARDGAME(SHORT _x, SHORT _y) {
 
 void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT)) {
 	PlaySound(0, 0, 0);
-	mciSendString(L"play music_winner.wav", NULL, 0, NULL);
+	mciSendString(L"play GAME_MUSICS\\music_winner.wav", NULL, 0, NULL);
 	_y = 1;
 	function(_x, _y);
 	Sleep(300);
@@ -1230,8 +1245,8 @@ void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT)) {
 	_y += 7;
 	_getch();
 	selectSound2();
-	mciSendString(L"close music_winner.wav", NULL, 0, NULL);
-	PlaySound(L"music_BG.wav", NULL, SND_ASYNC | SND_LOOP);
+	mciSendString(L"close GAME_MUSICS\\music_winner.wav", NULL, 0, NULL);
+	PlaySound(L"GAME_MUSICS\\music_BG.wav", NULL, SND_ASYNC | SND_LOOP);
 
 }
 
