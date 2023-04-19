@@ -239,9 +239,11 @@ void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix) {
 
 void draw_Grid_XO() {
 	SHORT _x = 6, _y = 1;
-	for (int i = 0; i < 14; i++) {
+	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 10; j++) {
-			GoTo(_x + i * 6, _y + j * 3); if ((i + j) % 2) {
+			GoTo(_x + i * 6, _y + j * 3);
+			if ((16 <= _x + i * 6 && _x + i * 6 <= 75) && (_y + j * 3 >= 4 && _y + j * 3 <= 16)) continue;
+			if ((i + j) % 2) {
 				cout << 'X';
 			}
 			else cout << 'O';
@@ -263,6 +265,18 @@ void show_ASK_DEL(SHORT x, SHORT y,BOOL check) {
 	returnColor();
 	if (!check) SetColor(COLOR_BLACK, COLOR_BG);
 	GoTo(77, 24); cout << " NO ";
+	returnColor();
+}
+
+void show_ASK_GAMEPLAY(SHORT x, SHORT y, BOOL check) {
+	draw_BOX(x, y, 30, 5, '-');
+	GoTo(x+5, y+1); cout << "Which opponent?";
+	GoTo(x+4, y+2); for (int i = 0; i < 20; i++) cout << LINE1_H;
+	if (check) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(x+4, y+3); cout << " PLAYER ";
+	returnColor();
+	if (!check) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(x+15, y+3); cout << " COMPUTER ";
 	returnColor();
 }
 
@@ -356,7 +370,6 @@ void show_GAME_HELP(SHORT posX, SHORT posY) {
 void show_SCREEN_MAINMENU(SHORT color, SHORT cmd, bool continue_check, SHORT _x, SHORT _y) {
 
 	SetColor(COLOR_BG, color);
-	_draw_NAME_CARO(4, 2);
 	SetColor(COLOR_BG, COLOR_TXT);
 
 	draw_TXT(29, 28, "Press ESC to QUIT the game --");
@@ -388,10 +401,10 @@ void show_SCREEN_MAINMENU(SHORT color, SHORT cmd, bool continue_check, SHORT _x,
 	SetColor(a[5], b[5]);
 	GoTo(op_x + 5, op_y + 8); cout << "SETTINGS";
 	returnColor();
-
-	_draw_MY_BOY(5, 13);
+	SetColor(COLOR_BG, COLOR_GRAY);
+	_draw_MY_BOY(12, 13);
+	returnColor();
 	draw_BORDER_2line(5, 1, 83, 12);
-	_draw_XO_SHAPE(58, 5);
 }
 
 void show_GET_NAME() {
@@ -546,6 +559,15 @@ void show_SCREEN_CGAME(const BOARD& a, const DATA& data, SHORT index, SHORT _x, 
 	cout << "[X]: " << a.X_wins;
 	GoTo(44, 20);
 	cout << "[O]: " << a.O_wins;
+	GoTo(44, 22); cout << "Type:";
+	GoTo(44, 23); cout << "          ";
+	if (a.gamePlay == 0) {
+		
+		GoTo(44, 23); cout << "Players.";
+	}
+	else {
+		GoTo(44, 23); cout << "Computer.";
+	}
 
 	_draw_LEFTARROW_SHAPE(4, 13);
 	_draw_RIGHTARROW_SHAPE(54, 14);

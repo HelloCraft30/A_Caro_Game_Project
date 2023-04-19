@@ -43,6 +43,7 @@ void setVal_POINT(_POINT& point, char _c) {
 }
 
 void init_BOARD(BOARD& matrix) {
+	matrix.gamePlay = 0;
 	matrix.points = new _POINT * [BOARD_SIZE];
 	for (int i = 0; i < BOARD_SIZE; i++) matrix.points[i] = new _POINT[BOARD_SIZE];
 	for (int i = 0; i < BOARD_SIZE; i++) {
@@ -62,6 +63,9 @@ void get_BOARD_DATA(BOARD& des,const string& fileName) {
 	dir+= '\\' + fileName + ".txt";
 	fstream fileOPEN(dir, ios::in);
 	string temp;
+	getline(fileOPEN, temp);
+	fileOPEN >> des.gamePlay;
+	fileOPEN.ignore();
 	getline(fileOPEN, temp);
 	fileOPEN >> des.X_wins >> des.O_wins;
 	fileOPEN.ignore();
@@ -115,6 +119,8 @@ void save_BOARD_FILE(BOARD& board) {
 	link += board.name;
 	link += ".txt";
 	fstream fileOpen(link, ios::out | ios::trunc);
+	fileOpen << "player/computer: " << endl;
+	fileOpen << board.gamePlay << endl;
 	fileOpen << "score: X/O" << endl;
 	fileOpen << board.X_wins << " " << board.O_wins << endl;
 	fileOpen << "turn:" << endl;

@@ -68,8 +68,15 @@ void Display(DATA& data) {
 		case 5:
 			display_id = display_SCREEN_SETTINGS(data);
 			break;
+		case 6:
+			display_id = display_SCREEN_GAME_BOT(data);
+			break;
 		case 9:
 			display_id = display_SCREEN_GAME(data, false, insSTR);
+			break;
+		case 10:
+			display_id = display_SCREEN_GAME_BOT(data, false, insSTR);
+			break;
 		}
 	}
 }
@@ -77,6 +84,10 @@ void Display(DATA& data) {
 SHORT display_SCREEN_MAINMENU(DATA& gameData) {
 	SHORT cmd = 1;
 	bool ct_check = gameData.SAVEnames.size();
+	int _size = 7;
+	int _color = 1;
+	_draw_NAME_CARO(4, 2, _color);
+	_draw_XO_SHAPE(58, 5);
 	show_SCREEN_MAINMENU(0, cmd, ct_check, 0, 0);
 	while (true) {
 		while (_kbhit()) {
@@ -111,7 +122,14 @@ SHORT display_SCREEN_MAINMENU(DATA& gameData) {
 				break;
 			}
 			show_SCREEN_MAINMENU(0, cmd, ct_check, 0, 0);
+			break;
 		}
+		//_color = (_color + 1) % _size;
+		////if (_color == 0) _color = 1;
+		//_draw_NAME_CARO(4, 2, _color);
+		//Sleep(70);
+		//_draw_XO_SHAPE(58,5, _color%2);
+		//Sleep(30);
 	}
 	return 0;
 }
@@ -132,9 +150,20 @@ bool is_DRAW(const BOARD& a) {
 }
 
 SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string& gameName) {
+
+	if (newGame) {
+		if (!display_get_GAMEPLAY()) {
+			system("cls");
+			_TRANSITION();
+			return 6;
+		}
+		system("cls");
+		_TRANSITION();
+	}
 	//maaybe transition
 	BOARD a;
 	SHORT cur_X = 0, cur_Y = 0;
+	a.gamePlay = 0;
 
 	if (newGame) {
 		if (new_GAME_BOARD(gameDat, a) == 0) return 0;
@@ -275,6 +304,7 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 		get_BOARD_NAME(gameDat, a, gameName);
 	}
 	system("cls");
+	a.gamePlay = 1;
 	//CONTROL THE GAME
 	show_SCREEN_GAME(a);
 	show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
@@ -732,7 +762,8 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 			case ENTER:
 				selectSound2();
 				output = gameData.SAVEdatas[curBoard].name;
-				return 9;
+				if (gameData.SAVEdatas[curBoard].gamePlay == 0) return 9;
+				if (gameData.SAVEdatas[curBoard].gamePlay == 1) return 10;
 			case BACKSPACE:
 				if (display_ASK_DEL()) {
 					delete_BOARD(gameData, gameData.SAVEdatas[curBoard].name);
@@ -764,6 +795,61 @@ BOOL display_ASK_DEL() {
 			return cmd;
 		}
 		show_ASK_DEL(0, 0, cmd);
+	}
+}
+
+BOOL display_get_GAMEPLAY() {
+	bool cmd = 1;
+	draw_BOX(6, 1, 81, 27, '=');
+	show_ASK_GAMEPLAY(32, 3, cmd);
+	if (cmd) {
+		SetColor(COLOR_BG, COLOR_BG);
+		_draw_ROBOT(46, 11);
+		SetColor(COLOR_BG, COLOR_RED);
+		_draw_HUMAN(11, 10);
+		SetColor(COLOR_BG, COLOR_BLUE);
+		_draw_HUMAN(46, 10);
+		returnColor();
+	}
+	else {
+		SetColor(COLOR_BG, COLOR_RED);
+		_draw_HUMAN(11, 10);
+		SetColor(COLOR_BG, COLOR_BG);
+		_draw_HUMAN(46, 10);
+		SetColor(COLOR_BG, COLOR_BLUE);
+		_draw_ROBOT(46, 11);
+		returnColor();
+	}
+	while (true) {
+		switch (toupper(_getch())) {
+		case 75: case 'A':
+			if (!cmd) cmd = 1;
+			break;
+		case 77: case 'D':
+			if (cmd) cmd = 0;
+			break;
+		case ENTER:
+			return cmd;
+		}
+		if (cmd) {
+			SetColor(COLOR_BG, COLOR_BG);
+			_draw_ROBOT(46, 11);
+			SetColor(COLOR_BG, COLOR_RED);
+			_draw_HUMAN(11, 10);
+			SetColor(COLOR_BG, COLOR_BLUE);
+			_draw_HUMAN(46, 10);
+			returnColor();
+		}
+		else {
+			SetColor(COLOR_BG, COLOR_RED);
+			_draw_HUMAN(11, 10);
+			SetColor(COLOR_BG, COLOR_BG);
+			_draw_HUMAN(46, 10);
+			SetColor(COLOR_BG, COLOR_BLUE);
+			_draw_ROBOT(46, 11);
+			returnColor();
+		}
+		show_ASK_GAMEPLAY(32, 3, cmd);
 	}
 }
 

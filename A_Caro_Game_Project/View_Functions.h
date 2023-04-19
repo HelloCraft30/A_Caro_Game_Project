@@ -114,6 +114,8 @@ void show_SCREEN_HTP(SHORT _x, SHORT _y);
 
 void show_SCREEN_ABOUT(SHORT _x, SHORT _y);
 
+void show_ASK_GAMEPLAY(SHORT x, SHORT y, BOOL check);
+
 void selectSound1();
 void selectSound2();
 void selectSound3();

@@ -32,6 +32,8 @@ SHORT display_SCREEN_HTP(DATA& gameData);
 
 BOOL display_ASK_DEL();
 
+BOOL display_get_GAMEPLAY();
+
 SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a);
 
 std::string get_STRING(SHORT x, SHORT y, int len);

@@ -1,3 +1,5 @@
+player/computer: 
+1
 score: X/O
 0 0
 turn:
@@ -8,7 +10,7 @@ N N N N N N N N N N N N
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
-N N N N N N N N N N N N 
+N N N N N X O N N N N N 
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
@@ -16,3 +18,5 @@ N N N N N N N N N N N N
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 history:
+5 5 X
+5 6 O
