@@ -450,7 +450,13 @@ SHORT display_SCREEN_SETTINGS(DATA& gameData) {
 					if (gameData.Vol == 0) {
 						show_SPEAKER(gameData.mute); break;
 					}
-					else gameData.Vol--; break;
+					else if (gameData.Vol == 1) {
+						show_SPEAKER(true);
+						gameData.Vol--;
+					}
+					else {
+						gameData.Vol--; break;
+					}
 				}break;
 			case 77: case 'D':
 				if (cmd) {
