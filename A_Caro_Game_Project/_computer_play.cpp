@@ -108,12 +108,13 @@ _POINT computer_Turn(const BOARD& board) {
 	
 	_POINT result;
 	setVal_POINT(result, 0, 0, 'N');
-
+	int thisMakeCPNotStupid = 0;
 	int MaxPoint = -DefendArr[9];
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (board.points[i][j].c == 'N')
 			{
+				thisMakeCPNotStupid++;
 				//Chọn r ngẫu nhiên, tăng tính ngẫu nhiên
 				int r = rand() % 2;
 				int Point = AttackPoint(board, i, j) + DefendPoint(board, i, j);
@@ -133,6 +134,11 @@ _POINT computer_Turn(const BOARD& board) {
 				}
 			}
 		}
+	}
+	if (thisMakeCPNotStupid == BOARD_SIZE * BOARD_SIZE) {
+		result.x = 5;
+		result.y = 6;
+		result.c = 'O';
 	}
 	return result;
 }
