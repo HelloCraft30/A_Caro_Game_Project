@@ -280,6 +280,21 @@ void show_ASK_GAMEPLAY(SHORT x, SHORT y, BOOL check) {
 	returnColor();
 }
 
+void show_ASK_DIFF(SHORT _x, SHORT _y, int cmd) {
+	draw_BOX(_x, _y, 35, 5, '-');
+	GoTo(_x + 5, _y + 1); cout << "Which complexity?";
+	GoTo(_x + 4, _y + 2); for (int i = 0; i < 20; i++) cout << LINE1_H;
+	if (cmd == 0) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(_x + 4, _y + 3); cout << " EASY ";
+	returnColor();
+	if (cmd == 1) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(_x + 15, _y + 3); cout << " MEDIUM ";
+	returnColor();
+	if (cmd == 2) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(_x + 26, _y + 3); cout << " HARD ";
+	returnColor();
+}
+
 void draw_STR_limit(SHORT x, SHORT y, string str, int len) {
 	GoTo(x, y);
 	if (str.size() > len) {
@@ -533,7 +548,6 @@ void show_SCREEN_CGAME(const BOARD& a, const DATA& data, SHORT index, SHORT _x, 
 		_name.resize(25);  _name += "...";
 	}
 	GoTo(15, 10); cout << "Name: " << _name;
-	
 	draw_RETANGLE_SPACE(44, 13, 8, 4);
 
 	int x_mat = 15, y_mat = 12;
@@ -579,10 +593,15 @@ void show_SCREEN_CGAME(const BOARD& a, const DATA& data, SHORT index, SHORT _x, 
 
 	GoTo(73, 22); SetColor(COLOR_BLACK, COLOR_BG); cout << LINE2_H << LINE2_H; returnColor();
 
-	GoTo(22, 7); cout << "Press ENTER to play, BACKSPACE to delete save";
+	GoTo(15, 7); cout << "Press "; SetColor(0, COLOR_BG); 
+	cout << " ENTER "; returnColor();
+	cout << " to play, "; SetColor(0, COLOR_BG);
+	cout << " BACKSPACE "; returnColor();
+	cout<<" to delete save, "; SetColor(0, COLOR_BG);
+	cout << " F "; returnColor();
+	cout << " to search save.";
 
 	GoTo(67, 11); cout << "LIST OF SAVES:";
-
 	bool _3dots = data.SAVEnames.size() - index + 1 > 7;
 	SHORT _posX = 67, _posY = 13;
 
@@ -593,6 +612,22 @@ void show_SCREEN_CGAME(const BOARD& a, const DATA& data, SHORT index, SHORT _x, 
 		else SetColor(COLOR_BG, COLOR_GRAY);
 		draw_STR_limit(_posX, _posY + i- (index - dist), data.SAVEnames[i], 14);
 	}
+	returnColor();
+	if (index > 6) {
+		GoTo(67, 21); cout << "<<<";
+	}
+	else {
+		GoTo(67, 21); cout << "   ";
+	}
+	if (data.SAVEdatas.size() - index +dist > 7) {
+		GoTo(79, 21); cout << ">>>";
+	}
+	else {
+		GoTo(79, 21); cout << "   ";
+	}
+	draw_BORDER_2line(64, 8, 20, 3);
+	GoTo(64, 10); cout << LINE2_V_LEFT;
+	GoTo(83, 10); cout << LINE2_V_RIGHT;
 }
 
 void show_SCREEN_SETTINGS(SHORT cmd, DATA& dat) {

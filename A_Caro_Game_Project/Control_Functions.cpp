@@ -309,6 +309,7 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 	show_SCREEN_GAME(a);
 	show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
 	show_LASTMOVE(61, 15, a);
+	SetColor(COLOR_BLUE, COLOR_BG); GoTo(80 - 2, 9); cout << "Computer's"; returnColor();
 	while (true) {
 		while (_kbhit()) {
 			char key = toupper(_getch());
@@ -743,22 +744,105 @@ SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd) {
 	}
 }
 
+bool checkHeadStr(string a, string b) {
+	if (a.size()>b.size()) return false;
+	for (int i = 0; i < a.size(); i++) {
+		if (a[i] != b[i]) return false;
+	}
+	return true;
+}
+
 SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 	system("cls");
 	get_STUFFS(gameData);
-	int n = gameData.SAVEdatas.size();
 	int curBoard = 0;
+	DATA showBoard = gameData;
+	vector<BOARD> tmpB;
+	vector<string> tmpN;
+	string nameTyped;
+	bool joinSearch = false;
+	GoTo(65, 9); cout << " Search: ";
+	bool color_search = false;
 	show_SCREEN_CGAME(gameData.SAVEdatas[curBoard], gameData, curBoard, 0, 0);
 	while (true) {
+		int n = showBoard.SAVEdatas.size();
+		if (nameTyped == "") showBoard = gameData;
+		while (joinSearch) {
+			bool do_sth = false;
+			while (_kbhit()) {
+				do_sth = true;
+				char _chr = _getch();
+				switch (_chr) {
+				case ENTER: case ESC:
+					GoTo(65, 9); cout << " Search:";
+					joinSearch = false;
+					break;
+				case BACKSPACE:
+					if(nameTyped.size()!=0) nameTyped.pop_back();
+					GoTo(74, 9); cout << nameTyped;
+					cout << (char)219; cout << ' ';
+					break;
+				default:
+					nameTyped.push_back(_chr);
+					break;
+				}
+				if (showBoard.SAVEnames.size() != 0) show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
+				else {
+					draw_RETANGLE_SPACE(65, 13, 18, 9);
+				}
+			}
+			if (do_sth) {
+				GoTo(74, 9); cout << nameTyped;
+				cout << (char)219;
+				if (nameTyped == "") showBoard = gameData;
+				else {
+					for (int i = 0; i < gameData.SAVEnames.size(); i++) {
+						GoTo(0, 0); cout << i;
+						if (checkHeadStr(nameTyped, gameData.SAVEnames[i])) {
+
+							bool _okay = true;
+							for (auto x : tmpN) {
+								if (x == gameData.SAVEnames[i]) {
+									_okay = false;
+								}
+							}
+							if (_okay) {
+								tmpB.push_back(gameData.SAVEdatas[i]);
+								tmpN.push_back(gameData.SAVEnames[i]);
+							}
+						}
+					}
+					showBoard.SAVEdatas = tmpB;
+					showBoard.SAVEnames = tmpN;
+					tmpB.clear();
+					tmpN.clear();
+				}
+				if (showBoard.SAVEnames.size() != 0) show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
+				else {
+					draw_RETANGLE_SPACE(65, 13, 18, 9);
+				}
+			}
+		}
+		GoTo(74, 9); cout << nameTyped << " ";
 		while (_kbhit()) {
 			switch (toupper(_getch())) {
 			case 'A': case 75:
+				if (showBoard.SAVEnames.size() == 0) continue;
+				selectSound1();
+				curBoard = (curBoard - 7 + n) % n;
+				break;
 			case 'W': case 72:
+				if (showBoard.SAVEnames.size() == 0) continue;
 				selectSound1();
 				if (curBoard == 0) curBoard = n - 1;
 				else curBoard--; break;
 			case 'D': case 77:
+				if (showBoard.SAVEnames.size() == 0) continue;
+				selectSound1();
+				curBoard = (curBoard + 7 + n) % n;
+				break;
 			case 'S': case 80:
+				if (showBoard.SAVEnames.size() == 0) continue;
 				selectSound1();
 				if (curBoard == n - 1) curBoard = 0;
 				else curBoard++; break;
@@ -766,21 +850,30 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 				selectSound2();
 				return 0;
 			case ENTER:
+				if (showBoard.SAVEnames.size() == 0) continue;
 				selectSound2();
-				output = gameData.SAVEdatas[curBoard].name;
-				if (gameData.SAVEdatas[curBoard].gamePlay == 0) return 9;
-				if (gameData.SAVEdatas[curBoard].gamePlay == 1) return 10;
+				output = showBoard.SAVEdatas[curBoard].name;
+				if (showBoard.SAVEdatas[curBoard].gamePlay == 0) return 9;
+				if (showBoard.SAVEdatas[curBoard].gamePlay == 1) return 10;
 			case BACKSPACE:
+				if (showBoard.SAVEnames.size() == 0) continue;
 				if (display_ASK_DEL()) {
-					delete_BOARD(gameData, gameData.SAVEdatas[curBoard].name);
+					delete_BOARD(gameData, showBoard.SAVEnames[curBoard]);
 					if (!(gameData.SAVEdatas.size())) return 0;
-					curBoard--;
+					if (curBoard != 0) curBoard--;
 				}
 				system("cls");
+			case 'F':
+				GoTo(74, 9); cout << nameTyped << (char)219;
+				SetColor(COLOR_BG, COLOR_GREEN);
+				GoTo(65, 9); cout << " Search:";
+				returnColor();
+				joinSearch = true;
+				continue;
 			default:
 				break;
 			}
-			show_SCREEN_CGAME(gameData.SAVEdatas[curBoard], gameData, curBoard, 0, 0);
+			show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
 		}
 	}
 	return 0;
@@ -807,23 +900,24 @@ BOOL display_ASK_DEL() {
 BOOL display_get_GAMEPLAY() {
 	bool cmd = 1;
 	draw_BOX(6, 1, 81, 27, '=');
+	_draw_VS(35, 15);
 	show_ASK_GAMEPLAY(32, 3, cmd);
 	if (cmd) {
 		SetColor(COLOR_BG, COLOR_BG);
-		_draw_ROBOT(46, 11);
+		_draw_ROBOT(52, 10);
 		SetColor(COLOR_BG, COLOR_RED);
 		_draw_HUMAN(11, 10);
 		SetColor(COLOR_BG, COLOR_BLUE);
-		_draw_HUMAN(46, 10);
+		_draw_HUMAN(52, 10);
 		returnColor();
 	}
 	else {
 		SetColor(COLOR_BG, COLOR_RED);
 		_draw_HUMAN(11, 10);
 		SetColor(COLOR_BG, COLOR_BG);
-		_draw_HUMAN(46, 10);
+		_draw_HUMAN(52, 10);
 		SetColor(COLOR_BG, COLOR_BLUE);
-		_draw_ROBOT(46, 11);
+		_draw_ROBOT(52, 10);
 		returnColor();
 	}
 	while (true) {
@@ -835,27 +929,48 @@ BOOL display_get_GAMEPLAY() {
 			if (cmd) cmd = 0;
 			break;
 		case ENTER:
+			if (!cmd) display_get_DIFF();
 			return cmd;
 		}
 		if (cmd) {
 			SetColor(COLOR_BG, COLOR_BG);
-			_draw_ROBOT(46, 11);
+			_draw_ROBOT(52, 10);
 			SetColor(COLOR_BG, COLOR_RED);
 			_draw_HUMAN(11, 10);
 			SetColor(COLOR_BG, COLOR_BLUE);
-			_draw_HUMAN(46, 10);
+			_draw_HUMAN(52, 10);
 			returnColor();
 		}
 		else {
 			SetColor(COLOR_BG, COLOR_RED);
 			_draw_HUMAN(11, 10);
 			SetColor(COLOR_BG, COLOR_BG);
-			_draw_HUMAN(46, 10);
+			_draw_HUMAN(52, 10);
 			SetColor(COLOR_BG, COLOR_BLUE);
-			_draw_ROBOT(46, 11);
+			_draw_ROBOT(52, 10);
 			returnColor();
 		}
 		show_ASK_GAMEPLAY(32, 3, cmd);
+	}
+}
+
+INT display_get_DIFF() {
+	int cmd = 1;
+	show_ASK_DIFF(29, 9, cmd);
+	while (true) {
+		switch (toupper(_getch())) {
+		case 75: case 'A':
+			if (cmd == 0) cmd = 2;
+			else cmd--;
+			break;
+		case 77: case 'D':
+			if (cmd == 2) cmd = 0;
+			else cmd++;
+			break;
+		case ENTER:
+			return cmd;
+		}
+		show_ASK_DIFF(29, 9, cmd);
 	}
 }
 

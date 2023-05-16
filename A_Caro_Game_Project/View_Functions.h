@@ -116,6 +116,8 @@ void show_SCREEN_ABOUT(SHORT _x, SHORT _y);
 
 void show_ASK_GAMEPLAY(SHORT x, SHORT y, BOOL check);
 
+void show_ASK_DIFF(SHORT _x, SHORT _y, int cmd);
+
 void selectSound1();
 void selectSound2();
 void selectSound3();

@@ -49,4 +49,6 @@ void _draw_ROBOT(SHORT _x, SHORT _y);
 
 void _draw_HUMAN(SHORT _x, SHORT _y);
 
+void _draw_VS(SHORT _x, SHORT _y);
+
 void _TRANSITION();

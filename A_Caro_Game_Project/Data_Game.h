@@ -16,7 +16,7 @@
 
 #define BOARD_SIZE 12
 
-#define VERSION "2.0"
+#define VERSION "2.1"
 
 struct _POINT {
 	int x;

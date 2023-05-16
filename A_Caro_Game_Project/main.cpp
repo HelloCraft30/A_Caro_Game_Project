@@ -27,9 +27,10 @@ void moveCur(int& x, int& y) {
 }
 
 int main() {
-
+	
 	int x = 0; int y = 0;
 	DATA gameDat;
+	changeFont(16);
 	resizeConsole(700, 70);
 	system("color F0");
 	GoTo(0, 0); cout << "THIS WORKS BEST ON WINDOW CONSOLE HOST - press any key";

@@ -1,2 +1,14 @@
-new bot
-player
+a
+01
+02
+newGame
+03
+04
+06
+199
+sdsds
+sds
+11
+12
+13
+14
