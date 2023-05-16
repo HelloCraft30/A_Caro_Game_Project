@@ -23,7 +23,7 @@ bool get_STUFFS(DATA& data);
 
 void get_BOARD_DATA(BOARD& des,const std::string& fileName);
 
-void save_BOARD_DATA(DATA& data,const BOARD& src);
+bool save_BOARD_DATA(DATA& data,const BOARD& src);
 
 void save_BOARD_FILE(BOARD& board);
 

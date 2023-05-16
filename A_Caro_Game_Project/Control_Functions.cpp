@@ -725,13 +725,19 @@ SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd) {
 	switch (cmd) {
 	case 0:
 		//save game
-		save_BOARD_DATA(data, board);
+		if (!save_BOARD_DATA(data, board)) {
+			SetColor(COLOR_RED, COLOR_BG);
+			GoTo(65, 21); cout << " SAVEs LIMITED! ";
+			returnColor();
+			Sleep(500);
+			return 0;
+		};
 		save_BOARD_FILE(board);
 		save_DATA_FILE(data);
 		SetColor(COLOR_GREEN, COLOR_BG);
 		GoTo(67, 21); cout << "   SAVED!   ";
 		returnColor();
-		Sleep(300);
+		Sleep(500);
 		return 0;
 	case 1:
 		//settings

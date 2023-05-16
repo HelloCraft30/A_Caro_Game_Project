@@ -91,8 +91,9 @@ void get_BOARD_DATA(BOARD& des,const string& fileName) {
 	fileOPEN.close();
 }
 
-void save_BOARD_DATA(DATA& data, const BOARD& src) {
+bool save_BOARD_DATA(DATA& data, const BOARD& src) {
 	//linear search
+	if (data.SAVEnames.size() >= SAVES_LIMIT) return false;
 	bool existed = 0;
 	for(auto x: data.SAVEnames) 
 		if (x == src.name) {
@@ -111,6 +112,7 @@ void save_BOARD_DATA(DATA& data, const BOARD& src) {
 			}
 		}
 	}
+	return true;
 }
 
 void save_BOARD_FILE(BOARD& board) {

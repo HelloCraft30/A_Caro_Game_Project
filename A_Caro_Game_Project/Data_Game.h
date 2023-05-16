@@ -13,11 +13,10 @@
 #define SCREEN_HEIGHT 525
 //FONT
 #define FONT_SIZE 23
-
 #define BOARD_SIZE 12
-
 #define VERSION "2.1"
 
+#define SAVES_LIMIT 100
 struct _POINT {
 	int x;
 	int y;
