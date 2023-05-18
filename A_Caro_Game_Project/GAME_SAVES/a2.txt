@@ -3,13 +3,13 @@ player/computer:
 score: X/O
 0 0
 turn:
-X
+O
 data:
 X N N N N N N N N N N N 
-N O N N N N N N N N N N 
-N N X N N N N N N N N N 
-N N O N N N N N N N N N 
-N N N X O N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
 N N N N N N N N N N N N 
@@ -19,8 +19,3 @@ N N N N N N N N N N N N
 N N N N N N N N N N N N 
 history:
 0 0 X
-1 1 O
-2 2 X
-3 2 O
-4 3 X
-4 4 O

@@ -6,7 +6,7 @@ using namespace std;
 
 SHORT _do_CMD_MAINMENU(SHORT cmd);
 
-SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd);
+SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd, bool& newGame);
 
 SHORT _do_CMD_SETTINGS(DATA& data);
 
@@ -218,7 +218,7 @@ SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string& gameName) {
 				break;
 			case ESC:
 				selectSound3();
-				if (display_SCREEN_SUBMENU(a, gameDat)) {
+				if (display_SCREEN_SUBMENU(a, gameDat,newGame)) {
 					system("cls");
 					return 0;
 				}
@@ -349,7 +349,7 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 				break;
 			case ESC:
 				selectSound3();
-				if (display_SCREEN_SUBMENU(a, gameDat)) {
+				if (display_SCREEN_SUBMENU(a, gameDat,newGame)) {
 					system("cls");
 					return 0;
 				}
@@ -400,7 +400,7 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 	return 0;
 }
 
-SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data) {
+SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data, bool& newGame) {
 	int cmd = 0;
 	show_SCREEN_SUBMENU(0, 0, cmd);
 	char key = ' ';
@@ -420,7 +420,7 @@ SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data) {
 				return 0;
 			case ENTER:
 				selectSound2();
-				return _do_CMD_SUBMENU(board, data, cmd);
+				return _do_CMD_SUBMENU(board, data, cmd, newGame);
 				break;
 			}
 			show_SCREEN_SUBMENU(0, 0, cmd);
@@ -721,7 +721,7 @@ SHORT is_WIN(const BOARD& a, SHORT x, SHORT y) {
 	return 0;
 }
 
-SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd) {
+SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd, bool& newGame) {
 	switch (cmd) {
 	case 0:
 		//save game
@@ -737,6 +737,7 @@ SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd) {
 		SetColor(COLOR_GREEN, COLOR_BG);
 		GoTo(67, 21); cout << "   SAVED!   ";
 		returnColor();
+		newGame = false;
 		Sleep(500);
 		return 0;
 	case 1:
@@ -746,6 +747,30 @@ SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd) {
 		return 0;
 	case 2:
 		//quit
+		if (newGame) {
+			if (display_ASK_SAVE()) {
+				if (!save_BOARD_DATA(data, board)) {
+					SetColor(COLOR_RED, COLOR_BG);
+					GoTo(65, 21); cout << " SAVEs LIMITED! ";
+					returnColor();
+					Sleep(500);
+					return 0;
+				};
+				save_BOARD_FILE(board);
+				save_DATA_FILE(data);
+			}
+		}
+		else {
+			if (!save_BOARD_DATA(data, board)) {
+				SetColor(COLOR_RED, COLOR_BG);
+				GoTo(65, 21); cout << " SAVEs LIMITED! ";
+				returnColor();
+				Sleep(500);
+				return 0;
+			};
+			save_BOARD_FILE(board);
+			save_DATA_FILE(data);
+		}
 		return 1;
 	}
 }
@@ -865,11 +890,16 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 				if (showBoard.SAVEnames.size() == 0) continue;
 				if (display_ASK_DEL()) {
 					delete_BOARD(gameData, showBoard.SAVEnames[curBoard]);
+					delete_BOARD(showBoard, showBoard.SAVEnames[curBoard]);
 					if (!(gameData.SAVEdatas.size())) return 0;
 					if (curBoard != 0) curBoard--;
 				}
 				system("cls");
+				show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
+				GoTo(65, 9); cout << " Search:";
+				break;
 			case 'F':
+				curBoard = 0;
 				GoTo(74, 9); cout << nameTyped << (char)219;
 				SetColor(COLOR_BG, COLOR_GREEN);
 				GoTo(65, 9); cout << " Search:";
@@ -977,6 +1007,24 @@ INT display_get_DIFF() {
 			return cmd;
 		}
 		show_ASK_DIFF(29, 9, cmd);
+	}
+}
+
+BOOL display_ASK_SAVE() {
+	bool cmd = 0;
+	show_ASK_SAVE(27, 12, cmd);
+	while (true) {
+		switch (toupper(_getch())) {
+		case 'A': case 75:
+		case 'D': case 77:
+			cmd = !cmd;
+			break;
+		case ENTER:
+			return cmd;
+		case ESC:
+			return 0;
+		}
+		show_ASK_SAVE(27, 12, cmd);
 	}
 }
 

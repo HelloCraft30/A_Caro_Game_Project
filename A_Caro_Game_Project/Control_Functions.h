@@ -20,7 +20,7 @@ SHORT display_SCREEN_GAME(DATA &gameData,bool newGame = 1,const std::string& nam
 
 SHORT display_SCREEN_GAME_BOT(DATA& gameData, bool newGame = 1, const std::string& nameGame = "");
 
-SHORT display_SCREEN_SUBMENU(BOARD& board, DATA & data);
+SHORT display_SCREEN_SUBMENU(BOARD& board, DATA & data, bool& newGame);
 
 SHORT display_SCREEN_CGAME(DATA& gameData, std::string& output);
 
@@ -33,6 +33,8 @@ SHORT display_SCREEN_HTP(DATA& gameData);
 BOOL display_ASK_DEL();
 
 BOOL display_get_GAMEPLAY();
+
+BOOL display_ASK_SAVE();
 
 INT display_get_DIFF();
 

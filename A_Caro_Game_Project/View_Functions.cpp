@@ -295,6 +295,18 @@ void show_ASK_DIFF(SHORT _x, SHORT _y, int cmd) {
 	returnColor();
 }
 
+void show_ASK_SAVE(SHORT x, SHORT y, BOOL check) {
+	draw_BOX(x, y, 36, 5, '-');
+	GoTo(x + 5, y + 1); cout << "Do you want to save this?";
+	GoTo(x + 4, y + 2); for (int i = 0; i < 20; i++) cout << LINE1_H;
+	if (check) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(x + 4, y + 3); cout << " YES ";
+	returnColor();
+	if (!check) SetColor(COLOR_BLACK, COLOR_BG);
+	GoTo(x + 27, y + 3); cout << " NO ";
+	returnColor();
+}
+
 void draw_STR_limit(SHORT x, SHORT y, string str, int len) {
 	GoTo(x, y);
 	if (str.size() > len) {

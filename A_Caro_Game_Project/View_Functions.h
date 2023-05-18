@@ -118,6 +118,8 @@ void show_ASK_GAMEPLAY(SHORT x, SHORT y, BOOL check);
 
 void show_ASK_DIFF(SHORT _x, SHORT _y, int cmd);
 
+void show_ASK_SAVE(SHORT _x, SHORT _y, BOOL check);
+
 void selectSound1();
 void selectSound2();
 void selectSound3();
