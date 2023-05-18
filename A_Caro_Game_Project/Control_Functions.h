@@ -14,38 +14,38 @@ void resetMatch(BOARD& a);
 
 void Display(DATA& data);
 
-SHORT display_SCREEN_MAINMENU(DATA& gameData);
+SHORT display_Screen_MainMenu(DATA& gameData);
 
-SHORT display_SCREEN_GAME(DATA &gameData,bool newGame = 1,const std::string& nameGame = "");
+SHORT display_Screen_Game_pvp(DATA &gameData,bool newGame = 1,const std::string& nameGame = "");
 
-SHORT display_SCREEN_GAME_BOT(DATA& gameData, bool newGame = 1, const std::string& nameGame = "");
+SHORT display_Screen_Game_pvc(DATA& gameData, bool newGame = 1, const std::string& nameGame = "");
 
-SHORT display_SCREEN_SUBMENU(BOARD& board, DATA & data, bool& newGame);
+SHORT display_Screen_SubMenu(BOARD& board, DATA & data, bool& newGame);
 
-SHORT display_SCREEN_CGAME(DATA& gameData, std::string& output);
+SHORT display_Screen_Continue_Game(DATA& gameData, std::string& output);
 
-SHORT display_SCREEN_SETTINGS(DATA& gameData);
+SHORT display_Screen_Setting(DATA& gameData);
 
-SHORT display_SCREEN_ABOUT();
+SHORT display_Screen_About();
 
-SHORT display_SCREEN_HTP(DATA& gameData);
+SHORT display_Screen_HTP(DATA& gameData);
 
-BOOL display_ASK_DEL();
+BOOL display_Ask_Delete();
 
-BOOL display_get_GAMEPLAY();
+BOOL display_Ask_Gameplay();
 
-BOOL display_ASK_SAVE();
+BOOL display_Ask_Save();
 
-INT display_get_DIFF();
+INT display_Ask_Difficult();
 
-SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a);
+SHORT build_New_Game(DATA& gameDat, BOARD& a);
 
-std::string get_STRING(SHORT x, SHORT y, int len);
+std::string get_String(SHORT x, SHORT y, int len);
 
-SHORT is_WIN(const BOARD& a, SHORT x, SHORT y);
+SHORT isWin(const BOARD& a, SHORT x, SHORT y);
 
-bool is_DRAW(const BOARD& a);
+bool isDraw(const BOARD& a);
 
-void game_UNDO(BOARD& a, SHORT &curX, SHORT &curY);
+void sys_Undo(BOARD& a, SHORT &curX, SHORT &curY);
 
-bool checkResult(BOARD& a, SHORT &curX, SHORT &curY);
+bool display_Screen_Result(BOARD& a, SHORT &curX, SHORT &curY);

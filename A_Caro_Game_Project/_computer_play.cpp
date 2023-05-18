@@ -107,7 +107,7 @@ int DefendPoint(const BOARD& board, int x, int y) {
 _POINT computer_Turn(const BOARD& board) {
 	
 	_POINT result;
-	setVal_POINT(result, 0, 0, 'N');
+	create_Point(result, 0, 0, 'N');
 	int thisMakeCPNotStupid = 0;
 	int MaxPoint = -DefendArr[9];
 	for (int i = 0; i < BOARD_SIZE; i++) {

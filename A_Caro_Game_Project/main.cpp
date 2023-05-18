@@ -39,17 +39,8 @@ int main() {
 	SetConsoleTitleA("CARO GAME");
 	getFormedWindow();
 
-	if (get_STUFFS(gameDat)) {
+	if (load_Data(gameDat)) {
 		Display(gameDat);
 	}
-	while (1) {
-
-		moveCur(x, y);
-		system("cls");
-		_draw_HUMAN(x, y);
-		show_ASK_DEL(x,y,1);
-	}
-	_TRANSITION();
-
 	return 0;
 }

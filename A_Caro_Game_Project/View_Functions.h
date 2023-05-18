@@ -63,62 +63,62 @@ void changeFont(int x);
 void fixConsoleWindow();
 
 //Return default color
-void returnColor();
+void reset_Color();
 //Draw Border - default text color : black
-void draw_BORDER_1line(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_TXT);
-void draw_BORDER_2line(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_TXT);
+void draw_Border_1line(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_TXT);
+void draw_Border_2line(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_TXT);
 //Draw retangle of spaces - default bg color : white
-void draw_RETANGLE_SPACE(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_BG, bool SHADOW = 0);
+void draw_RetangleSpace(SHORT posX, SHORT posY, int width, int height, int COLOR = COLOR_BG, bool SHADOW = 0);
 //Draw Box - default color, bg : white, txt : black
-void draw_BOX(SHORT posX, SHORT posY, int width, int height, char type, int COLOR_bg = COLOR_BG, int COLOR_txt = COLOR_TXT);
+void draw_Box(SHORT posX, SHORT posY, int width, int height, char type, int COLOR_bg = COLOR_BG, int COLOR_txt = COLOR_TXT);
 //Draw grid of board game
-void draw_BOARD(SHORT posX, SHORT posY, int sizeBoard, std::string nameBoard);
+void draw_Board(SHORT posX, SHORT posY, int sizeBoard, std::string nameBoard);
 //Draw point
-void draw_POINT(const _POINT& point);
+void draw_Point(const _POINT& point);
 //Draw points
-void draw_POINTS(SHORT posX, SHORT posY, const BOARD& matrix);
+void draw_GridPoint(SHORT posX, SHORT posY, const BOARD& matrix);
 //Draw text 1 line
-void draw_TXT(SHORT posX, SHORT posY, const std::string& str);
+void draw_Str(SHORT posX, SHORT posY, const std::string& str);
 
 void draw_Grid_XO();
 
 //Draw turn display
-void show_TURN(SHORT posX, SHORT posY, char turn);
+void show_Game_Turn(SHORT posX, SHORT posY, char turn);
 
-void draw_STR_limit(SHORT x, SHORT y, std::string str, int len);
+void draw_limited_Str(SHORT x, SHORT y, std::string str, int len);
 //Draw scores
-void show_SCORE_X(SHORT posX, SHORT posY, int score);
-void show_SCORE_O(SHORT posX, SHORT posY, int score);
+void show_Game_Score_x(SHORT posX, SHORT posY, int score);
+void show_Game_Score_o(SHORT posX, SHORT posY, int score);
 //Draw last move
-void show_LASTMOVE(SHORT posX, SHORT posY, const BOARD& board);
-void show_GAME_HELP(SHORT posX, SHORT posY);
+void show_Game_LastMove(SHORT posX, SHORT posY, const BOARD& board);
+void show_Game_Helps(SHORT posX, SHORT posY);
 //MAINMENU SHOWING
-void show_SCREEN_MAINMENU(SHORT color, SHORT cmd, bool continue_check, SHORT _x, SHORT _y);
+void show_Screen_MainMenu(SHORT color, SHORT cmd, bool continue_check, SHORT _x, SHORT _y);
 //GAME SHOWING
 //some orther function
-void show_GET_NAME();
-void show_SCREEN_GAME(BOARD& board);
-void show_BOARD_CURSOR(SHORT _x, SHORT _y, char type);
+void show_Get_Name();
+void show_Screen_Game(BOARD& board);
+void show_Board_Cursor(SHORT _x, SHORT _y, char type);
 
-void show_SCREEN_SUBMENU(SHORT _x, SHORT _y, SHORT cmd);
-void show_SCREEN_CGAME(const BOARD& a, const DATA& data, SHORT index, SHORT _x, SHORT _y);
+void show_Screen_SubMenu(SHORT _x, SHORT _y, SHORT cmd);
+void show_Screen_ContinueGame(const BOARD& a, const DATA& data, SHORT index, SHORT _x, SHORT _y);
 
-void show_SCREEN_SETTINGS(SHORT cmd, DATA& dat);
-void show_SETTINGS_VOLUME(SHORT lenVolume, BOOL HL);
-void show_SETTINGS_MUTE(BOOL check, BOOL HL);
-void show_SPEAKER(bool check);
+void show_Screen_Setting(SHORT cmd, DATA& dat);
+void show_Setting_Volume(SHORT lenVolume, BOOL HL);
+void show_Setting_Mute(BOOL check, BOOL HL);
+void show_Speaker(bool check);
 
-void show_ASK_DEL(SHORT x, SHORT y, BOOL check);
+void show_Ask_Delete(SHORT x, SHORT y, BOOL check);
 
-void show_SCREEN_HTP(SHORT _x, SHORT _y);
+void show_Screen_HTP(SHORT _x, SHORT _y);
 
-void show_SCREEN_ABOUT(SHORT _x, SHORT _y);
+void show_Screen_About(SHORT _x, SHORT _y);
 
-void show_ASK_GAMEPLAY(SHORT x, SHORT y, BOOL check);
+void show_Ask_Gameplay(SHORT x, SHORT y, BOOL check);
 
-void show_ASK_DIFF(SHORT _x, SHORT _y, int cmd);
+void show_Ask_Difficult(SHORT _x, SHORT _y, int cmd);
 
-void show_ASK_SAVE(SHORT _x, SHORT _y, BOOL check);
+void show_Ask_Save(SHORT _x, SHORT _y, BOOL check);
 
 void selectSound1();
 void selectSound2();

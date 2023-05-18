@@ -13,24 +13,24 @@ struct DATA {
 	bool mute;
 };
 
-void setVal_POINT(_POINT& point,int _x, int _y, char _c);
+void create_Point(_POINT& point,int _x, int _y, char _c);
 
-void setVal_POINT(_POINT& point, char _c);
+void create_Point(_POINT& point, char _c);
 
-void init_BOARD(BOARD& matrix);
+void init_Board(BOARD& matrix);
 
-bool get_STUFFS(DATA& data);
+bool load_Data(DATA& data);
 
-void get_BOARD_DATA(BOARD& des,const std::string& fileName);
+void load_Board_from_Data(BOARD& des,const std::string& fileName);
 
-bool save_BOARD_DATA(DATA& data,const BOARD& src);
+bool save_Board_to_Data(DATA& data,const BOARD& src);
 
-void save_BOARD_FILE(BOARD& board);
+void save_Board_to_File(BOARD& board);
 
-void save_DATA_FILE(DATA& data);
+void save_Data_to_File(DATA& data);
 
-void delete_BOARD_DATA(DATA& data,const std::string& name);
+void delete_Board_from_Data(DATA& data,const std::string& name);
 
-void delete_BOARD_FILE(const std::string& name);
+void delete_Board_from_File(const std::string& name);
 
-void delete_BOARD(DATA& data, const std::string& name);
+void delete_Board_from_Game(DATA& data, const std::string& name);

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void _draw_X_shape(SHORT _x, SHORT _y) {
+void _draw_shape_x(SHORT _x, SHORT _y) {
 	GoTo(_x + 1, _y + 1); cout << (char)223;
 	GoTo(_x + 1, _y + 4); cout << (char)223;
 	GoTo(_x + 2, _y + 1); cout << (char)220;
@@ -19,7 +19,7 @@ void _draw_X_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 7, _y + 1); cout << (char)223;
 	GoTo(_x + 7, _y + 4); cout << (char)223;
 }
-void _draw_O_shape(SHORT _x, SHORT _y) {
+void _draw_shape_o(SHORT _x, SHORT _y) {
 	GoTo(_x + 1, _y + 2); cout << (char)219;
 	GoTo(_x + 1, _y + 3); cout << (char)219;
 	GoTo(_x + 2, _y + 1); cout << (char)220;
@@ -31,7 +31,7 @@ void _draw_O_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 5, _y + 2); cout << (char)219;
 	GoTo(_x + 5, _y + 3); cout << (char)219;
 }
-void _draw_NAME_CARO(SHORT _x, SHORT _y, int _color) {
+void _draw_shape_caro(SHORT _x, SHORT _y, int _color) {
 	GoTo(_x + 50, _y + 11); cout << "- A project made by 11th Group. -";
 	SetColor(COLOR_BG, (_color+1)%7);
 	GoTo(_x + 5, _y + 2); cout << (char)219;
@@ -78,7 +78,7 @@ void _draw_NAME_CARO(SHORT _x, SHORT _y, int _color) {
 	GoTo(_x + 15, _y + 3); cout << (char)222;
 	GoTo(_x + 15, _y + 6); cout << (char)222;
 	GoTo(_x + 15, _y + 7); cout << (char)222;
-	returnColor();
+	reset_Color();
 	SetColor(COLOR_BG, (_color+2) % 7);
 	GoTo(_x + 17, _y + 2); cout << (char)219;
 	GoTo(_x + 17, _y + 3); cout << (char)219;
@@ -134,7 +134,7 @@ void _draw_NAME_CARO(SHORT _x, SHORT _y, int _color) {
 	GoTo(_x + 27, _y + 6); cout << (char)222;
 	GoTo(_x + 27, _y + 7); cout << (char)222;
 	GoTo(_x + 27, _y + 8); cout << (char)222;
-	returnColor();
+	reset_Color();
 	SetColor(COLOR_BG, (_color + 3) % 7);
 	GoTo(_x + 29, _y + 1); cout << (char)219;
 	GoTo(_x + 29, _y + 2); cout << (char)219;
@@ -190,7 +190,7 @@ void _draw_NAME_CARO(SHORT _x, SHORT _y, int _color) {
 	GoTo(_x + 39, _y + 6); cout << (char)222;
 	GoTo(_x + 39, _y + 7); cout << (char)222;
 	GoTo(_x + 39, _y + 8); cout << (char)222;
-	returnColor();
+	reset_Color();
 	SetColor(COLOR_BG, (_color + 4) % 7);
 	GoTo(_x + 41, _y + 2); cout << (char)219;
 	GoTo(_x + 41, _y + 3); cout << (char)219;
@@ -242,9 +242,9 @@ void _draw_NAME_CARO(SHORT _x, SHORT _y, int _color) {
 	GoTo(_x + 51, _y + 5); cout << (char)222;
 	GoTo(_x + 51, _y + 6); cout << (char)222;
 	GoTo(_x + 51, _y + 7); cout << (char)222;
-	returnColor();
+	reset_Color();
 }
-void _draw_MY_BOY(SHORT _x, SHORT _y) {
+void _draw_shape_qr(SHORT _x, SHORT _y) {
 	GoTo(_x + 1, _y + 1); cout << (char)219;
 	GoTo(_x + 1, _y + 2); cout << (char)219;
 	GoTo(_x + 1, _y + 3); cout << (char)219;
@@ -484,121 +484,7 @@ void _draw_MY_BOY(SHORT _x, SHORT _y) {
 	GoTo(_x + 25, _y + 13); cout << (char)223;
 
 }
-void _draw_TALK_BOX(SHORT _x, SHORT _y) {
-	GoTo(_x + 0, _y + 8); cout << (char)223;
-	GoTo(_x + 1, _y + 7); cout << (char)220;
-	GoTo(_x + 1, _y + 8); cout << (char)223;
-	GoTo(_x + 2, _y + 6); cout << (char)220;
-	GoTo(_x + 2, _y + 7); cout << (char)223;
-	GoTo(_x + 2, _y + 8); cout << (char)223;
-	GoTo(_x + 3, _y + 5); cout << (char)219;
-	GoTo(_x + 3, _y + 6); cout << (char)223;
-	GoTo(_x + 3, _y + 8); cout << (char)223;
-	GoTo(_x + 4, _y + 3); cout << (char)219;
-	GoTo(_x + 4, _y + 4); cout << (char)219;
-	GoTo(_x + 4, _y + 8); cout << (char)223;
-	GoTo(_x + 5, _y + 2); cout << (char)220;
-	GoTo(_x + 5, _y + 7); cout << (char)220;
-	GoTo(_x + 6, _y + 2); cout << (char)223;
-	GoTo(_x + 6, _y + 7); cout << (char)220;
-	GoTo(_x + 7, _y + 1); cout << (char)220;
-	GoTo(_x + 7, _y + 8); cout << (char)223;
-	GoTo(_x + 8, _y + 1); cout << (char)220;
-	GoTo(_x + 8, _y + 3); cout << (char)219;
-	GoTo(_x + 8, _y + 4); cout << (char)219;
-	GoTo(_x + 8, _y + 5); cout << (char)219;
-	GoTo(_x + 8, _y + 6); cout << (char)223;
-	GoTo(_x + 8, _y + 8); cout << (char)223;
-	GoTo(_x + 9, _y + 1); cout << (char)220;
-	GoTo(_x + 9, _y + 4); cout << (char)220;
-	GoTo(_x + 9, _y + 8); cout << (char)223;
-	GoTo(_x + 10, _y + 1); cout << (char)220;
-	GoTo(_x + 10, _y + 3); cout << (char)219;
-	GoTo(_x + 10, _y + 4); cout << (char)219;
-	GoTo(_x + 10, _y + 5); cout << (char)219;
-	GoTo(_x + 10, _y + 6); cout << (char)223;
-	GoTo(_x + 10, _y + 8); cout << (char)223;
-	GoTo(_x + 11, _y + 1); cout << (char)220;
-	GoTo(_x + 11, _y + 8); cout << (char)223;
-	GoTo(_x + 12, _y + 1); cout << (char)220;
-	GoTo(_x + 12, _y + 3); cout << (char)219;
-	GoTo(_x + 12, _y + 4); cout << (char)219;
-	GoTo(_x + 12, _y + 5); cout << (char)219;
-	GoTo(_x + 12, _y + 6); cout << (char)223;
-	GoTo(_x + 12, _y + 8); cout << (char)223;
-	GoTo(_x + 13, _y + 1); cout << (char)220;
-	GoTo(_x + 13, _y + 3); cout << (char)223;
-	GoTo(_x + 13, _y + 4); cout << (char)220;
-	GoTo(_x + 13, _y + 6); cout << (char)223;
-	GoTo(_x + 13, _y + 8); cout << (char)223;
-	GoTo(_x + 14, _y + 1); cout << (char)220;
-	GoTo(_x + 14, _y + 3); cout << (char)223;
-	GoTo(_x + 14, _y + 4); cout << (char)220;
-	GoTo(_x + 14, _y + 6); cout << (char)223;
-	GoTo(_x + 14, _y + 8); cout << (char)223;
-	GoTo(_x + 15, _y + 1); cout << (char)220;
-
-	GoTo(_x + 15, _y + 8); cout << (char)223;
-	GoTo(_x + 16, _y + 1); cout << (char)220;
-	GoTo(_x + 16, _y + 3); cout << (char)219;
-	GoTo(_x + 16, _y + 4); cout << (char)219;
-	GoTo(_x + 16, _y + 5); cout << (char)219;
-	GoTo(_x + 16, _y + 6); cout << (char)223;
-	GoTo(_x + 16, _y + 8); cout << (char)223;
-	GoTo(_x + 17, _y + 1); cout << (char)220;
-	GoTo(_x + 17, _y + 6); cout << (char)223;
-	GoTo(_x + 17, _y + 8); cout << (char)223;
-	GoTo(_x + 18, _y + 1); cout << (char)220;
-	GoTo(_x + 18, _y + 6); cout << (char)223;
-	GoTo(_x + 18, _y + 8); cout << (char)223;
-	GoTo(_x + 19, _y + 1); cout << (char)220;
-	GoTo(_x + 19, _y + 8); cout << (char)223;
-	GoTo(_x + 20, _y + 1); cout << (char)220;
-	GoTo(_x + 20, _y + 3); cout << (char)219;
-	GoTo(_x + 20, _y + 4); cout << (char)219;
-	GoTo(_x + 20, _y + 5); cout << (char)219;
-	GoTo(_x + 20, _y + 6); cout << (char)223;
-	GoTo(_x + 20, _y + 8); cout << (char)223;
-	GoTo(_x + 21, _y + 1); cout << (char)220;
-	GoTo(_x + 21, _y + 6); cout << (char)223;
-	GoTo(_x + 21, _y + 8); cout << (char)223;
-	GoTo(_x + 22, _y + 1); cout << (char)220;
-	GoTo(_x + 22, _y + 6); cout << (char)223;
-	GoTo(_x + 22, _y + 8); cout << (char)223;
-	GoTo(_x + 23, _y + 1); cout << (char)220;
-	GoTo(_x + 23, _y + 8); cout << (char)223;
-	GoTo(_x + 24, _y + 1); cout << (char)220;
-	GoTo(_x + 24, _y + 3); cout << (char)220;
-	GoTo(_x + 24, _y + 4); cout << (char)219;
-	GoTo(_x + 24, _y + 5); cout << (char)219;
-	GoTo(_x + 24, _y + 8); cout << (char)223;
-	GoTo(_x + 25, _y + 1); cout << (char)220;
-	GoTo(_x + 25, _y + 3); cout << (char)223;
-	GoTo(_x + 25, _y + 6); cout << (char)223;
-	GoTo(_x + 25, _y + 8); cout << (char)223;
-	GoTo(_x + 26, _y + 1); cout << (char)220;
-	GoTo(_x + 26, _y + 3); cout << (char)223;
-	GoTo(_x + 26, _y + 6); cout << (char)223;
-	GoTo(_x + 26, _y + 8); cout << (char)223;
-	GoTo(_x + 27, _y + 1); cout << (char)220;
-	GoTo(_x + 27, _y + 3); cout << (char)220;
-	GoTo(_x + 27, _y + 4); cout << (char)219;
-	GoTo(_x + 27, _y + 5); cout << (char)219;
-	GoTo(_x + 27, _y + 8); cout << (char)223;
-	GoTo(_x + 28, _y + 1); cout << (char)220;
-	GoTo(_x + 28, _y + 8); cout << (char)223;
-	GoTo(_x + 29, _y + 2); cout << (char)223;
-	GoTo(_x + 29, _y + 7); cout << (char)220;
-	GoTo(_x + 30, _y + 2); cout << (char)220;
-	GoTo(_x + 30, _y + 7); cout << (char)223;
-	GoTo(_x + 31, _y + 3); cout << (char)219;
-	GoTo(_x + 31, _y + 4); cout << (char)219;
-	GoTo(_x + 31, _y + 5); cout << (char)219;
-	GoTo(_x + 31, _y + 6); cout << (char)219;
-
-
-}
-void _draw_XO_SHAPE(SHORT _x, SHORT _y, bool _color) {
+void _draw_shape_x_o(SHORT _x, SHORT _y, bool _color) {
 	if (_color) SetColor(COLOR_BG, COLOR_BLUE);
 	else SetColor(COLOR_BG, COLOR_RED);
 	GoTo(_x + 2, _y + 1); cout << (char)219;
@@ -667,7 +553,7 @@ void _draw_XO_SHAPE(SHORT _x, SHORT _y, bool _color) {
 	GoTo(_x + 23, _y + 2); cout << (char)219;
 	GoTo(_x + 23, _y + 3); cout << (char)219;
 	GoTo(_x + 23, _y + 4); cout << (char)219;
-	returnColor();
+	reset_Color();
 
 }
 void _draw_BALL(SHORT _x, SHORT _y) {
@@ -714,7 +600,7 @@ void _draw_LINE(SHORT _x, SHORT _y) {
 	GoTo(_x + 15, _y + 8); cout << (char)223;
 	GoTo(_x + 16, _y + 8); cout << (char)223;
 }
-void _draw_XWIN_shape(SHORT _x, SHORT _y) {
+void _draw_shape_x_win(SHORT _x, SHORT _y) {
 	GoTo(_x + 10, _y + 1); cout << (char)220;
 	GoTo(_x + 10, _y + 2); cout << (char)219;
 	GoTo(_x + 10, _y + 3); cout << (char)219;
@@ -817,7 +703,7 @@ void _draw_XWIN_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 58, _y + 5); cout << (char)223;
 	GoTo(_x + 59, _y + 1); cout << (char)220;
 	GoTo(_x + 59, _y + 5); cout << (char)223;
-	returnColor();
+	reset_Color();
 	GoTo(_x + 64, _y + 1); cout << (char)220;
 	GoTo(_x + 64, _y + 2); cout << (char)219;
 	GoTo(_x + 64, _y + 3); cout << (char)219;
@@ -862,7 +748,7 @@ void _draw_XWIN_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 87, _y + 5); cout << (char)223;
 
 }
-void _draw_OWIN_shape(SHORT _x, SHORT _y) {
+void _draw_shape_o_win(SHORT _x, SHORT _y) {
 	GoTo(_x + 10, _y + 1); cout << (char)220;
 	GoTo(_x + 10, _y + 2); cout << (char)219;
 	GoTo(_x + 10, _y + 3); cout << (char)219;
@@ -962,7 +848,7 @@ void _draw_OWIN_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 59, _y + 2); cout << (char)219;
 	GoTo(_x + 59, _y + 3); cout << (char)219;
 	GoTo(_x + 59, _y + 4); cout << (char)219;
-	returnColor();
+	reset_Color();
 	GoTo(_x + 64, _y + 1); cout << (char)220;
 	GoTo(_x + 64, _y + 2); cout << (char)219;
 	GoTo(_x + 64, _y + 3); cout << (char)219;
@@ -1005,10 +891,10 @@ void _draw_OWIN_shape(SHORT _x, SHORT _y) {
 	GoTo(_x + 87, _y + 3); cout << (char)219;
 	GoTo(_x + 87, _y + 4); cout << (char)219;
 	GoTo(_x + 87, _y + 5); cout << (char)223;
-	returnColor();
+	reset_Color();
 }
 
-void _draw_BOT_face(SHORT _x, SHORT _y) {
+void _draw_shape_bot_face(SHORT _x, SHORT _y) {
 	GoTo(_x + 3, _y + 3); cout << (char)219;
 	GoTo(_x + 4, _y + 4); cout << (char)223;
 	GoTo(_x + 5, _y + 1); cout << (char)219;
@@ -1023,7 +909,7 @@ void _draw_BOT_face(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_DRAW_shape(SHORT _x, SHORT _y) {
+void _draw_shape_isdraw(SHORT _x, SHORT _y) {
 	GoTo(_x + 3, _y + 2); cout << (char)219;
 	GoTo(_x + 3, _y + 3); cout << (char)219;
 	GoTo(_x + 3, _y + 4); cout << (char)219;
@@ -1090,7 +976,7 @@ void _draw_DRAW_shape(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_NEWBOARDGAME(SHORT _x, SHORT _y) {
+void _draw_shape_newboard(SHORT _x, SHORT _y) {
 	GoTo(_x + 1, _y + 1); cout << (char)219;
 	GoTo(_x + 1, _y + 2); cout << (char)219;
 	GoTo(_x + 1, _y + 3); cout << (char)223;
@@ -1258,7 +1144,7 @@ void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT)) {
 
 }
 
-void _draw_LEFTARROW_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_leftarrow(SHORT _x, SHORT _y) {
 	GoTo(_x + 3, _y + 4); cout << (char)220;
 	GoTo(_x + 4, _y + 4); cout << (char)219;
 	GoTo(_x + 4, _y + 5); cout << (char)223;
@@ -1283,7 +1169,7 @@ void _draw_LEFTARROW_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_RIGHTARROW_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_rightarrow(SHORT _x, SHORT _y) {
 	GoTo(_x + 1, _y + 1); cout << (char)219;
 	GoTo(_x + 1, _y + 2); cout << (char)219;
 	GoTo(_x + 1, _y + 3); cout << (char)219;
@@ -1308,7 +1194,7 @@ void _draw_RIGHTARROW_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_SETTINGS_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_setting(SHORT _x, SHORT _y) {
 	GoTo(_x + 1, _y + 1); cout << (char)219;
 	GoTo(_x + 1, _y + 2); cout << (char)223;
 	GoTo(_x + 1, _y + 3); cout << (char)223;
@@ -1383,7 +1269,7 @@ void _draw_SETTINGS_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_VOLUME_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_volume(SHORT _x, SHORT _y) {
 	GoTo(_x + 6, _y + 4); cout << (char)219;
 	GoTo(_x + 6, _y + 5); cout << (char)219;
 	GoTo(_x + 6, _y + 6); cout << (char)219;
@@ -1479,7 +1365,7 @@ void _draw_VOLUME_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_SILINE_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_volume_dis(SHORT _x, SHORT _y) {
 	GoTo(_x + 6, _y + 4); cout << (char)219;
 	GoTo(_x + 6, _y + 5); cout << (char)219;
 	GoTo(_x + 6, _y + 6); cout << (char)219;
@@ -1565,7 +1451,7 @@ void _draw_SILINE_SHAPE(SHORT _x, SHORT _y) {
 	GoTo(_x + 28, _y + 9); cout << (char)223;
 }
 
-void _draw_CONTINUE_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_continue(SHORT _x, SHORT _y) {
 	SetColor(COLOR_BG, 1);
 	GoTo(_x + 1, _y + 1); cout << (char)220;
 	GoTo(_x + 1, _y + 2); cout << (char)219;
@@ -1648,10 +1534,10 @@ void _draw_CONTINUE_SHAPE(SHORT _x, SHORT _y) {
 	GoTo(_x + 44, _y + 1); cout << (char)223;
 	GoTo(_x + 44, _y + 2); cout << (char)223;
 	GoTo(_x + 44, _y + 3); cout << (char)220;
-	returnColor();
+	reset_Color();
 }
 
-void _draw_HTP_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_htp(SHORT _x, SHORT _y) {
 	GoTo(_x + 1, _y + 1); cout << (char)219;
 	GoTo(_x + 1, _y + 2); cout << (char)219;
 	GoTo(_x + 1, _y + 3); cout << (char)223;
@@ -1721,7 +1607,7 @@ void _draw_HTP_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_CONSOLE_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_console(SHORT _x, SHORT _y) {
 	GoTo(_x + 4, _y + 3); cout << (char)219;
 	GoTo(_x + 4, _y + 4); cout << (char)219;
 	GoTo(_x + 4, _y + 5); cout << (char)223;
@@ -1780,7 +1666,7 @@ void _draw_CONSOLE_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_ABOUT_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_about(SHORT _x, SHORT _y) {
 	GoTo(_x + 3, _y + 2); cout << (char)219;
 	GoTo(_x + 3, _y + 3); cout << (char)219;
 	GoTo(_x + 4, _y + 1); cout << (char)220;
@@ -1824,7 +1710,7 @@ void _draw_ABOUT_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_FACE_SHAPE(SHORT _x, SHORT _y) {
+void _draw_shape_littleface(SHORT _x, SHORT _y) {
 	GoTo(_x + 3, _y + 1); cout << (char)220;
 	GoTo(_x + 3, _y + 2); cout << (char)219;
 	GoTo(_x + 4, _y + 1); cout << (char)223;
@@ -1861,7 +1747,7 @@ void _draw_FACE_SHAPE(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_ROBOT(SHORT _x, SHORT _y) {
+void _draw_shape_robot(SHORT _x, SHORT _y) {
 	GoTo(_x + 2, _y + 11); cout << (char)220;
 	GoTo(_x + 2, _y + 12); cout << (char)219;
 	GoTo(_x + 2, _y + 13); cout << (char)219;
@@ -2101,7 +1987,7 @@ void _draw_ROBOT(SHORT _x, SHORT _y) {
 
 }
 
-void _draw_HUMAN(SHORT _x, SHORT _y) {
+void _draw_shape_human(SHORT _x, SHORT _y) {
 	GoTo(_x + 2, _y + 11); cout << (char)220;
 	GoTo(_x + 2, _y + 12); cout << (char)219;
 	GoTo(_x + 2, _y + 13); cout << (char)219;
@@ -2294,7 +2180,7 @@ void _draw_HUMAN(SHORT _x, SHORT _y) {
 	GoTo(_x + 25, _y + 16); cout << (char)219;
 }
 
-void _draw_VS(SHORT _x, SHORT _y) {
+void _draw_shape_vs(SHORT _x, SHORT _y) {
 	GoTo(_x + 5, _y + 2); cout << (char)219;
 	GoTo(_x + 5, _y + 3); cout << (char)219;
 	GoTo(_x + 6, _y + 4); cout << (char)219;
@@ -2319,12 +2205,12 @@ void _draw_VS(SHORT _x, SHORT _y) {
 
 }
 
-void _TRANSITION() {
+void _draw_transition() {
 	system("cls");
 	GoTo(42, 14); cout << "LOADING ";
 	for (int i = 0; i < 3; i++) {
 		 cout << ". "; Sleep(300);
 	}
 	system("cls");
-	returnColor();
+	reset_Color();
 }

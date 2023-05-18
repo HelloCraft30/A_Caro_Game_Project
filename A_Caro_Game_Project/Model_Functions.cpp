@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool get_STUFFS(DATA &data) {
+bool load_Data(DATA &data) {
 	data.SAVEdatas.resize(0);
 	data.SAVEnames.resize(0);
 	data.mute = false;
@@ -24,31 +24,31 @@ bool get_STUFFS(DATA &data) {
 		//get BOARDS
 		
 		for (int i = 0; i < data.SAVEnames.size(); i++) {
-			BOARD _board; init_BOARD(_board);
-			get_BOARD_DATA(_board, data.SAVEnames[i]);
+			BOARD _board; init_Board(_board);
+			load_Board_from_Data(_board, data.SAVEnames[i]);
 			data.SAVEdatas.push_back(_board);
 		}
 	}
 	return true;
 }
 
-void setVal_POINT(_POINT& point, int _x, int _y, char _c) {
+void create_Point(_POINT& point, int _x, int _y, char _c) {
 	point.x = _x;
 	point.y = _y;
 	point.c = _c;
 }
 
-void setVal_POINT(_POINT& point, char _c) {
+void create_Point(_POINT& point, char _c) {
 	point.c = _c;
 }
 
-void init_BOARD(BOARD& matrix) {
+void init_Board(BOARD& matrix) {
 	matrix.gamePlay = 0;
 	matrix.points = new _POINT * [BOARD_SIZE];
 	for (int i = 0; i < BOARD_SIZE; i++) matrix.points[i] = new _POINT[BOARD_SIZE];
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
-			setVal_POINT(matrix.points[i][j], j, i, 'N');
+			create_Point(matrix.points[i][j], j, i, 'N');
 		}
 	}
 	matrix.O_wins = 0;
@@ -57,7 +57,7 @@ void init_BOARD(BOARD& matrix) {
 	matrix.listOfMoves.resize(0);
 }
 
-void get_BOARD_DATA(BOARD& des,const string& fileName) {
+void load_Board_from_Data(BOARD& des,const string& fileName) {
 	des.name = fileName;
 	string dir = SAVESFOLDER;
 	dir+= '\\' + fileName + ".txt";
@@ -91,7 +91,7 @@ void get_BOARD_DATA(BOARD& des,const string& fileName) {
 	fileOPEN.close();
 }
 
-bool save_BOARD_DATA(DATA& data, const BOARD& src) {
+bool save_Board_to_Data(DATA& data, const BOARD& src) {
 	//linear search
 	if (data.SAVEnames.size() >= SAVES_LIMIT) return false;
 	bool existed = 0;
@@ -115,7 +115,7 @@ bool save_BOARD_DATA(DATA& data, const BOARD& src) {
 	return true;
 }
 
-void save_BOARD_FILE(BOARD& board) {
+void save_Board_to_File(BOARD& board) {
 	string link = SAVESFOLDER;
 	link += '\\';
 	link += board.name;
@@ -141,18 +141,18 @@ void save_BOARD_FILE(BOARD& board) {
 	fileOpen.close();
 }
 
-void save_DATA_FILE(DATA& data) {
+void save_Data_to_File(DATA& data) {
 	fstream fileLIST(LISTSAVES, ios::out | ios::trunc);
 	for (auto x : data.SAVEnames) {
 		fileLIST << x << endl;
 	}
 	fileLIST.close();
 	for (auto x : data.SAVEdatas) {
-		save_BOARD_FILE(x);
+		save_Board_to_File(x);
 	}
 }
 
-void delete_BOARD_DATA(DATA& data,const std::string& name) {
+void delete_Board_from_Data(DATA& data,const std::string& name) {
 	for (int i = 0; i < data.SAVEnames.size(); i++) {
 		if (data.SAVEnames[i] == name) {
 			data.SAVEnames.erase(data.SAVEnames.begin()+i);
@@ -168,7 +168,7 @@ void delete_BOARD_DATA(DATA& data,const std::string& name) {
 	}
 }
 
-void delete_BOARD_FILE(const std::string& name) {
+void delete_Board_from_File(const std::string& name) {
 	string dir = SAVESFOLDER;
 	dir += '\\';
 	dir += name;
@@ -176,8 +176,8 @@ void delete_BOARD_FILE(const std::string& name) {
 	remove(dir.c_str());
 }
 
-void delete_BOARD(DATA& data, const std::string& name) {
-	delete_BOARD_FILE(name);
-	delete_BOARD_DATA(data, name);
-	save_DATA_FILE(data);
+void delete_Board_from_Game(DATA& data, const std::string& name) {
+	delete_Board_from_File(name);
+	delete_Board_from_Data(data, name);
+	save_Data_to_File(data);
 }

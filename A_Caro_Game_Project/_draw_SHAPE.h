@@ -1,54 +1,52 @@
 #pragma once
 #include "View_Functions.h"
 #include <math.h>
-void _draw_X_shape(SHORT _x, SHORT _y);
+void _draw_shape_x(SHORT _x, SHORT _y);
 
-void _draw_O_shape(SHORT _x, SHORT _y);
+void _draw_shape_o(SHORT _x, SHORT _y);
 
-void _draw_NAME_CARO(SHORT _x, SHORT _y, int _color = 1);
+void _draw_shape_caro(SHORT _x, SHORT _y, int _color = 1);
 
-void _draw_MY_BOY(SHORT _x, SHORT _y);
+void _draw_shape_qr(SHORT _x, SHORT _y);
 
-void _draw_TALK_BOX(SHORT _x, SHORT _y);
+void _draw_shape_x_o(SHORT _x, SHORT _y, bool _color = 0);
 
-void _draw_XO_SHAPE(SHORT _x, SHORT _y, bool _color = 0);
+void _draw_shape_x_win(SHORT _x, SHORT _y);
 
-void _draw_XWIN_shape(SHORT _x, SHORT _y);
+void _draw_shape_o_win(SHORT _x, SHORT _y);
 
-void _draw_OWIN_shape(SHORT _x, SHORT _y);
+void _draw_shape_bot_face(SHORT _x, SHORT _y);
 
-void _draw_BOT_face(SHORT _x, SHORT _y);
-
-void _draw_DRAW_shape(SHORT _x, SHORT _y);
+void _draw_shape_isdraw(SHORT _x, SHORT _y);
 
 void _draw_animation_win(SHORT _x, SHORT _y, void function(SHORT, SHORT));
 
-void _draw_LEFTARROW_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_leftarrow(SHORT _x, SHORT _y);
 
-void _draw_RIGHTARROW_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_rightarrow(SHORT _x, SHORT _y);
 
-void _draw_NEWBOARDGAME(SHORT _x, SHORT _y);
+void _draw_shape_newboard(SHORT _x, SHORT _y);
 
-void _draw_SETTINGS_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_setting(SHORT _x, SHORT _y);
 
-void _draw_VOLUME_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_volume(SHORT _x, SHORT _y);
 
-void _draw_SILINE_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_volume_dis(SHORT _x, SHORT _y);
 
-void _draw_CONTINUE_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_continue(SHORT _x, SHORT _y);
 
-void _draw_HTP_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_htp(SHORT _x, SHORT _y);
 
-void _draw_CONSOLE_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_console(SHORT _x, SHORT _y);
 
-void _draw_ABOUT_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_about(SHORT _x, SHORT _y);
 
-void _draw_FACE_SHAPE(SHORT _x, SHORT _y);
+void _draw_shape_littleface(SHORT _x, SHORT _y);
 
-void _draw_ROBOT(SHORT _x, SHORT _y);
+void _draw_shape_robot(SHORT _x, SHORT _y);
 
-void _draw_HUMAN(SHORT _x, SHORT _y);
+void _draw_shape_human(SHORT _x, SHORT _y);
 
-void _draw_VS(SHORT _x, SHORT _y);
+void _draw_shape_vs(SHORT _x, SHORT _y);
 
-void _TRANSITION();
+void _draw_transition();

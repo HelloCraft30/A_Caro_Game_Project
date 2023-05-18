@@ -50,45 +50,45 @@ void Display(DATA& data) {
 		system("cls");
 		switch (display_id) {
 		case 0:
-			_TRANSITION();
-			display_id = display_SCREEN_MAINMENU(data);
+			_draw_transition();
+			display_id = display_Screen_MainMenu(data);
 			break;
 		case 1:
-			display_id = display_SCREEN_GAME(data);
+			display_id = display_Screen_Game_pvp(data);
 			break;
 		case 2:
-			display_id = display_SCREEN_CGAME(data, insSTR);
+			display_id = display_Screen_Continue_Game(data, insSTR);
 			break;
 		case 3:
-			display_id = display_SCREEN_HTP(data);
+			display_id = display_Screen_HTP(data);
 			break;
 		case 4:
-			display_id = display_SCREEN_ABOUT();
+			display_id = display_Screen_About();
 			break;
 		case 5:
-			display_id = display_SCREEN_SETTINGS(data);
+			display_id = display_Screen_Setting(data);
 			break;
 		case 6:
-			display_id = display_SCREEN_GAME_BOT(data);
+			display_id = display_Screen_Game_pvc(data);
 			break;
 		case 9:
-			display_id = display_SCREEN_GAME(data, false, insSTR);
+			display_id = display_Screen_Game_pvp(data, false, insSTR);
 			break;
 		case 10:
-			display_id = display_SCREEN_GAME_BOT(data, false, insSTR);
+			display_id = display_Screen_Game_pvc(data, false, insSTR);
 			break;
 		}
 	}
 }
 
-SHORT display_SCREEN_MAINMENU(DATA& gameData) {
+SHORT display_Screen_MainMenu(DATA& gameData) {
 	SHORT cmd = 1;
 	bool ct_check = gameData.SAVEnames.size();
 	int _size = 7;
 	int _color = 1;
-	_draw_NAME_CARO(4, 2, _color);
-	_draw_XO_SHAPE(58, 5);
-	show_SCREEN_MAINMENU(0, cmd, ct_check, 0, 0);
+	_draw_shape_caro(4, 2, _color);
+	_draw_shape_x_o(58, 5);
+	show_Screen_MainMenu(0, cmd, ct_check, 0, 0);
 	while (true) {
 		while (_kbhit()) {
 			switch (toupper(_getch())) {
@@ -112,7 +112,7 @@ SHORT display_SCREEN_MAINMENU(DATA& gameData) {
 				else cmd++; break;
 			case ENTER:
 				selectSound2();
-				_TRANSITION();
+				_draw_transition();
 				return _do_CMD_MAINMENU(cmd);
 				break;
 			case ESC:
@@ -121,7 +121,7 @@ SHORT display_SCREEN_MAINMENU(DATA& gameData) {
 				exit(0);
 				break;
 			}
-			show_SCREEN_MAINMENU(0, cmd, ct_check, 0, 0);
+			show_Screen_MainMenu(0, cmd, ct_check, 0, 0);
 			break;
 		}
 		//_color = (_color + 1) % _size;
@@ -134,7 +134,7 @@ SHORT display_SCREEN_MAINMENU(DATA& gameData) {
 	return 0;
 }
 
-bool is_DRAW(const BOARD& a) {
+bool isDraw(const BOARD& a) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (a.points[i][j].c == 'N') return false;
@@ -142,23 +142,23 @@ bool is_DRAW(const BOARD& a) {
 	}
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
-			show_BOARD_CURSOR(i, j, a.points[i][j].c);
+			show_Board_Cursor(i, j, a.points[i][j].c);
 		}
 	}
 
 	return true;
 }
 
-SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string& gameName) {
+SHORT display_Screen_Game_pvp(DATA& gameDat, bool newGame, const string& gameName) {
 
 	if (newGame) {
-		if (!display_get_GAMEPLAY()) {
+		if (!display_Ask_Gameplay()) {
 			system("cls");
-			_TRANSITION();
+			_draw_transition();
 			return 6;
 		}
 		system("cls");
-		_TRANSITION();
+		_draw_transition();
 	}
 	//maaybe transition
 	BOARD a;
@@ -166,8 +166,8 @@ SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string& gameName) {
 	a.gamePlay = 0;
 
 	if (newGame) {
-		if (new_GAME_BOARD(gameDat, a) == 0) return 0;
-		else _TRANSITION();
+		if (build_New_Game(gameDat, a) == 0) return 0;
+		else _draw_transition();
 	}
 	else {
 		get_BOARD_NAME(gameDat, a, gameName);
@@ -175,9 +175,9 @@ SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string& gameName) {
 	system("cls");
 
 	//CONTROL THE GAME
-	show_SCREEN_GAME(a);
-	show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-	show_LASTMOVE(61, 15, a);
+	show_Screen_Game(a);
+	show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+	show_Game_LastMove(61, 15, a);
 	while (true) {
 		while (_kbhit()) {
 			char key = toupper(_getch());
@@ -207,35 +207,35 @@ SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string& gameName) {
 				}
 				if (a.Turn == 'X') a.Turn = 'O';
 				else a.Turn = 'X';
-				show_LASTMOVE(61, 15, a);
+				show_Game_LastMove(61, 15, a);
 				break;
 			case BACKSPACE:
 				selectSound3();
-				game_UNDO(a, cur_X, cur_Y);
-				draw_POINTS(4, 2, a);
-				show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-				show_LASTMOVE(61, 15, a);
+				sys_Undo(a, cur_X, cur_Y);
+				draw_GridPoint(4, 2, a);
+				show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+				show_Game_LastMove(61, 15, a);
 				break;
 			case ESC:
 				selectSound3();
-				if (display_SCREEN_SUBMENU(a, gameDat,newGame)) {
+				if (display_Screen_SubMenu(a, gameDat,newGame)) {
 					system("cls");
 					return 0;
 				}
 				else {
-					show_SCREEN_GAME(a);
-					show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-					show_LASTMOVE(61, 15, a);
+					show_Screen_Game(a);
+					show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+					show_Game_LastMove(61, 15, a);
 				}
 				break;
 			default:
 				break;
 			}
-			draw_POINTS(4, 2, a);
-			show_TURN(61, 4, a.Turn);
-			show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-			if (checkResult(a, cur_X, cur_Y)) {
-				show_TURN(61, 4, a.Turn); break;
+			draw_GridPoint(4, 2, a);
+			show_Game_Turn(61, 4, a.Turn);
+			show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+			if (display_Screen_Result(a, cur_X, cur_Y)) {
+				show_Game_Turn(61, 4, a.Turn); break;
 			}
 		}
 
@@ -244,61 +244,61 @@ SHORT display_SCREEN_GAME(DATA& gameDat, bool newGame, const string& gameName) {
 	return 0;
 }
 
-bool checkResult(BOARD& a, SHORT& cur_X, SHORT& cur_Y) {
+bool display_Screen_Result(BOARD& a, SHORT& cur_X, SHORT& cur_Y) {
 	bool exit = false;
-	switch (is_WIN(a, cur_X, cur_Y)) {
+	switch (isWin(a, cur_X, cur_Y)) {
 		//temp notice
 	case 1:
 		exit = true;
 		Sleep(1000);
 		system("cls");
-		_draw_animation_win(-3, 10, _draw_XWIN_shape);
+		_draw_animation_win(-3, 10, _draw_shape_x_win);
 		resetMatch(a);
 		a.X_wins++;
 		system("cls");
-		show_SCREEN_GAME(a);
+		show_Screen_Game(a);
 		cur_X = 5;
 		cur_Y = 5;
-		show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+		show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
 		break;
 	case 2:
 		exit = true;
 		Sleep(1000);
 		system("cls");
-		_draw_animation_win(-3, 10, _draw_OWIN_shape);
+		_draw_animation_win(-3, 10, _draw_shape_o_win);
 		resetMatch(a);
 		a.O_wins++;
 		system("cls");
-		show_SCREEN_GAME(a);
+		show_Screen_Game(a);
 		cur_X = 5;
 		cur_Y = 5;
-		show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+		show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
 		break;
 	}
-	if (is_DRAW(a)) {
+	if (isDraw(a)) {
 		exit = true;
 		Sleep(1000);
 		system("cls");
 		SetColor(COLOR_BG, COLOR_GREEN);
-		_draw_animation_win(28, 8, _draw_DRAW_shape);
-		returnColor();
+		_draw_animation_win(28, 8, _draw_shape_isdraw);
+		reset_Color();
 		resetMatch(a);
 		system("cls");
-		show_SCREEN_GAME(a);
+		show_Screen_Game(a);
 		cur_X = 5;
 		cur_Y = 5;
 	}
 	return exit;
 }
 
-SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameName) {
+SHORT display_Screen_Game_pvc(DATA& gameDat, bool newGame, const string& gameName) {
 	BOARD a;
 	SHORT cur_X = 5, cur_Y = 5;
 	SHORT _x = 0, _y = 0;
-	_POINT bot; setVal_POINT(bot, 0, 0, 'N');
+	_POINT bot; create_Point(bot, 0, 0, 'N');
 	if (newGame) {
-		if (new_GAME_BOARD(gameDat, a) == 0) return 0;
-		else _TRANSITION();
+		if (build_New_Game(gameDat, a) == 0) return 0;
+		else _draw_transition();
 	}
 	else {
 		get_BOARD_NAME(gameDat, a, gameName);
@@ -306,10 +306,10 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 	system("cls");
 	a.gamePlay = 1;
 	//CONTROL THE GAME
-	show_SCREEN_GAME(a);
-	show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-	show_LASTMOVE(61, 15, a);
-	SetColor(COLOR_BLUE, COLOR_BG); GoTo(80 - 2, 9); cout << "Computer's"; returnColor();
+	show_Screen_Game(a);
+	show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+	show_Game_LastMove(61, 15, a);
+	SetColor(COLOR_BLUE, COLOR_BG); GoTo(80 - 2, 9); cout << "Computer's"; reset_Color();
 	while (true) {
 		while (_kbhit()) {
 			char key = toupper(_getch());
@@ -337,35 +337,35 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 				a.points[cur_Y][cur_X].c = 'X';
 				a.listOfMoves.push_back({ cur_X,cur_Y,a.Turn });
 				a.Turn = 'O';
-				show_LASTMOVE(61, 15, a);
+				show_Game_LastMove(61, 15, a);
 				break;
 			case BACKSPACE:
 				selectSound3();
-				game_UNDO(a, cur_X, cur_Y);
-				game_UNDO(a, cur_X, cur_Y);
-				draw_POINTS(4, 2, a);
-				show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-				show_LASTMOVE(61, 15, a);
+				sys_Undo(a, cur_X, cur_Y);
+				sys_Undo(a, cur_X, cur_Y);
+				draw_GridPoint(4, 2, a);
+				show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+				show_Game_LastMove(61, 15, a);
 				break;
 			case ESC:
 				selectSound3();
-				if (display_SCREEN_SUBMENU(a, gameDat,newGame)) {
+				if (display_Screen_SubMenu(a, gameDat,newGame)) {
 					system("cls");
 					return 0;
 				}
 				else {
-					show_SCREEN_GAME(a);
-					show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-					show_LASTMOVE(61, 15, a);
+					show_Screen_Game(a);
+					show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+					show_Game_LastMove(61, 15, a);
 				}
 				break;
 			default:
 				break;
 			}
-			draw_POINTS(4, 2, a);
-			show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-			if (checkResult(a, cur_X, cur_Y)) {
-				show_LASTMOVE(61, 15, a); break;
+			draw_GridPoint(4, 2, a);
+			show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+			if (display_Screen_Result(a, cur_X, cur_Y)) {
+				show_Game_LastMove(61, 15, a); break;
 			}
 			if (a.Turn == 'O') {
 				bot = computer_Turn(a);
@@ -373,25 +373,25 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 				a.points[bot.y][bot.x].c = 'O';
 				a.listOfMoves.push_back({ _x,_y,a.Turn });
 				a.Turn = 'X';
-				draw_RETANGLE_SPACE(78, 3, 8, 4);
+				draw_RetangleSpace(78, 3, 8, 4);
 				SetColor(COLOR_BG, COLOR_BLUE);
-				_draw_BOT_face(75, 2);
-				draw_POINTS(4, 2, a);
-				show_BOARD_CURSOR(_x, _y, 'O');
+				_draw_shape_bot_face(75, 2);
+				draw_GridPoint(4, 2, a);
+				show_Board_Cursor(_x, _y, 'O');
 				Sleep(300);
-				draw_POINTS(4, 2, a);
-				returnColor();
+				draw_GridPoint(4, 2, a);
+				reset_Color();
 			}
 
 
-			show_BOARD_CURSOR(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
-			if (checkResult(a, _x, _y)) {
+			show_Board_Cursor(cur_X, cur_Y, a.points[cur_Y][cur_X].c);
+			if (display_Screen_Result(a, _x, _y)) {
 				cur_X = 5;
 				cur_Y = 5;
-				show_LASTMOVE(61, 15, a);
+				show_Game_LastMove(61, 15, a);
 				break;
 			}
-			show_TURN(61, 4, a.Turn);
+			show_Game_Turn(61, 4, a.Turn);
 		}
 
 
@@ -400,9 +400,9 @@ SHORT display_SCREEN_GAME_BOT(DATA& gameDat, bool newGame, const string& gameNam
 	return 0;
 }
 
-SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data, bool& newGame) {
+SHORT display_Screen_SubMenu(BOARD& board, DATA& data, bool& newGame) {
 	int cmd = 0;
-	show_SCREEN_SUBMENU(0, 0, cmd);
+	show_Screen_SubMenu(0, 0, cmd);
 	char key = ' ';
 	while (true) {
 		while (_kbhit()) {
@@ -423,20 +423,20 @@ SHORT display_SCREEN_SUBMENU(BOARD& board, DATA& data, bool& newGame) {
 				return _do_CMD_SUBMENU(board, data, cmd, newGame);
 				break;
 			}
-			show_SCREEN_SUBMENU(0, 0, cmd);
+			show_Screen_SubMenu(0, 0, cmd);
 		}
 
 	}
 }
 
-SHORT display_SCREEN_SETTINGS(DATA& gameData) {
+SHORT display_Screen_Setting(DATA& gameData) {
 	bool cmd = 0;
 	bool a[2]{ 0 };
 	a[cmd] = true;
-	show_SPEAKER(gameData.mute);
-	draw_BORDER_2line(5, 1, 83, 28);
-	draw_TXT(31, 26, "Press ESC to go back --");
-	show_SCREEN_SETTINGS(cmd, gameData);
+	show_Speaker(gameData.mute);
+	draw_Border_2line(5, 1, 83, 28);
+	draw_Str(31, 26, "Press ESC to go back --");
+	show_Screen_Setting(cmd, gameData);
 	a[0] = a[1] = 0;
 	while (true) {
 		while (_kbhit()) {
@@ -449,10 +449,10 @@ SHORT display_SCREEN_SETTINGS(DATA& gameData) {
 				if (cmd) {
 					if (!gameData.mute && gameData.Vol == 1) gameData.mute = !gameData.mute;
 					if (gameData.Vol == 0) {
-						show_SPEAKER(gameData.mute); break;
+						show_Speaker(gameData.mute); break;
 					}
 					else if (gameData.Vol == 1) {
-						show_SPEAKER(true);
+						show_Speaker(true);
 						gameData.Vol--;
 					}
 					else {
@@ -463,7 +463,7 @@ SHORT display_SCREEN_SETTINGS(DATA& gameData) {
 				if (cmd) {
 					if (gameData.mute) {
 						gameData.mute = !gameData.mute;
-						show_SPEAKER(gameData.mute);
+						show_Speaker(gameData.mute);
 					}
 					if (gameData.Vol == 22) break;
 					else gameData.Vol++; break;
@@ -473,15 +473,15 @@ SHORT display_SCREEN_SETTINGS(DATA& gameData) {
 				selectSound2();
 				if (!cmd) {
 					gameData.mute = !gameData.mute;
-					show_SPEAKER(gameData.mute);
+					show_Speaker(gameData.mute);
 					if (gameData.mute) gameData.Vol = 0;
 					else gameData.Vol = 1;
 				}
 				break;
 			}
 			a[cmd] = true;
-			show_SETTINGS_MUTE(gameData.mute, a[0]);
-			show_SETTINGS_VOLUME(gameData.Vol, a[1]);
+			show_Setting_Mute(gameData.mute, a[0]);
+			show_Setting_Volume(gameData.Vol, a[1]);
 			a[0] = a[1] = 0;
 			_do_CMD_SETTINGS(gameData);
 		}
@@ -490,8 +490,8 @@ SHORT display_SCREEN_SETTINGS(DATA& gameData) {
 	return 0;
 }
 
-SHORT display_SCREEN_ABOUT() {
-	show_SCREEN_ABOUT(0, 0);
+SHORT display_Screen_About() {
+	show_Screen_About(0, 0);
 	while (true) {
 		switch (_getch()) {
 		case ESC:
@@ -506,22 +506,22 @@ SHORT _do_CMD_SETTINGS(DATA& data) {
 	return 0;
 }
 
-SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a) {
-	init_BOARD(a);
-	show_GET_NAME();
-	draw_BOX(28, 24, 32, 3, '-');
-	draw_TXT(31, 25, "Press ESC to go back --");
+SHORT build_New_Game(DATA& gameDat, BOARD& a) {
+	init_Board(a);
+	show_Get_Name();
+	draw_Box(28, 24, 32, 3, '-');
+	draw_Str(31, 25, "Press ESC to go back --");
 	bool success = false;
 	bool next = false;
 	do {
-		a.name = get_STRING(43, 14, 17);
+		a.name = get_String(43, 14, 17);
 		if (a.name == "########################################") return 0;
 		//linear search :|
 		for (int i = 0; i < gameDat.SAVEnames.size(); i++) {
 			if (gameDat.SAVEnames[i] == a.name) {
 				SetColor(COLOR_BG, COLOR_RED);
 				GoTo(43, 14); cout << "EXISTED NAME!"; Sleep(500);
-				returnColor();
+				reset_Color();
 				next = true; break;
 			}
 		}
@@ -529,7 +529,7 @@ SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a) {
 		if (a.name.size() > 25) {
 			SetColor(COLOR_BG, COLOR_RED);
 			GoTo(43, 14); cout << "TOO LONG (< 25)! "; Sleep(500);
-			returnColor();
+			reset_Color();
 			continue;
 		}
 
@@ -540,8 +540,8 @@ SHORT new_GAME_BOARD(DATA& gameDat, BOARD& a) {
 	} while (!success || a.name.size() == 0);
 }
 
-SHORT display_SCREEN_HTP(DATA& gameData) {
-	show_SCREEN_HTP(0, 0);
+SHORT display_Screen_HTP(DATA& gameData) {
+	show_Screen_HTP(0, 0);
 	while (true) {
 		switch (_getch()) {
 		case ESC:
@@ -566,7 +566,7 @@ SHORT _do_CMD_MAINMENU(SHORT cmd) {
 	return 0;
 }
 
-std::string get_STRING(SHORT x, SHORT y, int len) {
+std::string get_String(SHORT x, SHORT y, int len) {
 	string str;
 	while (true) {
 		while (_kbhit()) {
@@ -618,7 +618,7 @@ std::string get_STRING(SHORT x, SHORT y, int len) {
 	return str;
 }
 
-SHORT is_WIN(const BOARD& a, SHORT x, SHORT y) {
+SHORT isWin(const BOARD& a, SHORT x, SHORT y) {
 	vector<pair<int, int>> list;
 	SHORT winTYPE = (a.points[y][x].c == 'X' ? 1 : 2);
 	if (a.points[y][x].c != 'X' && a.points[y][x].c != 'O') return 0;
@@ -640,7 +640,7 @@ SHORT is_WIN(const BOARD& a, SHORT x, SHORT y) {
 	}
 	if (count >= 5) {
 		for (auto _x : list) {
-			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+			show_Board_Cursor(_x.first, _x.second, a.points[y][x].c);
 		}
 		return winTYPE;
 	}
@@ -665,7 +665,7 @@ SHORT is_WIN(const BOARD& a, SHORT x, SHORT y) {
 	}
 	if (count >= 5) {
 		for (auto _x : list) {
-			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+			show_Board_Cursor(_x.first, _x.second, a.points[y][x].c);
 		}
 		return winTYPE;
 	}
@@ -689,7 +689,7 @@ SHORT is_WIN(const BOARD& a, SHORT x, SHORT y) {
 	}
 	if (count >= 5) {
 		for (auto _x : list) {
-			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+			show_Board_Cursor(_x.first, _x.second, a.points[y][x].c);
 		}
 		return winTYPE;
 	}
@@ -714,7 +714,7 @@ SHORT is_WIN(const BOARD& a, SHORT x, SHORT y) {
 	}
 	if (count >= 5) {
 		for (auto _x : list) {
-			show_BOARD_CURSOR(_x.first, _x.second, a.points[y][x].c);
+			show_Board_Cursor(_x.first, _x.second, a.points[y][x].c);
 		}
 		return winTYPE;
 	}
@@ -725,51 +725,51 @@ SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd, bool& newGame) {
 	switch (cmd) {
 	case 0:
 		//save game
-		if (!save_BOARD_DATA(data, board)) {
+		if (!save_Board_to_Data(data, board)) {
 			SetColor(COLOR_RED, COLOR_BG);
 			GoTo(65, 21); cout << " SAVEs LIMITED! ";
-			returnColor();
+			reset_Color();
 			Sleep(500);
 			return 0;
 		};
-		save_BOARD_FILE(board);
-		save_DATA_FILE(data);
+		save_Board_to_File(board);
+		save_Data_to_File(data);
 		SetColor(COLOR_GREEN, COLOR_BG);
 		GoTo(67, 21); cout << "   SAVED!   ";
-		returnColor();
+		reset_Color();
 		newGame = false;
 		Sleep(500);
 		return 0;
 	case 1:
 		//settings
 		system("cls");
-		display_SCREEN_SETTINGS(data);
+		display_Screen_Setting(data);
 		return 0;
 	case 2:
 		//quit
 		if (newGame) {
-			if (display_ASK_SAVE()) {
-				if (!save_BOARD_DATA(data, board)) {
+			if (display_Ask_Save()) {
+				if (!save_Board_to_Data(data, board)) {
 					SetColor(COLOR_RED, COLOR_BG);
 					GoTo(65, 21); cout << " SAVEs LIMITED! ";
-					returnColor();
+					reset_Color();
 					Sleep(500);
 					return 0;
 				};
-				save_BOARD_FILE(board);
-				save_DATA_FILE(data);
+				save_Board_to_File(board);
+				save_Data_to_File(data);
 			}
 		}
 		else {
-			if (!save_BOARD_DATA(data, board)) {
+			if (!save_Board_to_Data(data, board)) {
 				SetColor(COLOR_RED, COLOR_BG);
 				GoTo(65, 21); cout << " SAVEs LIMITED! ";
-				returnColor();
+				reset_Color();
 				Sleep(500);
 				return 0;
 			};
-			save_BOARD_FILE(board);
-			save_DATA_FILE(data);
+			save_Board_to_File(board);
+			save_Data_to_File(data);
 		}
 		return 1;
 	}
@@ -783,9 +783,9 @@ bool checkHeadStr(string a, string b) {
 	return true;
 }
 
-SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
+SHORT display_Screen_Continue_Game(DATA& gameData, string& output) {
 	system("cls");
-	get_STUFFS(gameData);
+	load_Data(gameData);
 	int curBoard = 0;
 	DATA showBoard = gameData;
 	vector<BOARD> tmpB;
@@ -794,7 +794,7 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 	bool joinSearch = false;
 	GoTo(65, 9); cout << " Search: ";
 	bool color_search = false;
-	show_SCREEN_CGAME(gameData.SAVEdatas[curBoard], gameData, curBoard, 0, 0);
+	show_Screen_ContinueGame(gameData.SAVEdatas[curBoard], gameData, curBoard, 0, 0);
 	while (true) {
 		int n = showBoard.SAVEdatas.size();
 		if (nameTyped == "") showBoard = gameData;
@@ -817,9 +817,9 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 					nameTyped.push_back(_chr);
 					break;
 				}
-				if (showBoard.SAVEnames.size() != 0) show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
+				if (showBoard.SAVEnames.size() != 0) show_Screen_ContinueGame(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
 				else {
-					draw_RETANGLE_SPACE(65, 13, 18, 9);
+					draw_RetangleSpace(65, 13, 18, 9);
 				}
 			}
 			if (do_sth) {
@@ -848,9 +848,9 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 					tmpB.clear();
 					tmpN.clear();
 				}
-				if (showBoard.SAVEnames.size() != 0) show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
+				if (showBoard.SAVEnames.size() != 0) show_Screen_ContinueGame(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
 				else {
-					draw_RETANGLE_SPACE(65, 13, 18, 9);
+					draw_RetangleSpace(65, 13, 18, 9);
 				}
 			}
 		}
@@ -888,14 +888,14 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 				if (showBoard.SAVEdatas[curBoard].gamePlay == 1) return 10;
 			case BACKSPACE:
 				if (showBoard.SAVEnames.size() == 0) continue;
-				if (display_ASK_DEL()) {
-					delete_BOARD(gameData, showBoard.SAVEnames[curBoard]);
-					delete_BOARD(showBoard, showBoard.SAVEnames[curBoard]);
+				if (display_Ask_Delete()) {
+					delete_Board_from_Game(gameData, showBoard.SAVEnames[curBoard]);
+					delete_Board_from_Game(showBoard, showBoard.SAVEnames[curBoard]);
 					if (!(gameData.SAVEdatas.size())) return 0;
 					if (curBoard != 0) curBoard--;
 				}
 				system("cls");
-				show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
+				show_Screen_ContinueGame(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
 				GoTo(65, 9); cout << " Search:";
 				break;
 			case 'F':
@@ -903,21 +903,21 @@ SHORT display_SCREEN_CGAME(DATA& gameData, string& output) {
 				GoTo(74, 9); cout << nameTyped << (char)219;
 				SetColor(COLOR_BG, COLOR_GREEN);
 				GoTo(65, 9); cout << " Search:";
-				returnColor();
+				reset_Color();
 				joinSearch = true;
 				continue;
 			default:
 				break;
 			}
-			show_SCREEN_CGAME(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
+			show_Screen_ContinueGame(showBoard.SAVEdatas[curBoard], showBoard, curBoard, 0, 0);
 		}
 	}
 	return 0;
 }
 
-BOOL display_ASK_DEL() {
+BOOL display_Ask_Delete() {
 	bool cmd = 0;
-	show_ASK_DEL(0, 0, 0);
+	show_Ask_Delete(0, 0, 0);
 	while (true) {
 		switch (toupper(_getch())) {
 		case 75: case 'A':
@@ -929,32 +929,32 @@ BOOL display_ASK_DEL() {
 		case ENTER:
 			return cmd;
 		}
-		show_ASK_DEL(0, 0, cmd);
+		show_Ask_Delete(0, 0, cmd);
 	}
 }
 
-BOOL display_get_GAMEPLAY() {
+BOOL display_Ask_Gameplay() {
 	bool cmd = 1;
-	draw_BOX(6, 1, 81, 27, '=');
-	_draw_VS(35, 15);
-	show_ASK_GAMEPLAY(32, 3, cmd);
+	draw_Box(6, 1, 81, 27, '=');
+	_draw_shape_vs(35, 15);
+	show_Ask_Gameplay(32, 3, cmd);
 	if (cmd) {
 		SetColor(COLOR_BG, COLOR_BG);
-		_draw_ROBOT(52, 10);
+		_draw_shape_robot(52, 10);
 		SetColor(COLOR_BG, COLOR_RED);
-		_draw_HUMAN(11, 10);
+		_draw_shape_human(11, 10);
 		SetColor(COLOR_BG, COLOR_BLUE);
-		_draw_HUMAN(52, 10);
-		returnColor();
+		_draw_shape_human(52, 10);
+		reset_Color();
 	}
 	else {
 		SetColor(COLOR_BG, COLOR_RED);
-		_draw_HUMAN(11, 10);
+		_draw_shape_human(11, 10);
 		SetColor(COLOR_BG, COLOR_BG);
-		_draw_HUMAN(52, 10);
+		_draw_shape_human(52, 10);
 		SetColor(COLOR_BG, COLOR_BLUE);
-		_draw_ROBOT(52, 10);
-		returnColor();
+		_draw_shape_robot(52, 10);
+		reset_Color();
 	}
 	while (true) {
 		switch (toupper(_getch())) {
@@ -965,34 +965,34 @@ BOOL display_get_GAMEPLAY() {
 			if (cmd) cmd = 0;
 			break;
 		case ENTER:
-			if (!cmd) display_get_DIFF();
+			if (!cmd) display_Ask_Difficult();
 			return cmd;
 		}
 		if (cmd) {
 			SetColor(COLOR_BG, COLOR_BG);
-			_draw_ROBOT(52, 10);
+			_draw_shape_robot(52, 10);
 			SetColor(COLOR_BG, COLOR_RED);
-			_draw_HUMAN(11, 10);
+			_draw_shape_human(11, 10);
 			SetColor(COLOR_BG, COLOR_BLUE);
-			_draw_HUMAN(52, 10);
-			returnColor();
+			_draw_shape_human(52, 10);
+			reset_Color();
 		}
 		else {
 			SetColor(COLOR_BG, COLOR_RED);
-			_draw_HUMAN(11, 10);
+			_draw_shape_human(11, 10);
 			SetColor(COLOR_BG, COLOR_BG);
-			_draw_HUMAN(52, 10);
+			_draw_shape_human(52, 10);
 			SetColor(COLOR_BG, COLOR_BLUE);
-			_draw_ROBOT(52, 10);
-			returnColor();
+			_draw_shape_robot(52, 10);
+			reset_Color();
 		}
-		show_ASK_GAMEPLAY(32, 3, cmd);
+		show_Ask_Gameplay(32, 3, cmd);
 	}
 }
 
-INT display_get_DIFF() {
+INT display_Ask_Difficult() {
 	int cmd = 1;
-	show_ASK_DIFF(29, 9, cmd);
+	show_Ask_Difficult(29, 9, cmd);
 	while (true) {
 		switch (toupper(_getch())) {
 		case 75: case 'A':
@@ -1006,13 +1006,13 @@ INT display_get_DIFF() {
 		case ENTER:
 			return cmd;
 		}
-		show_ASK_DIFF(29, 9, cmd);
+		show_Ask_Difficult(29, 9, cmd);
 	}
 }
 
-BOOL display_ASK_SAVE() {
+BOOL display_Ask_Save() {
 	bool cmd = 0;
-	show_ASK_SAVE(27, 12, cmd);
+	show_Ask_Save(27, 12, cmd);
 	while (true) {
 		switch (toupper(_getch())) {
 		case 'A': case 75:
@@ -1024,11 +1024,11 @@ BOOL display_ASK_SAVE() {
 		case ESC:
 			return 0;
 		}
-		show_ASK_SAVE(27, 12, cmd);
+		show_Ask_Save(27, 12, cmd);
 	}
 }
 
-void game_UNDO(BOARD& a, SHORT& curX, SHORT& curY) {
+void sys_Undo(BOARD& a, SHORT& curX, SHORT& curY) {
 	if (a.listOfMoves.size() == 0) return;
 	curX = a.listOfMoves[a.listOfMoves.size() - 1].x;
 	curY = a.listOfMoves[a.listOfMoves.size() - 1].y;
