@@ -285,8 +285,8 @@ bool display_Screen_Result(BOARD& a, SHORT& cur_X, SHORT& cur_Y) {
 		resetMatch(a);
 		system("cls");
 		show_Screen_Game(a);
-		cur_X = 5;
-		cur_Y = 5;
+		cur_X = BOARD_SIZE/2;
+		cur_Y = BOARD_SIZE / 2;
 	}
 	return exit;
 }
@@ -520,7 +520,7 @@ SHORT build_New_Game(DATA& gameDat, BOARD& a) {
 		for (int i = 0; i < gameDat.SAVEnames.size(); i++) {
 			if (gameDat.SAVEnames[i] == a.name) {
 				SetColor(COLOR_BG, COLOR_RED);
-				GoTo(43, 14); cout << "EXISTED NAME!"; Sleep(500);
+				GoTo(43, 14); cout << "EXISTED NAME!"; Sleep(1000);
 				reset_Color();
 				next = true; break;
 			}
@@ -528,7 +528,7 @@ SHORT build_New_Game(DATA& gameDat, BOARD& a) {
 
 		if (a.name.size() > 25) {
 			SetColor(COLOR_BG, COLOR_RED);
-			GoTo(43, 14); cout << "TOO LONG (< 25)! "; Sleep(500);
+			GoTo(43, 14); cout << "TOO LONG (< 25)! "; Sleep(1000);
 			reset_Color();
 			continue;
 		}
@@ -729,7 +729,7 @@ SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd, bool& newGame) {
 			SetColor(COLOR_RED, COLOR_BG);
 			GoTo(65, 21); cout << " SAVEs LIMITED! ";
 			reset_Color();
-			Sleep(500);
+			Sleep(1000);
 			return 0;
 		};
 		save_Board_to_File(board);
@@ -738,7 +738,7 @@ SHORT _do_CMD_SUBMENU(BOARD& board, DATA& data, SHORT cmd, bool& newGame) {
 		GoTo(67, 21); cout << "   SAVED!   ";
 		reset_Color();
 		newGame = false;
-		Sleep(500);
+		Sleep(1000);
 		return 0;
 	case 1:
 		//settings

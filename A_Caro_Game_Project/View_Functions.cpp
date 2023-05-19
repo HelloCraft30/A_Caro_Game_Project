@@ -167,6 +167,19 @@ void draw_Box(SHORT posX, SHORT posY, int width, int height, char type, int COLO
 	}
 }
 void draw_Board(SHORT posX, SHORT posY, int sizeBoard, string nameBoard) {
+	SetColor(COLOR_BG, COLOR_RED);
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		GoTo(posX - 2, posY + 1+i*2);
+		if (i >= 10) GoTo(posX - 3, posY + 1 + i * 2);
+		cout << i;
+	}
+	SetColor(COLOR_BG, COLOR_BLUE);
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		GoTo(posX + 2+i*4, posY + BOARD_SIZE * 2 + 1); 
+		if(i>=10) GoTo(posX + 1 + i * 4, posY + BOARD_SIZE * 2 + 1);
+		cout << i;
+	}
+	reset_Color();
 	GoTo(posX, posY);
 	cout << LINE2_LEFT_TOP;
 	for (int i = 0; i < sizeBoard - 1; i++) {
@@ -366,7 +379,11 @@ void show_Game_LastMove(SHORT posX, SHORT posY, const BOARD& board) {
 		reset_Color();
 		GoTo(posX + 14, posY); cout << "                  ";
 		GoTo(posX + 14, posY); cout << board.listOfMoves[n - 1].c;
-		cout << ": [" << board.listOfMoves[n - 1].x << "] - [";
+		SetColor(COLOR_BG, COLOR_BLUE);
+		cout << ": [" << board.listOfMoves[n - 1].x << "]";
+		cout << " - ";
+		SetColor(COLOR_BG, COLOR_RED);
+		cout<<"[";
 		cout << board.listOfMoves[n - 1].y << "]";
 	}
 	else {
@@ -444,7 +461,7 @@ void show_Get_Name() {
 
 void show_Screen_Game(BOARD& board) {
 	system("cls");
-	draw_Board(4, 2, 12, board.name);
+	draw_Board(4, 2, BOARD_SIZE, board.name);
 	draw_GridPoint(4, 2, board);
 	show_Game_Turn(61, 4, board.Turn);
 	show_Game_Score_x(61, 9, board.X_wins);

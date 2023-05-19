@@ -1,0 +1,28 @@
+player/computer: 
+0
+score: X/O
+0 0
+turn:
+X
+data:
+N N N N N N N N N N N N 
+N X O N N N N N N N N N 
+N N N X N N N N N N N N 
+N N N O N N N N N N N N 
+N N N N X N N N N N N N 
+N N N N N O X N N N N N 
+N N N N N N N O N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+N N N N N N N N N N N N 
+history:
+1 1 X
+1 2 O
+2 3 X
+3 3 O
+4 4 X
+5 5 O
+5 6 X
+6 7 O

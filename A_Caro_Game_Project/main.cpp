@@ -7,25 +7,6 @@
 
 using namespace std;
 
-void moveCur(int& x, int& y) {
-	switch (_getch()) {
-	case 'A':
-		x--;
-		break;
-	case 'S':
-		y++;
-		break;
-	case 'W':
-		y--;
-		break;
-	case 'D':
-		x++;
-		break;
-	case 13:
-		cout << "x: " << x << " y: " << y;
-	}
-}
-
 int main() {
 	
 	int x = 0; int y = 0;
