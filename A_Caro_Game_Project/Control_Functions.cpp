@@ -890,7 +890,7 @@ SHORT display_Screen_Continue_Game(DATA& gameData, string& output) {
 				if (showBoard.SAVEnames.size() == 0) continue;
 				if (display_Ask_Delete()) {
 					delete_Board_from_Game(gameData, showBoard.SAVEnames[curBoard]);
-					delete_Board_from_Game(showBoard, showBoard.SAVEnames[curBoard]);
+					delete_Board_from_Data(showBoard, showBoard.SAVEnames[curBoard]);
 					if (!(gameData.SAVEdatas.size())) return 0;
 					if (curBoard != 0) curBoard--;
 				}
